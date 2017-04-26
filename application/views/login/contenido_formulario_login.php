@@ -22,6 +22,16 @@
 
 	</div>
 
+	<?php if ($this->session->flashdata("error")): ?>
+
+		<div>
+
+			<label class="text-danger"><?= $this->session->flashdata("error") ?></label>
+
+		</div>
+
+	<?php endif; ?>
+
 	<input type="hidden" id="token" name="token" value="<?= $token ?>">
 
 	<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-default">
