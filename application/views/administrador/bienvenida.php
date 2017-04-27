@@ -2,18 +2,8 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center">
+<?php $this->load->view("base/menu"); ?>
 
-	<h1><?= $titulo ?></h1>
-
-</div>
-
-<div class="container">
-
-	<p>Bienvenido administrador</p>
-
-	<a href="<?= base_url("login/cerrar_sesion") ?>">Cerrar sesión</a>
-
-</div>
+<?php $this->load->view("administrador/contenido_bienvenida"); ?>
 
 <?php $this->load->view("base/footer"); ?>

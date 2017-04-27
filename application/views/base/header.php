@@ -28,6 +28,12 @@
 
 		<script src="<?= base_url("assets/bootstrap/3.3.7/js/bootstrap.min.js") ?>"></script>
 
+		<!-- Bootstrap navigation menu -->
+
+		<link href="<?= base_url("assets/responsive-sidebar-menu/css/sidebar-menu.css") ?>" rel="stylesheet">
+
+		<script src="<?= base_url("assets/responsive-sidebar-menu/js/sidebar-menu.js") ?>"></script>
+
 	</head>
 
 	<body>
