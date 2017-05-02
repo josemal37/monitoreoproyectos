@@ -86,4 +86,58 @@ class Proyecto extends CI_Controller {
 		}
 	}
 
+	public function modificar_proyecto($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_proyecto_bd();
+				} else {
+					$this->cargar_vista_modificar_proyecto($id);
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function cargar_vista_modificar_proyecto($id) {
+		$titulo = "Modificar proyecto";
+		$id_usuario = $this->session->userdata("id");
+		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
+
+		if ($proyecto) {
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+
+			$this->load->view("proyecto/formulario_proyecto", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+	
+	private function modificar_proyecto_bd() {
+		$id = $this->input->post("id");
+		$nombre = $this->input->post("nombre");
+		$objetivo = $this->input->post("objetivo");
+		$fecha_inicio = $this->input->post("fecha_inicio");
+		$fecha_fin = $this->input->post("fecha_fin");
+		
+		if ($this->proyecto_validacion->validar(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"))) {
+			if ($this->Modelo_proyecto->update_proyecto($id, $nombre, $objetivo, $fecha_inicio, $fecha_fin)) {
+				redirect(base_url("proyecto/proyectos"));
+			} else {
+				redirect(base_url("proyecto/modificar_proyecto/" . $id), "refresh");
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_proyecto($id);
+		}
+	}
+
 }

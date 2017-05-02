@@ -69,7 +69,7 @@
 </div>
 
 <script type="text/javascript">
-	//$(".contenido-variable").matchHeight();
 	$(".titulo").matchHeight();
 	$(".objetivo").matchHeight();
+	$(".acciones").matchHeight();
 </script>

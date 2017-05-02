@@ -50,6 +50,29 @@ class Modelo_proyecto extends MY_Model {
 
 		return $proyectos;
 	}
+	
+	public function select_proyecto_por_id($id_proyecto = FALSE, $id_usuario = FALSE, $id_rol_proyecto = FALSE) {
+		$proyecto = FALSE;
+		
+		if ($id_proyecto) {
+			$this->set_select_proyecto_con_usuario_y_rol();
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_proyecto);
+			
+			if ($id_usuario) {
+				$this->db->where(self::ID_USUARIO_PU, $id_usuario);
+			}
+			
+			if ($id_rol_proyecto) {
+				$this->db->where(self::ID_ROL_PROYECTO_PU, $id_rol_proyecto);
+			}
+			
+			$query = $this->db->get();
+			
+			$proyecto = $this->return_row($query);
+		}
+		
+		return $proyecto;
+	}
 
 	private function set_select_proyecto_con_usuario_y_rol() {
 		$this->db->select(self::COLUMNAS_SELECT);
@@ -107,6 +130,31 @@ class Modelo_proyecto extends MY_Model {
 		}
 
 		return $asignado;
+	}
+	
+	public function update_proyecto($id = FALSE, $nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "") {
+		$actualizado = FALSE;
+		
+		if ($id && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "") {
+			$this->db->trans_start();
+			
+			$datos = array(
+				self::NOMBRE => $nombre,
+				self::OBJETIVO => $objetivo,
+				self::FECHA_INICIO => $fecha_inicio,
+				self::FECHA_FIN => $fecha_fin
+			);
+			
+			$this->db->set($datos);
+			
+			$this->db->where(self::ID, $id);
+			
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			
+			$this->db->trans_complete();
+		}
+		
+		return $actualizado;
 	}
 
 }
