@@ -1,11 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 <?php
+$accion = $this->uri->segment(2);
 $url = "";
 
-switch ($this->uri->segment(2)) {
+switch ($accion) {
 	case "registrar_usuario":
 		$url = base_url("usuario/registrar_usuario");
+		break;
+	case "modificar_usuario":
+		$url = base_url("usuario/modificar_usuario/" . $usuario->id);
 		break;
 }
 ?>
@@ -20,7 +24,7 @@ switch ($this->uri->segment(2)) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control">
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -30,7 +34,7 @@ switch ($this->uri->segment(2)) {
 
 			<label>Apellido paterno</label>
 
-			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control">
+			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
 
 			<?= form_error("apellido_paterno") ?>
 
@@ -40,7 +44,7 @@ switch ($this->uri->segment(2)) {
 
 			<label>Apellido materno</label>
 
-			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control">
+			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
 
 			<?= form_error("apellido_materno") ?>
 
@@ -56,7 +60,7 @@ switch ($this->uri->segment(2)) {
 
 					<?php foreach ($roles as $rol): ?>
 
-						<option value="<?= $rol->id ?>"><?= $rol->nombre ?></option>
+						<option value="<?= $rol->id ?>"  <?php if ($accion = "modificar_usuario" && $rol->id == $usuario->id_rol): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
 
 					<?php endforeach; ?>
 
@@ -70,7 +74,7 @@ switch ($this->uri->segment(2)) {
 
 			<label>Nombre de usuario</label>
 
-			<input type="text" id="login" name="login" class="form-control">
+			<input type="text" id="login" name="login" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
 
 			<?= form_error("login") ?>
 
@@ -82,25 +86,35 @@ switch ($this->uri->segment(2)) {
 
 		</div>
 
-		<div class="form-group">
+		<?php if ($accion == "registrar_usuario"): ?>
 
-			<label>Contraseña</label>
+			<div class="form-group">
 
-			<input type="password" id="password" name="password" class="form-control">
+				<label>Contraseña</label>
 
-			<?= form_error("password") ?>
+				<input type="password" id="password" name="password" class="form-control">
 
-		</div>
+				<?= form_error("password") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Confirmar contraseña</label>
+			<div class="form-group">
 
-			<input type="password" id="confirmacion_password" name="confirmacion_password" class="form-control">
+				<label>Confirmar contraseña</label>
 
-			<?= form_error("confirmacion_password") ?>
+				<input type="password" id="confirmacion_password" name="confirmacion_password" class="form-control">
 
-		</div>
+				<?= form_error("confirmacion_password") ?>
+
+			</div>
+
+		<?php endif; ?>
+
+		<?php if ($accion == "modificar_usuario"): ?>
+
+			<input type="hidden" id="id" name="id" value="<?= $usuario->id ?>">
+
+		<?php endif; ?>
 
 		<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 

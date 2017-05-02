@@ -20,7 +20,7 @@ class Modelo_usuario extends MY_Model {
 	const APELLIDO_MATERNO = "apellido_materno";
 	const LOGIN = "login";
 	const PASSWORD = "passwd";
-	const COLUMNAS_SELECT = "usuario.id, usuario.id_rol_usuario, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno, usuario.login, usuario.passwd as password";
+	const COLUMNAS_SELECT = "usuario.id, usuario.id_rol_usuario as id_rol, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno, usuario.login, usuario.passwd as password";
 	const NOMBRE_TABLA = "usuario";
 
 	public function __construct() {
@@ -48,7 +48,7 @@ class Modelo_usuario extends MY_Model {
 
 		if ($id) {
 			$this->set_select_usuario_y_rol();
-			$this->db->where(self::ID, $id);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
 
 			$query = $this->db->get();
 
@@ -94,7 +94,7 @@ class Modelo_usuario extends MY_Model {
 			}
 
 			$query = $this->db->get();
-			
+
 			$usuario = $this->return_row($query);
 		}
 
@@ -120,7 +120,7 @@ class Modelo_usuario extends MY_Model {
 					self::APELLIDO_MATERNO => $apellido_materno,
 					self::LOGIN => $login,
 					self::PASSWORD => $password,
-					self::ID_ROL => $id_rol,
+					self::ID_ROL => $id_rol
 				);
 
 				$this->db->set($datos);
@@ -132,6 +132,32 @@ class Modelo_usuario extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function update_usuario($id = FALSE, $nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $id_rol = FALSE) {
+		$actualizado = FALSE;
+
+		if ($id && $nombre != "" && $login != "" && $id_rol) {
+			if (!$this->select_usuario_por_login($login, $id)) {
+				$datos = array(
+					self::NOMBRE => $nombre,
+					self::APELLIDO_PATERNO => $apellido_paterno,
+					self::APELLIDO_MATERNO => $apellido_materno,
+					self::LOGIN => $login,
+					self::ID_ROL => $id_rol
+				);
+
+				$this->db->set($datos);
+
+				$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+
+				$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			} else {
+				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
+			}
+		}
+
+		return $actualizado;
 	}
 
 	private function get_nombre_completo($usuario = FALSE) {
