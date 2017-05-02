@@ -5,13 +5,13 @@
  */
 
 /**
- * Description of Usuario_validacion
+ * Description of Proyecto_validacion
  *
  * @author Jose
  */
 require_once 'Validacion.php';
 
-class Usuario_validacion extends Validacion {
+class Proyecto_validacion extends Validacion {
 
 	protected $reglas_validacion_ci = array(
 		"id" => array(
@@ -31,43 +31,27 @@ class Usuario_validacion extends Validacion {
 				"min_length[1]"
 			)
 		),
-		"apellido_paterno" => array(
-			"field" => "apellido_paterno",
-			"label" => "apellido paterno",
+		"objetivo" => array(
+			"field" => "objetivo",
+			"label" => "objetivo",
 			"rules" => array(
 				"min_length[1]"
 			)
 		),
-		"apellido_materno" => array(
-			"field" => "apellido_materno",
-			"label" => "apellido materno",
-			"rules" => array(
-				"min_length[1]"
-			)
-		),
-		"login" => array(
-			"field" => "login",
-			"label" => "login",
+		"fecha_inicio" => array(
+			"field" => "fecha_inicio",
+			"label" => "fecha de inicio",
 			"rules" => array(
 				"required",
-				"min_length[5]"
+				"date"
 			)
 		),
-		"password" => array(
-			"field" => "password",
-			"label" => "password",
+		"fecha_fin" => array(
+			"field" => "fecha_fin",
+			"label" => "fecha de fin",
 			"rules" => array(
 				"required",
-				"min_length[5]"
-			)
-		),
-		"confirmacion_password" => array(
-			"field" => "confirmacion_password",
-			"label" => "confirmación password",
-			"rules" => array(
-				"required",
-				"min_length[5]",
-				"matches[password]"
+				"date"
 			)
 		)
 	);

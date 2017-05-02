@@ -34,6 +34,14 @@
 
 		<script src="<?= base_url("assets/responsive-sidebar-menu/js/sidebar-menu.js") ?>"></script>
 
+		<!-- Jquery MatchHeight -->
+
+		<script src="<?= base_url("assets/jquery-matchheight/jquery.matchHeight.js") ?>"></script>
+
+		<!-- Estilos del sistema -->
+
+		<link href="<?= base_url("assets/monitoreo/monitoreo.css") ?>" rel="stylesheet">
+
 	</head>
 
 	<body>

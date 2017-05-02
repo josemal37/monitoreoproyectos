@@ -37,9 +37,17 @@
 
 					<!-- Proyectos -->
 
-					<li><a href="#">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a></li>
+					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "proyectos"): ?>class="active open"<?php endif; ?>>
 
-					<li><a href="#">Registrar proyecto<span class="glyphicon glyphicon-plus-sign pull-right"></span></a></li>
+						<a href="<?= base_url("proyecto/proyectos")?>">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+
+					</li>
+
+					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "registrar_proyecto"): ?>class="active open"<?php endif; ?>>
+						
+						<a href="<?= base_url("proyecto/registrar_proyecto")?>">Registrar proyecto<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
+					
+					</li>
 
 				<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
