@@ -193,4 +193,33 @@ class Usuario extends CI_Controller {
 		}
 	}
 
+	public function eliminar_usuario($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador") {
+			if ($id) {
+				$this->eliminar_usuario_bd($id);
+			} else {
+				redirect(base_url("usuario/usuarios"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_usuario_bd($id) {
+		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
+
+		if ($usuario) {
+			if ($this->Modelo_usuario->delete_usuario($id)) {
+				redirect(base_url("usuario/usuarios"));
+			} else {
+				$this->session->set_userdata("error", "Ocurrió un error al eliminar el usuario.");
+				redirect(base_url("usuario/usuarios"), "refresh");
+			}
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
+	}
+
 }

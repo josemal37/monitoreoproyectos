@@ -174,7 +174,7 @@ class Modelo_usuario extends MY_Model {
 
 	public function update_password_usuario($id = FALSE, $password = "") {
 		$actualizado = FALSE;
-		
+
 		$password = sha1($password);
 
 		if ($id && $password != "") {
@@ -194,6 +194,22 @@ class Modelo_usuario extends MY_Model {
 		}
 
 		return $actualizado;
+	}
+
+	public function delete_usuario($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 	private function get_nombre_completo($usuario = FALSE) {
