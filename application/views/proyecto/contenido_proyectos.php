@@ -36,29 +36,17 @@
 
 							<div class="acciones">
 
-								<div>
+								<a href="<?= base_url("proyecto/actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Actividades</a>
 
-									<a href="<?= base_url("proyecto/actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Actividades</a>
+								<a href="<?= base_url("proyecto/marco_logico/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Marco lógico</a>
 
-								</div>
+								<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
 
-								<div>
+									<a href="<?= base_url("proyecto/modificar_proyecto/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Modificar datos generales</a>
 
-									<a href="<?= base_url("proyecto/marco_logico/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Marco lógico</a>
+									<a href="<?= base_url("proyecto/eliminar_proyecto/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
 
-								</div>
-
-								<div>
-
-									<a href="<?= base_url("proyecto/modificar/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Modificar</a>
-
-								</div>
-
-								<div>
-
-									<a href="<?= base_url("proyecto/eliminar/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
-
-								</div>
+								<?php endif; ?>
 
 							</div>
 

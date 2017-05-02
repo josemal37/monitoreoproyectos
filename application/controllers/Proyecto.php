@@ -13,34 +13,34 @@ class Proyecto extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array("Modelo_proyecto"));
+		$this->load->model(array("Modelo_proyecto", "Modelo_rol_proyecto"));
 		$this->load->library(array("Proyecto_validacion"));
 		$this->load->database("default");
 	}
-	
+
 	public function index() {
 		$this->proyectos();
 	}
-	
+
 	public function proyectos() {
 		$rol = $this->session->userdata("rol");
-		
+
 		if ($rol == "empleado") {
 			$this->cargar_vista_proyectos();
 		} else {
 			redirect(base_url());
 		}
 	}
-	
+
 	private function cargar_vista_proyectos() {
 		$titulo = "Proyectos";
 		$id_usuario = $this->session->userdata("id");
 		$proyectos = $this->Modelo_proyecto->select_proyectos_de_usuario($id_usuario);
-		
+
 		$datos = array();
 		$datos["titulo"] = $titulo;
 		$datos["proyectos"] = $proyectos;
-		
+
 		$this->load->view("proyecto/proyectos", $datos);
 	}
 
@@ -54,7 +54,7 @@ class Proyecto extends CI_Controller {
 				$this->cargar_vista_registrar_proyecto();
 			}
 		} else {
-			redirect(base_url());
+			redirect(base_url("proyecto/proyectos"));
 		}
 	}
 
@@ -72,9 +72,10 @@ class Proyecto extends CI_Controller {
 		$objetivo = $this->input->post("objetivo");
 		$fecha_inicio = $this->input->post("fecha_inicio");
 		$fecha_fin = $this->input->post("fecha_fin");
-		
+		$id_usuario = $this->session->userdata("id");
+
 		if ($this->proyecto_validacion->validar(array("nombre", "objetivo", "fecha_inicio", "fecha_fin"))) {
-			if ($this->Modelo_proyecto->insert_proyecto($nombre, $objetivo, $fecha_inicio, $fecha_fin)) {
+			if ($this->Modelo_proyecto->insert_proyecto($nombre, $objetivo, $fecha_inicio, $fecha_fin, $id_usuario)) {
 				redirect(base_url("proyecto/proyectos"));
 			} else {
 				redirect(base_url("proyecto/registrar_proyecto"), "refresh");
