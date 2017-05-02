@@ -1,3 +1,5 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
 <nav class="navbar navbar-m2p sidebar" role="navigation">
 
     <div class="container-fluid">
@@ -14,7 +16,7 @@
 
             </button>
 
-            <a class="navbar-brand" href="#">Fundación Atica</a>
+            <a class="navbar-brand" href="<?= base_url() ?>">Fundación Atica</a>
 
         </div>
 
@@ -23,9 +25,9 @@
             <ul class="nav navbar-nav">
 
                 <!-- Inicio -->
-                <li class="active open">
+                <li <?php if ($this->uri->segment(1) == "administrador" || $this->uri->segment(1) == "empleado"): ?>class="active open"<?php endif; ?>>
 
-					<a href="#">Inicio</a>
+					<a href="<?= base_url() ?>">Inicio<span class="glyphicon glyphicon-menu-hamburger pull-right"></span></a>
 
                 </li>
 
@@ -35,9 +37,9 @@
 
 					<!-- Proyectos -->
 
-					<li><a href="#">Ver mis proyectos</a></li>
+					<li><a href="#">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a></li>
 
-					<li><a href="#">Registrar proyecto</a></li>
+					<li><a href="#">Registrar proyecto<span class="glyphicon glyphicon-plus-sign pull-right"></span></a></li>
 
 				<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
@@ -45,9 +47,17 @@
 
 					<!-- Administrador -->
 
-					<li><a href="#">Ver usuarios del sistema</a></li>
+					<li <?php if ($this->uri->segment(1) == "usuario" && $this->uri->segment(2) == "usuarios"): ?>class="active open"<?php endif; ?>>
 
-					<li><a href="#">Registrar usuario</a></li>
+						<a href="<?= base_url("usuario/usuarios") ?>">Ver usuarios del sistema<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+
+					</li>
+
+					<li <?php if ($this->uri->segment(1) == "usuario" && $this->uri->segment(2) == "registrar_usuario"): ?>class="active open"<?php endif; ?>>
+
+						<a href="<?= base_url("usuario/registrar_usuario") ?>">Registrar usuario<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
+
+					</li>
 
 				<?php endif; ?>
 
@@ -56,11 +66,11 @@
                 <!-- Usuario -->
                 <li>
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span><span class="glyphicon glyphicon-user pull-right"></span></a>
 
 					<ul class="dropdown-menu forAnimate" role="menu">
 
-                        <li><a href="#">Modificar contraseña</a></li>
+                        <li><a href="#">Modificar contraseña<span class="glyphicon glyphicon-pencil pull-right"></span></a></li>
 
                     </ul>
 
@@ -69,7 +79,7 @@
                 <!-- Salir -->
                 <li>
 
-                    <a href="<?= base_url("login/cerrar_sesion") ?>">Salir</a>
+                    <a href="<?= base_url("login/cerrar_sesion") ?>">Salir<span class="glyphicon glyphicon-remove pull-right"></span></a>
 
                 </li>
 

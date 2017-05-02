@@ -21,20 +21,31 @@ class Modelo_rol extends MY_Model {
 	public function __construct() {
 		parent::__construct();
 	}
-	
+
+	public function select_roles() {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		
+		$query = $this->db->get();
+		
+		$roles = $this->return_result($query);
+		
+		return $roles;
+	}
+
 	public function select_rol($id = FALSE) {
 		$rol = FALSE;
-		
+
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::ID, $id);
-			
+
 			$query = $this->db->get();
-			
+
 			$rol = $this->return_row($query);
 		}
-		
+
 		return $rol;
 	}
 

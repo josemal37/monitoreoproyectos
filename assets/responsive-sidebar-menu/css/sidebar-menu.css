@@ -190,11 +190,3 @@ nav:hover .forAnimate{
         opacity: 1;
     }
 }
-
-@media (min-width: 768px) {
-
-    .sidebar {
-        margin-right: 10px;
-    }
-
-}

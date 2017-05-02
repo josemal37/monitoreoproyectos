@@ -27,18 +27,33 @@ class Modelo_usuario extends MY_Model {
 		parent::__construct();
 	}
 
+	public function select_usuarios() {
+		$this->set_select_usuario_y_rol();
+
+		$query = $this->db->get();
+
+		$usuarios = $this->return_result($query);
+
+		if ($usuarios) {
+			foreach ($usuarios as $usuario) {
+				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+			}
+		}
+
+		return $usuarios;
+	}
+
 	public function select_usuario_por_id($id = FALSE) {
 		$usuario = FALSE;
 
 		if ($id) {
 			$this->set_select_usuario_y_rol();
-			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::ID, $id);
 
 			$query = $this->db->get();
 
 			$usuario = $this->return_row($query);
-			
+
 			if ($usuario) {
 				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
 			}
@@ -52,16 +67,35 @@ class Modelo_usuario extends MY_Model {
 
 		if ($login != "" && $password != "") {
 			$this->set_select_usuario_y_rol();
-			$this->db->where(self::LOGIN, $login);
-			$this->db->where(self::PASSWORD, $password);
+			$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::LOGIN . "` = '" . $login . "'", NULL, FALSE);
+			$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::PASSWORD . "` = '" . $password . "'", NULL, FALSE);
 
 			$query = $this->db->get();
 
 			$usuario = $this->return_row($query);
-			
+
 			if ($usuario) {
 				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
 			}
+		}
+
+		return $usuario;
+	}
+
+	private function select_usuario_por_login($login = "", $no_id = FALSE) {
+		$usuario = FALSE;
+
+		if ($login != "") {
+			$this->set_select_usuario_y_rol();
+			$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::LOGIN . "` = '" . $login . "'", NULL, FALSE);
+
+			if ($no_id) {
+				$this->db->where(self::NOMBRE_TABLA . "." . self::ID . " != " . $no_id, NULL, FALSE);
+			}
+
+			$query = $this->db->get();
+			
+			$usuario = $this->return_row($query);
 		}
 
 		return $usuario;
@@ -72,10 +106,38 @@ class Modelo_usuario extends MY_Model {
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->join(Modelo_rol::NOMBRE_TABLA, Modelo_rol::NOMBRE_TABLA . "." . Modelo_rol::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_ROL);
 	}
-	
+
+	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $password = "", $id_rol = FALSE) {
+		$insertado = FALSE;
+
+		$password = sha1($password);
+
+		if ($nombre != "" && $login != "" && $password != "" && $id_rol) {
+			if (!$this->existe_login($login)) {
+				$datos = array(
+					self::NOMBRE => $nombre,
+					self::APELLIDO_PATERNO => $apellido_paterno,
+					self::APELLIDO_MATERNO => $apellido_materno,
+					self::LOGIN => $login,
+					self::PASSWORD => $password,
+					self::ID_ROL => $id_rol,
+				);
+
+				$this->db->set($datos);
+
+				$insertado = $this->db->insert(self::NOMBRE_TABLA);
+			} else {
+				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
+			}
+		}
+
+		return $insertado;
+	}
+
 	private function get_nombre_completo($usuario = FALSE) {
+		$nombre_completo = FALSE;
+
 		if ($usuario) {
-			$nombre_completo = FALSE;
 
 			if (isset($usuario->nombre)) {
 				$nombre_completo = $usuario->nombre;
@@ -88,11 +150,19 @@ class Modelo_usuario extends MY_Model {
 			if ($usuario->apellido_paterno) {
 				$nombre_completo .= " " . $usuario->apellido_materno;
 			}
-
-			return $nombre_completo;
-		} else {
-			return FALSE;
 		}
+
+		return $nombre_completo;
+	}
+
+	public function existe_login($login = "", $no_id = FALSE) {
+		$existe = FALSE;
+
+		if ($this->select_usuario_por_login($login, $no_id)) {
+			$existe = TRUE;
+		}
+
+		return $existe;
 	}
 
 }
