@@ -88,10 +88,10 @@ class Usuario extends CI_Controller {
 			$this->registrar_usuario();
 		}
 	}
-	
+
 	public function modificar_usuario($id = FALSE) {
 		$rol = $this->session->userdata("rol");
-		
+
 		if ($rol == "administrador") {
 			if ($id) {
 				if (isset($_POST["submit"])) {
@@ -106,20 +106,24 @@ class Usuario extends CI_Controller {
 			redirect(base_url());
 		}
 	}
-	
+
 	private function cargar_vista_modificar_usuario($id) {
 		$titulo = "Modificar usuario";
 		$roles = $this->Modelo_rol->select_roles();
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
-		
-		$datos = array();
-		$datos["titulo"] = $titulo;
-		$datos["roles"] = $roles;
-		$datos["usuario"] = $usuario;
-		
-		$this->load->view("usuario/formulario_usuario", $datos);
+
+		if ($usuario) {
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["roles"] = $roles;
+			$datos["usuario"] = $usuario;
+
+			$this->load->view("usuario/formulario_usuario", $datos);
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
 	}
-	
+
 	private function modificar_usuario_bd() {
 		$id = $this->input->post("id");
 		$nombre = $this->input->post("nombre");
@@ -127,7 +131,7 @@ class Usuario extends CI_Controller {
 		$apellido_materno = $this->input->post("apellido_materno");
 		$login = $this->input->post("login");
 		$rol = $this->input->post("rol");
-		
+
 		if ($this->usuario_validacion->validar(array("id", "nombre", "apellido_paterno", "apellido_materno", "login", "rol"))) {
 			if ($this->Modelo_usuario->update_usuario($id, $nombre, $apellido_paterno, $apellido_materno, $login, $rol)) {
 				redirect(base_url("usuario/usuarios"));
@@ -137,6 +141,55 @@ class Usuario extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_usuario($id);
+		}
+	}
+
+	public function modificar_password_usuario($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador") {
+			if ($id) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_password_usuario_bd();
+				} else {
+					$this->cargar_vista_modificar_password($id);
+				}
+			} else {
+				redirect(base_url("usuario/usuarios"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_modificar_password($id) {
+		$titulo = "Modificar password";
+		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
+
+		if ($usuario) {
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["usuario"] = $usuario;
+
+			$this->load->view("usuario/formulario_usuario", $datos);
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
+	}
+
+	private function modificar_password_usuario_bd() {
+		$id = $this->input->post("id");
+		$password = $this->input->post("password");
+
+		if ($this->usuario_validacion->validar(array("id", "password", "confirmacion_password"))) {
+			if ($this->Modelo_usuario->update_password_usuario($id, $password)) {
+				redirect(base_url("usuario/usuarios"));
+			} else {
+				redirect(base_url("usuario/modificar_password_usuario/" . $id), "refresh");
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_password_usuario($id);
 		}
 	}
 

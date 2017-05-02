@@ -11,6 +11,9 @@ switch ($accion) {
 	case "modificar_usuario":
 		$url = base_url("usuario/modificar_usuario/" . $usuario->id);
 		break;
+	case "modificar_password_usuario":
+		$url = base_url("usuario/modificar_password_usuario/" . $usuario->id);
+		break;
 }
 ?>
 
@@ -20,73 +23,87 @@ switch ($accion) {
 
 	<form action="<?= $url ?>" method="post">
 
-		<div class="form-group">
+		<?php if ($accion == "registrar_usuario" || $accion == "modificar_usuario"): ?>
 
-			<label>Nombre</label>
+			<div class="form-group">
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
+				<label>Nombre</label>
 
-			<?= form_error("nombre") ?>
+				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
 
-		</div>
+				<?= form_error("nombre") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Apellido paterno</label>
+			<div class="form-group">
 
-			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
+				<label>Apellido paterno</label>
 
-			<?= form_error("apellido_paterno") ?>
+				<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
 
-		</div>
+				<?= form_error("apellido_paterno") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Apellido materno</label>
+			<div class="form-group">
 
-			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
+				<label>Apellido materno</label>
 
-			<?= form_error("apellido_materno") ?>
+				<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
 
-		</div>
+				<?= form_error("apellido_materno") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Rol</label>
+			<div class="form-group">
 
-			<select id="rol" name="rol" class="form-control">
+				<label>Rol</label>
 
-				<?php if (isset($roles) && $roles): ?>
+				<select id="rol" name="rol" class="form-control">
 
-					<?php foreach ($roles as $rol): ?>
+					<?php if (isset($roles) && $roles): ?>
 
-						<option value="<?= $rol->id ?>"  <?php if ($accion == "modificar_usuario" && $rol->id == $usuario->id_rol): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
+						<?php foreach ($roles as $rol): ?>
 
-					<?php endforeach; ?>
+							<option value="<?= $rol->id ?>"  <?php if ($accion == "modificar_usuario" && $rol->id == $usuario->id_rol): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
+
+						<?php endforeach; ?>
+
+					<?php endif; ?>
+
+				</select>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Nombre de usuario</label>
+
+				<input type="text" id="login" name="login" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
+
+				<?= form_error("login") ?>
+
+				<?php if ($this->session->flashdata("existe")): ?>
+
+					<label class="text-danger"><?= $this->session->flashdata("existe") ?></label>
 
 				<?php endif; ?>
 
-			</select>
+			</div>
 
-		</div>
+		<?php endif; ?>
 
-		<div class="form-group">
+		<?php if ($accion == "modificar_password_usuario"): ?>
 
-			<label>Nombre de usuario</label>
+			<div>
 
-			<input type="text" id="login" name="login" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
+				<p><label>Nombre:</label> <?= $usuario->nombre_completo ?></p>
 
-			<?= form_error("login") ?>
+			</div>
 
-			<?php if ($this->session->flashdata("existe")): ?>
+		<?php endif; ?>
 
-				<label class="text-danger"><?= $this->session->flashdata("existe") ?></label>
-
-			<?php endif; ?>
-
-		</div>
-
-		<?php if ($accion == "registrar_usuario"): ?>
+		<?php if ($accion == "registrar_usuario" || $accion == "modificar_password_usuario"): ?>
 
 			<div class="form-group">
 
@@ -110,7 +127,7 @@ switch ($accion) {
 
 		<?php endif; ?>
 
-		<?php if ($accion == "modificar_usuario"): ?>
+		<?php if ($accion == "modificar_usuario" || $accion == "modificar_password_usuario"): ?>
 
 			<input type="hidden" id="id" name="id" value="<?= $usuario->id ?>">
 

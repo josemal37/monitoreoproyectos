@@ -96,6 +96,10 @@ class Modelo_usuario extends MY_Model {
 			$query = $this->db->get();
 
 			$usuario = $this->return_row($query);
+
+			if ($usuario) {
+				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+			}
 		}
 
 		return $usuario;
@@ -113,6 +117,8 @@ class Modelo_usuario extends MY_Model {
 		$password = sha1($password);
 
 		if ($nombre != "" && $login != "" && $password != "" && $id_rol) {
+			$this->db->trans_start();
+
 			if (!$this->existe_login($login)) {
 				$datos = array(
 					self::NOMBRE => $nombre,
@@ -129,6 +135,8 @@ class Modelo_usuario extends MY_Model {
 			} else {
 				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
 			}
+
+			$this->db->trans_complete();
 		}
 
 		return $insertado;
@@ -138,6 +146,8 @@ class Modelo_usuario extends MY_Model {
 		$actualizado = FALSE;
 
 		if ($id && $nombre != "" && $login != "" && $id_rol) {
+			$this->db->trans_start();
+
 			if (!$this->select_usuario_por_login($login, $id)) {
 				$datos = array(
 					self::NOMBRE => $nombre,
@@ -155,6 +165,32 @@ class Modelo_usuario extends MY_Model {
 			} else {
 				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
 			}
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
+	}
+
+	public function update_password_usuario($id = FALSE, $password = "") {
+		$actualizado = FALSE;
+		
+		$password = sha1($password);
+
+		if ($id && $password != "") {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::PASSWORD => $password
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
 		}
 
 		return $actualizado;
