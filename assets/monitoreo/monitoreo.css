@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/*
+Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
+*/
+/* 
+    Created on : 02-05-2017, 02:45:15 PM
+    Author     : Jose
+*/
+.proyectos .proyecto {
+  border: 1px solid;
+  border-color: #737373;
+  margin-bottom: 20px; }
+  .proyectos .proyecto .titulo {
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: #737373; }
+    .proyectos .proyecto .titulo label {
+      margin: 0; }
+  .proyectos .proyecto .objetivo {
+    text-align: justify;
+    border-bottom: 1px solid;
+    border-color: #737373;
+    padding: 5px; }
+  .proyectos .proyecto .fecha {
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: #737373; }
+    .proyectos .proyecto .fecha p {
+      margin: 0; }
+  .proyectos .proyecto .acciones {
+    text-align: center;
+    padding: 5px; }
+
+/*# sourceMappingURL=monitoreo.css.map */

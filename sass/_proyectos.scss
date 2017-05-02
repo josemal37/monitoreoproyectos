@@ -1,0 +1,33 @@
+.proyectos {
+    .proyecto {
+        border: 1px solid;
+        border-color: #737373;
+        margin-bottom: 20px;
+        .titulo {
+            text-align: center;
+            border-bottom: 1px solid;
+            border-color: #737373;
+            label {
+                margin: 0;
+            }
+        }
+        .objetivo {
+            text-align: justify;
+            border-bottom: 1px solid;
+            border-color: #737373;
+            padding: 5px;
+        }
+        .fecha {
+            text-align: center;
+            border-bottom: 1px solid;
+            border-color: #737373;
+            p {
+                margin: 0;
+            }
+        }
+        .acciones {
+            text-align: center;
+            padding: 5px;
+        }
+    }
+}
