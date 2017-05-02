@@ -24,7 +24,7 @@ switch ($accion) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -34,7 +34,7 @@ switch ($accion) {
 
 			<label>Apellido paterno</label>
 
-			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
+			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
 
 			<?= form_error("apellido_paterno") ?>
 
@@ -44,7 +44,7 @@ switch ($accion) {
 
 			<label>Apellido materno</label>
 
-			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
+			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
 
 			<?= form_error("apellido_materno") ?>
 
@@ -60,7 +60,7 @@ switch ($accion) {
 
 					<?php foreach ($roles as $rol): ?>
 
-						<option value="<?= $rol->id ?>"  <?php if ($accion = "modificar_usuario" && $rol->id == $usuario->id_rol): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
+						<option value="<?= $rol->id ?>"  <?php if ($accion == "modificar_usuario" && $rol->id == $usuario->id_rol): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
 
 					<?php endforeach; ?>
 
@@ -74,7 +74,7 @@ switch ($accion) {
 
 			<label>Nombre de usuario</label>
 
-			<input type="text" id="login" name="login" class="form-control" <?php if ($accion = "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
+			<input type="text" id="login" name="login" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
 
 			<?= form_error("login") ?>
 
