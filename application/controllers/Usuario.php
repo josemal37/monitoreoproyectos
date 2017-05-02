@@ -162,21 +162,6 @@ class Usuario extends CI_Controller {
 		}
 	}
 
-	private function cargar_vista_modificar_password($id) {
-		$titulo = "Modificar password";
-		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
-
-		if ($usuario) {
-			$datos = array();
-			$datos["titulo"] = $titulo;
-			$datos["usuario"] = $usuario;
-
-			$this->load->view("usuario/formulario_usuario", $datos);
-		} else {
-			redirect(base_url("usuario/usuarios"));
-		}
-	}
-
 	private function modificar_password_usuario_bd() {
 		$id = $this->input->post("id");
 		$password = $this->input->post("password");
@@ -190,6 +175,66 @@ class Usuario extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_password_usuario($id);
+		}
+	}
+
+	public function modificar_password() {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador" || $rol == "empleado") {
+			if (isset($_POST["submit"])) {
+				$this->modificar_password_bd();
+			} else {
+				$id = $this->session->userdata("id");
+				$this->cargar_vista_modificar_password($id);
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function modificar_password_bd() {
+		$id = $this->session->userdata("id");
+		$password = $this->input->post("password");
+		$password_anterior = $this->input->post("password_anterior");
+
+		$password_anterior_valido = FALSE;
+
+		$usuario_de_id = $this->Modelo_usuario->select_usuario_por_id($id);
+
+		if ($usuario_de_id) {
+			$password_anterior_valido = $usuario_de_id->password == sha1($password_anterior);
+		}
+
+		if ($password_anterior_valido) {
+			if ($this->usuario_validacion->validar(array("password", "confirmacion_password"))) {
+				if ($this->Modelo_usuario->update_password_usuario($id, $password)) {
+					redirect(base_url());
+				} else {
+					redirect(base_url("usuario/modificar_password"), "refresh");
+				}
+			} else {
+				unset($_POST["submit"]);
+				$this->modificar_password_usuario($id);
+			}
+		} else {
+			$this->session->set_flashdata("password_anterior", "La contraseña introducida no coincide.");
+			redirect(base_url("usuario/modificar_password"), "refresh");
+		}
+	}
+
+	private function cargar_vista_modificar_password($id) {
+		$titulo = "Modificar password";
+		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
+
+		if ($usuario) {
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["usuario"] = $usuario;
+
+			$this->load->view("usuario/formulario_usuario", $datos);
+		} else {
+			redirect(base_url("usuario/usuarios"));
 		}
 	}
 

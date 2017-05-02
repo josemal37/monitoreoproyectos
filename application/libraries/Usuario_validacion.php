@@ -63,7 +63,7 @@ class Usuario_validacion extends Validacion {
 		),
 		"confirmacion_password" => array(
 			"field" => "confirmacion_password",
-			"label" => "confirmacion_password",
+			"label" => "confirmación password",
 			"rules" => array(
 				"required",
 				"min_length[5]",

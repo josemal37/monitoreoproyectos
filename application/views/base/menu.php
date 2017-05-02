@@ -70,7 +70,7 @@
 
 					<ul class="dropdown-menu forAnimate" role="menu">
 
-                        <li><a href="#">Modificar contraseña<span class="glyphicon glyphicon-pencil pull-right"></span></a></li>
+                        <li><a href="<?= base_url("usuario/modificar_password") ?>">Modificar contraseña<span class="glyphicon glyphicon-pencil pull-right"></span></a></li>
 
                     </ul>
 

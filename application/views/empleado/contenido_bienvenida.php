@@ -8,7 +8,7 @@
 
 	</div>
 
-	<div class="container">
+	<div>
 
 		<p>Bienvenido al sistema</p>
 

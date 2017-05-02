@@ -57,7 +57,7 @@ class Login extends CI_Controller {
 		if ($this->formulario_enviado()) {
 			if ($this->login_validacion->validar(array("login", "password"))) {
 				$login = $this->input->post("login");
-				$password = sha1($this->input->post("password"));
+				$password = $this->input->post("password");
 
 				$usuario = $this->Modelo_usuario->select_usuario_por_login_password($login, $password);
 

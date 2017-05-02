@@ -66,6 +66,8 @@ class Modelo_usuario extends MY_Model {
 		$usuario = FALSE;
 
 		if ($login != "" && $password != "") {
+			$password = sha1($password);
+
 			$this->set_select_usuario_y_rol();
 			$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::LOGIN . "` = '" . $login . "'", NULL, FALSE);
 			$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::PASSWORD . "` = '" . $password . "'", NULL, FALSE);
@@ -114,9 +116,9 @@ class Modelo_usuario extends MY_Model {
 	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $password = "", $id_rol = FALSE) {
 		$insertado = FALSE;
 
-		$password = sha1($password);
-
 		if ($nombre != "" && $login != "" && $password != "" && $id_rol) {
+			$password = sha1($password);
+
 			$this->db->trans_start();
 
 			if (!$this->existe_login($login)) {
@@ -175,9 +177,9 @@ class Modelo_usuario extends MY_Model {
 	public function update_password_usuario($id = FALSE, $password = "") {
 		$actualizado = FALSE;
 
-		$password = sha1($password);
-
 		if ($id && $password != "") {
+			$password = sha1($password);
+
 			$this->db->trans_start();
 
 			$datos = array(

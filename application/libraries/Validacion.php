@@ -60,7 +60,7 @@ abstract class Validacion {
 	}
 
 	private function set_delimitadores_ci() {
-		$this->ci->form_validation->set_error_delimiters('<label class="control-label">', '</label>');
+		$this->ci->form_validation->set_error_delimiters('<label class="text-danger">', '</label>');
 	}
 
 }

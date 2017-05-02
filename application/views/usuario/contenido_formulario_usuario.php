@@ -103,11 +103,41 @@ switch ($accion) {
 
 		<?php endif; ?>
 
-		<?php if ($accion == "registrar_usuario" || $accion == "modificar_password_usuario"): ?>
+		<?php if ($accion == "modificar_password"): ?>
 
 			<div class="form-group">
 
-				<label>Contraseña</label>
+				<label>Contraseña anterior</label>
+
+				<input type="password" id="password_anterior" name="password_anterior" class="form-control">
+
+				<?= form_error("password_anterior") ?>
+
+				<?php if ($this->session->flashdata("password_anterior")): ?>
+
+					<label class="text-danger"><?= $this->session->flashdata("password_anterior") ?></label>
+
+				<?php endif; ?>
+
+			</div>
+
+		<?php endif; ?>
+
+		<?php if ($accion == "registrar_usuario" || $accion == "modificar_password_usuario" || $accion == "modificar_password"): ?>
+
+			<div class="form-group">
+
+				<?php if ($accion == "registrar_usuario" || $accion == "modificar_password_usuario"): ?>
+
+					<label>Contraseña</label>
+
+				<?php endif; ?>
+
+				<?php if ($accion == "modificar_password"): ?>
+
+					<label>Contraseña nueva</label>
+
+				<?php endif; ?>
 
 				<input type="password" id="password" name="password" class="form-control">
 
