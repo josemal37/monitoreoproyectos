@@ -14,7 +14,7 @@ class Marco_logico extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->Model(array("Modelo_proyecto", "Modelo_rol_proyecto"));
+		$this->load->Model(array("Modelo_proyecto", "Modelo_rol_proyecto", "Modelo_resultado"));
 		$this->load->database("default");
 	}
 
@@ -38,13 +38,20 @@ class Marco_logico extends CI_Controller {
 
 	private function cargar_vista_marco_logico($id_proyecto) {
 		$titulo = "Marco lógico";
-		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto);
 
-		$datos = array();
-		$datos["titulo"] = $titulo;
-		$datos["proyecto"] = $proyecto;
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
 
-		$this->load->view("marco_logico/marco_logico", $datos);
+		if ($proyecto) {
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+
+			$this->load->view("marco_logico/marco_logico", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
 	}
 
 }

@@ -74,6 +74,73 @@ class Modelo_proyecto extends MY_Model {
 		return $proyecto;
 	}
 
+	public function select_marco_logico_proyecto($id_proyecto = FALSE, $id_usuario = FALSE, $id_rol_proyecto = FALSE) {
+		$proyecto = FALSE;
+
+		if ($id_proyecto) {
+			$this->set_select_proyecto_con_usuario_y_rol();
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_proyecto);
+
+			if ($id_usuario) {
+				$this->db->where(self::ID_USUARIO_PU, $id_usuario);
+			}
+
+			if ($id_rol_proyecto) {
+				$this->db->where(self::ID_ROL_PROYECTO_PU, $id_rol_proyecto);
+			}
+			
+			$this->set_select_resultados();
+			
+			$query = $this->db->get();
+
+			$columnas_proyecto = $this->return_result($query);
+			
+			$proyecto = $this->obtener_objeto_proyecto_de_columnas($columnas_proyecto);
+		}
+
+		return $proyecto;
+	}
+	
+	private function obtener_objeto_proyecto_de_columnas($columnas_proyecto) {
+		$proyecto = FALSE;
+		
+		if (is_array($columnas_proyecto) && sizeof($columnas_proyecto) > 0) {
+			$proyecto = new stdClass();
+			
+			//datos generales
+			$columna = $columnas_proyecto[0];
+			
+			$proyecto->id = $columna->id;
+			$proyecto->nombre = $columna->nombre;
+			$proyecto->objetivo = $columna->objetivo;
+			$proyecto->fecha_inicio = $columna->fecha_inicio;
+			$proyecto->fecha_fin = $columna->fecha_fin;
+			
+			$proyecto->usuario = new stdClass();
+			$proyecto->usuario->nombre_rol_proyecto = $columna->nombre_rol_proyecto;
+			
+			//resultados
+			$proyecto->resultados = $this->obtener_resultados_de_proyecto($columnas_proyecto);
+		}
+		
+		return $proyecto;
+	}
+	
+	private function obtener_resultados_de_proyecto($columnas_proyecto) {
+		$resultados = array();
+		
+		foreach($columnas_proyecto as $columna) {
+			if (isset($columna->id_resultado)) {
+				$resultado = new stdClass();
+				$resultado->id = $columna->id_resultado;
+				$resultado->nombre = $columna->nombre_resultado;
+				$resultados[] = $resultado;
+			}
+		}
+		
+		return $resultados;
+	}
+
 	private function set_select_proyecto_con_usuario_y_rol() {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->select(self::COLUMNAS_SELECT_PROYECTO_USUARIO);
@@ -81,6 +148,11 @@ class Modelo_proyecto extends MY_Model {
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->join(self::NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 		$this->db->join(self::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_ROL_PROYECTO_PU, "left");
+	}
+	
+	private function set_select_resultados() {
+		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_PARA_PROYECTO);
+		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_proyecto($nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $coordinador = FALSE) {
