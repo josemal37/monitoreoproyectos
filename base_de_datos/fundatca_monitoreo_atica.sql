@@ -11,7 +11,8 @@ CREATE TABLE `proyecto` (
   `nombre` VARCHAR(1024)  NULL  ,
   `objetivo` TEXT  NULL  ,
   `fecha_inicio` DATE  NULL  ,
-  `fecha_fin` DATE  NULL    ,
+  `fecha_fin` DATE  NULL  ,
+  `finalizado` BOOL  NULL    ,
 PRIMARY KEY(`id`))
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
@@ -31,8 +32,8 @@ CREATE TABLE `usuario` (
   `nombre` VARCHAR(1024)  NULL  ,
   `apellido_paterno` VARCHAR(1024)  NULL  ,
   `apellido_materno` VARCHAR(1024)  NULL  ,
-  `login` VARCHAR(1024) BINARY  NULL  ,
-  `passwd` VARCHAR(1024) BINARY  NULL    ,
+  `login` VARCHAR(1024)  NULL  ,
+  `passwd` VARCHAR(1024)  NULL    ,
 PRIMARY KEY(`id`)  ,
 INDEX `usuario_FKIndex1`(`id_rol_usuario`),
   FOREIGN KEY(`id_rol_usuario`)
@@ -51,8 +52,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `resultado_FKIndex1`(`id_proyecto`),
   FOREIGN KEY(`id_proyecto`)
     REFERENCES `proyecto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -65,8 +66,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `efecto_FKIndex1`(`id_resultado`),
   FOREIGN KEY(`id_resultado`)
     REFERENCES `resultado`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -79,8 +80,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `indicador_impacto_FKIndex1`(`id_proyecto`),
   FOREIGN KEY(`id_proyecto`)
     REFERENCES `proyecto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -96,8 +97,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `actividad_FKIndex1`(`id_proyecto`),
   FOREIGN KEY(`id_proyecto`)
     REFERENCES `proyecto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -127,7 +128,7 @@ INDEX `proyecto_usuario_FKIndex3`(`id_rol_proyecto`),
   FOREIGN KEY(`id_usuario`)
     REFERENCES `usuario`(`id`)
       ON DELETE CASCADE
-      ON UPDATE NO ACTION,
+      ON UPDATE CASCADE,
   FOREIGN KEY(`id_proyecto`)
     REFERENCES `proyecto`(`id`)
       ON DELETE CASCADE
@@ -148,8 +149,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `producto_FKIndex1`(`id_efecto`),
   FOREIGN KEY(`id_efecto`)
     REFERENCES `efecto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -163,8 +164,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `resultado_clave_FKIndex1`(`id_resultado`),
   FOREIGN KEY(`id_resultado`)
     REFERENCES `resultado`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -187,7 +188,7 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 CREATE TABLE `meta_impacto` (
   `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
   `id_indicador_impacto` INTEGER UNSIGNED  NOT NULL  ,
-  `cantidad` INTEGER UNSIGNED  NULL  ,
+  `cantidad` INTEGER UNSIGNED  NULL   ,
   `unidad` VARCHAR(1024)  NULL    ,
 PRIMARY KEY(`id`)  ,
 INDEX `meta_impacto_FKIndex1`(`id_indicador_impacto`),
@@ -207,8 +208,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `avance_FKIndex1`(`id_actividad`),
   FOREIGN KEY(`id_actividad`)
     REFERENCES `actividad`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -221,8 +222,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `indicador_efecto_FKIndex1`(`id_efecto`),
   FOREIGN KEY(`id_efecto`)
     REFERENCES `efecto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -235,8 +236,8 @@ PRIMARY KEY(`id`)  ,
 INDEX `indicador_producto_FKIndex1`(`id_producto`),
   FOREIGN KEY(`id_producto`)
     REFERENCES `producto`(`id`)
-      ON DELETE RESTRICT
-      ON UPDATE RESTRICT)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
@@ -279,7 +280,7 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 CREATE TABLE `indicador_efecto_impacto` (
   `id_indicador_efecto` INTEGER UNSIGNED  NOT NULL  ,
   `id_indicador_impacto` INTEGER UNSIGNED  NOT NULL  ,
-  `porcentaje` DOUBLE  NOT NULL    ,
+  `porcentaje` DOUBLE  NOT NULL   ,
 INDEX `indicador_efecto_impacto_FKIndex1`(`id_indicador_impacto`)  ,
 INDEX `indicador_efecto_impacto_FKIndex2`(`id_indicador_efecto`),
   FOREIGN KEY(`id_indicador_impacto`)
