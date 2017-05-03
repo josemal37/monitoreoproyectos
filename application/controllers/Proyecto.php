@@ -120,14 +120,14 @@ class Proyecto extends CI_Controller {
 			redirect(base_url("proyecto/proyectos"));
 		}
 	}
-	
+
 	private function modificar_proyecto_bd() {
 		$id = $this->input->post("id");
 		$nombre = $this->input->post("nombre");
 		$objetivo = $this->input->post("objetivo");
 		$fecha_inicio = $this->input->post("fecha_inicio");
 		$fecha_fin = $this->input->post("fecha_fin");
-		
+
 		if ($this->proyecto_validacion->validar(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"))) {
 			if ($this->Modelo_proyecto->update_proyecto($id, $nombre, $objetivo, $fecha_inicio, $fecha_fin)) {
 				redirect(base_url("proyecto/proyectos"));
@@ -137,6 +137,36 @@ class Proyecto extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_proyecto($id);
+		}
+	}
+
+	public function eliminar_proyecto($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id) {
+				$this->eliminar_proyecto_bd($id);
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function eliminar_proyecto_bd($id) {
+		$id_usuario = $this->session->userdata("id");
+		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
+		
+		if ($proyecto) {
+			if ($this->Modelo_proyecto->delete_proyecto($id)) {
+				redirect(base_url("proyecto/proyectos"));
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"), "refresh");
 		}
 	}
 
