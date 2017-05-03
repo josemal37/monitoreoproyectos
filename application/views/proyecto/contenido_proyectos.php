@@ -38,7 +38,7 @@
 
 								<a href="<?= base_url("proyecto/actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Actividades</a>
 
-								<a href="<?= base_url("proyecto/marco_logico/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Marco lógico</a>
+								<a href="<?= base_url("marco_logico/ver_marco_logico/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Marco lógico</a>
 
 								<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
 
