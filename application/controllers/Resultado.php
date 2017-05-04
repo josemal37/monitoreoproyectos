@@ -16,7 +16,7 @@ class Resultado extends CI_Controller {
 
 		$this->load->model(array("Modelo_resultado", "Modelo_proyecto", "Modelo_rol_proyecto"));
 
-		$this->load->library(array("Resultado_validacion"));
+		$this->load->library(array("Item_validacion"));
 
 		$this->load->database("default");
 	}
@@ -57,7 +57,7 @@ class Resultado extends CI_Controller {
 	private function registrar_resultado_bd($id_proyecto) {
 		$nombre = $this->input->post("nombre");
 
-		if ($this->resultado_validacion->validar(array("nombre"))) {
+		if ($this->item_validacion->validar(array("nombre"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			if ($proyecto) {
 				if ($this->Modelo_resultado->insert_resultado($id_proyecto, $nombre)) {
@@ -112,7 +112,7 @@ class Resultado extends CI_Controller {
 	private function modificar_resultado_bd($id_proyecto, $id_resultado) {
 		$nombre = $this->input->post("nombre");
 
-		if ($this->resultado_validacion->validar(array("nombre"))) {
+		if ($this->item_validacion->validar(array("nombre"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$resultado = $this->get_resultado_de_coordinador($id_resultado, $id_proyecto);
 			if ($proyecto && $resultado) {

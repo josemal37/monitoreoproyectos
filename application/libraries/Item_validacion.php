@@ -5,13 +5,13 @@
  */
 
 /**
- * Description of Resultado_validacion
+ * Description of Item_validacion
  *
  * @author Jose
  */
 require_once 'Validacion.php';
 
-class Resultado_validacion extends Validacion {
+class Item_validacion extends Validacion {
 
 	protected $reglas_validacion_ci = array(
 		"id" => array(
@@ -38,6 +38,13 @@ class Resultado_validacion extends Validacion {
 			"rules" => array(
 				"required",
 				"min_length[1]"
+			)
+		),
+		"descripcion" => array(
+			"field" => "descripcion",
+			"label" => "descripción",
+			"rules" => array(
+				"min_length[1]",
 			)
 		)
 	);
