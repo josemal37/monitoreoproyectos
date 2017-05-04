@@ -9,7 +9,9 @@
  *
  * @author Jose
  */
-class Resultado extends CI_Controller {
+require_once 'Coordinador.php';
+
+class Resultado extends Coordinador {
 
 	public function __construct() {
 		parent::__construct();
@@ -157,20 +159,6 @@ class Resultado extends CI_Controller {
 		} else {
 			redirect(base_url("proyecto/proyectos"));
 		}
-	}
-
-	private function get_proyecto_de_coordinador($id_proyecto) {
-		$id_usuario = $this->session->userdata("id");
-		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
-		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario, $id_rol_coordinador);
-
-		return $proyecto;
-	}
-
-	private function get_resultado_de_coordinador($id_resultado, $id_proyecto) {
-		$resultado = $this->Modelo_resultado->select_resultado_por_id($id_resultado, $id_proyecto);
-
-		return $resultado;
 	}
 
 }
