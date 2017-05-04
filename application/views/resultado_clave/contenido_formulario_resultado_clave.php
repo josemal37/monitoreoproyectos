@@ -27,7 +27,7 @@ switch ($accion) {
 
 			<label>Descripción</label>
 
-			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar_resultado"): ?><?= $resultado_clave->descripcion ?><?php endif; ?></textarea>
+			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar_resultado_clave"): ?><?= $resultado_clave->descripcion ?><?php endif; ?></textarea>
 
 			<?= form_error("descripcion") ?>
 

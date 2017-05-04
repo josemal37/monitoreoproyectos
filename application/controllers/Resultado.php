@@ -116,7 +116,7 @@ class Resultado extends Coordinador {
 
 		if ($this->item_validacion->validar(array("nombre"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-			$resultado = $this->get_resultado_de_coordinador($id_resultado, $id_proyecto);
+			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 			if ($proyecto && $resultado) {
 				if ($this->Modelo_resultado->update_resultado($id_resultado, $nombre)) {
 					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
@@ -148,7 +148,7 @@ class Resultado extends Coordinador {
 
 	private function eliminar_resultado_bd($id_proyecto, $id_resultado) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-		$resultado = $this->get_resultado_de_coordinador($id_resultado, $id_proyecto);
+		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		if ($proyecto && $resultado) {
 			if ($this->Modelo_resultado->delete_resultado($id_resultado)) {

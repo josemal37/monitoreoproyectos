@@ -22,6 +22,25 @@ class Modelo_resultado_clave extends MY_Model {
 		parent::__construct();
 	}
 
+	public function select_resultado_clave_de_proyecto($id_resultado_clave = FALSE, $id_proyecto = FALSE) {
+		$resultado_clave = FALSE;
+
+		if ($id_resultado_clave && $id_proyecto) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_resultado_clave);
+
+			$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
+			$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
+
+			$query = $this->db->get();
+
+			$resultado_clave = $this->return_row($query);
+		}
+
+		return $resultado_clave;
+	}
+
 	public function select_resultados_clave_de_resultado($id_resultado = FALSE) {
 		$resultados_clave = FALSE;
 
@@ -59,6 +78,28 @@ class Modelo_resultado_clave extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function update_resultado_clave($id = FALSE, $descripcion = "") {
+		$actualizado = FALSE;
+
+		if ($id && $descripcion != "") {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::DESCRIPCION => $descripcion
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
 	}
 
 }

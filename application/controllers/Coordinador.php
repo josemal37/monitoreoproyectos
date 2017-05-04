@@ -27,10 +27,16 @@ abstract class Coordinador extends CI_Controller {
 		return $proyecto;
 	}
 
-	protected function get_resultado_de_coordinador($id_resultado, $id_proyecto) {
+	protected function get_resultado_de_proyecto($id_resultado, $id_proyecto) {
 		$resultado = $this->Modelo_resultado->select_resultado_por_id($id_resultado, $id_proyecto);
 
 		return $resultado;
+	}
+	
+	protected function ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto) {
+		$resultado_clave = $this->Modelo_resultado_clave->select_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
+		
+		return $resultado_clave;
 	}
 
 }
