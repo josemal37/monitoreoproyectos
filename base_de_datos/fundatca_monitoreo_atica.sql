@@ -156,7 +156,7 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 CREATE TABLE `resultado_clave` (
-  `id` INTEGER UNSIGNED  NOT NULL  ,
+  `id` INTEGER UNSIGNED  NOT NULL  AUTO_INCREMENT,
   `id_resultado` INTEGER UNSIGNED  NOT NULL  ,
   `descripcion` TEXT  NULL  ,
   `conseguido` BOOL  NULL    ,
