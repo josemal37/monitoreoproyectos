@@ -101,5 +101,21 @@ class Modelo_resultado_clave extends MY_Model {
 
 		return $actualizado;
 	}
+	
+	public function delete_resultado_clave($id) {
+		$eliminado = FALSE;
+		
+		if ($id) {
+			$this->db->trans_start();
+			
+			$this->db->where(self::ID, $id);
+			
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+			
+			$this->db->trans_complete();
+		}
+		
+		return $eliminado;
+	}
 
 }

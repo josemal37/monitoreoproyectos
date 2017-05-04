@@ -136,5 +136,34 @@ class Resultado_clave extends Coordinador {
 			$this->modificar_resultado_clave($id_proyecto, $id_resultado_clave);
 		}
 	}
+	
+	public function eliminar_resultado_clave($id_proyecto = FALSE, $id_resultado_clave = FALSE) {
+		$rol = $this->session->userdata("rol");
+		
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_resultado_clave) {
+				$this->eliminar_resultado_clave_bd($id_proyecto, $id_resultado_clave);
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+	
+	private function eliminar_resultado_clave_bd($id_proyecto, $id_resultado_clave) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$resultado_clave = $this->ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
+		
+		if ($proyecto && $resultado_clave) {
+			if ($this->Modelo_resultado_clave->delete_resultado_clave($id_resultado_clave)) {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+			} else {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
 
 }
