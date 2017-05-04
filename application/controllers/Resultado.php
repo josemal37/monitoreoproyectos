@@ -35,7 +35,7 @@ class Resultado extends CI_Controller {
 				redirect(base_url("proyecto/proyectos"));
 			}
 		} else {
-			redirect(base_url("proyecto/proyectos"));
+			redirect(base_url());
 		}
 	}
 
@@ -88,7 +88,7 @@ class Resultado extends CI_Controller {
 				redirect(base_url("proyecto/proyectos"));
 			}
 		} else {
-			redirect(base_url("proyecto/proyectos"));
+			redirect(base_url());
 		}
 	}
 
@@ -140,7 +140,7 @@ class Resultado extends CI_Controller {
 				redirect("proyecto/proyectos");
 			}
 		} else {
-			redirect("proyecto/proyectos");
+			redirect();
 		}
 	}
 
