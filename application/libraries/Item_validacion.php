@@ -44,7 +44,8 @@ class Item_validacion extends Validacion {
 			"field" => "descripcion",
 			"label" => "descripción",
 			"rules" => array(
-				"min_length[1]",
+				"required",
+				"min_length[1]"
 			)
 		)
 	);

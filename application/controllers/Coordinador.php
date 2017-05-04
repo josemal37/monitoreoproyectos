@@ -14,7 +14,7 @@ abstract class Coordinador extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->load->model(array("Modelo_resultado", "Modelo_proyecto", "Modelo_rol_proyecto"));
+		$this->load->model(array("Modelo_proyecto", "Modelo_resultado", "Modelo_resultado_clave","Modelo_rol_proyecto"));
 
 		$this->load->database("default");
 	}

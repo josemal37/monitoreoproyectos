@@ -134,11 +134,18 @@ class Modelo_proyecto extends MY_Model {
 				$resultado = new stdClass();
 				$resultado->id = $columna->id_resultado;
 				$resultado->nombre = $columna->nombre_resultado;
+				$resultado->resultados_clave = $this->obtener_resultados_clave_de_resultado($resultado->id);
 				$resultados[] = $resultado;
 			}
 		}
 		
 		return $resultados;
+	}
+	
+	private function obtener_resultados_clave_de_resultado($id_resultado) {
+		$resultados_clave = $this->Modelo_resultado_clave->select_resultados_clave_de_resultado($id_resultado);
+		
+		return $resultados_clave;
 	}
 
 	private function set_select_proyecto_con_usuario_y_rol() {
