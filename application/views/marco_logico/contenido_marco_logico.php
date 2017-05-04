@@ -62,7 +62,19 @@
 
 					<div>
 
-						<h3><?= $resultado->nombre ?> <?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?><a href="<?= base_url("resultado/modificar_resultado/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a> <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a><?php endif; ?></h3>
+						<h3>
+
+							<?= $resultado->nombre ?>
+
+							<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+								<a href="<?= base_url("resultado/modificar_resultado/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+								<a href="<?= base_url("resultado/eliminar_resultado/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+							<?php endif; ?>
+
+						</h3>
 
 						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 

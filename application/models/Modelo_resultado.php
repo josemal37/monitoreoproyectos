@@ -70,6 +70,8 @@ class Modelo_resultado extends MY_Model {
 		$actualizado = FALSE;
 
 		if ($id && $nombre != "") {
+			$this->db->trans_start();
+
 			$datos = array(
 				self::NOMBRE => $nombre
 			);
@@ -79,9 +81,27 @@ class Modelo_resultado extends MY_Model {
 			$this->db->where(self::ID, $id);
 
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
 		}
 
 		return $actualizado;
+	}
+
+	public function delete_resultado($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }

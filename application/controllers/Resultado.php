@@ -130,6 +130,35 @@ class Resultado extends CI_Controller {
 		}
 	}
 
+	public function eliminar_resultado($id_proyecto = FALSE, $id_resultado = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_resultado) {
+				$this->eliminar_resultado_bd($id_proyecto, $id_resultado);
+			} else {
+				redirect("proyecto/proyectos");
+			}
+		} else {
+			redirect("proyecto/proyectos");
+		}
+	}
+
+	private function eliminar_resultado_bd($id_proyecto, $id_resultado) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$resultado = $this->get_resultado_de_coordinador($id_resultado, $id_proyecto);
+
+		if ($proyecto && $resultado) {
+			if ($this->Modelo_resultado->delete_resultado($id_resultado)) {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+			} else {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
 	private function get_proyecto_de_coordinador($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
 		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
