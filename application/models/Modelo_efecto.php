@@ -31,7 +31,7 @@ class Modelo_efecto extends MY_Model {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
-			
+
 			if ($id_proyecto) {
 				$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
 				$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
@@ -79,13 +79,29 @@ class Modelo_efecto extends MY_Model {
 			$this->db->set($datos);
 
 			$this->db->where(self::ID, $id);
-			
+
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
 
 			$this->db->trans_complete();
 		}
 
 		return $actualizado;
+	}
+
+	public function delete_efecto($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }
