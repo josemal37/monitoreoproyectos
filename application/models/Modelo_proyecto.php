@@ -100,6 +100,27 @@ class Modelo_proyecto extends MY_Model {
 
 		return $proyecto;
 	}
+
+	private function set_select_proyecto_con_usuario_y_rol() {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->select(self::COLUMNAS_SELECT_PROYECTO_USUARIO);
+		$this->db->select(self::COLUMNAS_SELECT_ROL_PROYECTO);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->join(self::NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->join(self::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_ROL_PROYECTO_PU, "left");
+	}
+	
+	private function set_select_resultados() {
+		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_PARA_PROYECTO);
+		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		
+		$this->set_select_efectos();
+	}
+	
+	private function set_select_efectos() {
+		$this->db->select(Modelo_efecto::COLUMNAS_SELECT_PARA_PROYECTO);
+		$this->db->join(Modelo_efecto::NOMBRE_TABLA, Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO . " = " . Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID, "left");
+	}
 	
 	private function obtener_objeto_proyecto_de_columnas($columnas_proyecto) {
 		$proyecto = FALSE;
@@ -135,6 +156,7 @@ class Modelo_proyecto extends MY_Model {
 				$resultado->id = $columna->id_resultado;
 				$resultado->nombre = $columna->nombre_resultado;
 				$resultado->resultados_clave = $this->obtener_resultados_clave_de_resultado($resultado->id);
+				$resultado->efectos = $this->obtener_efectos_de_resultado($resultado->id, $columnas_proyecto);
 				$resultados[] = $resultado;
 			}
 		}
@@ -142,24 +164,30 @@ class Modelo_proyecto extends MY_Model {
 		return $resultados;
 	}
 	
+	private function obtener_efectos_de_resultado($id_resultado, $columnas_proyecto) {
+		$efectos = array();
+		
+		foreach($columnas_proyecto as $columna) {
+			if (isset($columna->id_resultado) && isset($columna->id_efecto)) {
+				if ($id_resultado == $columna->id_resultado) {
+					$efecto = new stdClass();
+					
+					$efecto->id = $columna->id_efecto;
+					$efecto->descripcion = $columna->descripcion_efecto;
+					
+					$efectos[] = $efecto;
+				}
+			}
+		}
+		
+		return $efectos;
+	}
+
+
 	private function obtener_resultados_clave_de_resultado($id_resultado) {
 		$resultados_clave = $this->Modelo_resultado_clave->select_resultados_clave_de_resultado($id_resultado);
 		
 		return $resultados_clave;
-	}
-
-	private function set_select_proyecto_con_usuario_y_rol() {
-		$this->db->select(self::COLUMNAS_SELECT);
-		$this->db->select(self::COLUMNAS_SELECT_PROYECTO_USUARIO);
-		$this->db->select(self::COLUMNAS_SELECT_ROL_PROYECTO);
-		$this->db->from(self::NOMBRE_TABLA);
-		$this->db->join(self::NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-		$this->db->join(self::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_ROL_PROYECTO_PU, "left");
-	}
-	
-	private function set_select_resultados() {
-		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_PARA_PROYECTO);
-		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_proyecto($nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $coordinador = FALSE) {

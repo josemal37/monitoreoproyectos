@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<?php $tiene_efectos = FALSE; ?>
+
 <div class="container-fluid">
 
 	<!-- Nombre del proyecto -->
@@ -75,6 +77,38 @@
 							<?php endif; ?>
 
 						</h3>
+
+						<?php if ($resultado->efectos): ?>
+
+							<?php $tiene_efectos = TRUE; ?>
+
+							<ol>
+
+								<?php foreach ($resultado->efectos as $efecto): ?>
+
+									<li>
+
+										<p class="text-justify">
+
+											<?= $efecto->descripcion ?>
+
+											<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+												<a href="<?= base_url("efecto/modificar_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+												<a href="<?= base_url("efecto/eliminar_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+											<?php endif; ?>
+
+										</p>
+
+									</li>
+
+								<?php endforeach; ?>
+
+							</ol>
+
+						<?php endif; ?>
 
 						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 
@@ -159,6 +193,32 @@
 					</div>
 
 				</li>
+
+			<?php endforeach; ?>
+
+		</ol>
+
+	<?php endif; ?>
+
+	<!-- Efectos -->
+
+	<?php if ($tiene_efectos): ?>
+
+		<h2>Efectos</h2>
+
+		<ol>
+
+			<?php foreach ($proyecto->resultados as $resultado): ?>
+
+				<?php if ($resultado->efectos): ?>
+
+					<?php foreach ($resultado->efectos as $efecto): ?>
+
+						<li><p class="text-justify"><?= $efecto->descripcion ?></p></li>
+
+					<?php endforeach; ?>
+
+				<?php endif; ?>
 
 			<?php endforeach; ?>
 
