@@ -39,14 +39,14 @@
 
 					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "proyectos"): ?>class="active open"<?php endif; ?>>
 
-						<a href="<?= base_url("proyecto/proyectos")?>">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+						<a href="<?= base_url("proyecto/proyectos") ?>">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a>
 
 					</li>
 
 					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "registrar_proyecto"): ?>class="active open"<?php endif; ?>>
-						
-						<a href="<?= base_url("proyecto/registrar_proyecto")?>">Registrar proyecto<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
-					
+
+						<a href="<?= base_url("proyecto/registrar_proyecto") ?>">Registrar proyecto<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
+
 					</li>
 
 				<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
@@ -74,7 +74,7 @@
                 <!-- Usuario -->
                 <li>
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span><span class="glyphicon glyphicon-user pull-right"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $this->session->userdata("nombre_completo") ?> <span class="caret"></span><span class="glyphicon glyphicon-user pull-right"></span></a>
 
 					<ul class="dropdown-menu forAnimate" role="menu">
 
