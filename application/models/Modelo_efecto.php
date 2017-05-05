@@ -24,6 +24,27 @@ class Modelo_efecto extends MY_Model {
 		parent::__construct();
 	}
 
+	public function select_efecto_de_proyecto($id = FALSE, $id_proyecto = FALSE) {
+		$efecto = FALSE;
+
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+			
+			if ($id_proyecto) {
+				$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
+				$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
+			}
+
+			$query = $this->db->get();
+
+			$efecto = $this->return_row($query);
+		}
+
+		return $efecto;
+	}
+
 	public function insert_efecto($id_resultado = FALSE, $descripcion = "") {
 		$insertado = FALSE;
 
@@ -43,6 +64,28 @@ class Modelo_efecto extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function update_efecto($id = FALSE, $descripcion = "") {
+		$actualizado = FALSE;
+
+		if ($id && $descripcion != "") {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::DESCRIPCION => $descripcion
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID, $id);
+			
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
 	}
 
 }

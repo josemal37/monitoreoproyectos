@@ -97,7 +97,7 @@ class Resultado_clave extends Coordinador {
 	private function cargar_vista_modificar_resultado_clave($id_proyecto, $id_resultado_clave) {
 		$titulo = "Modificar resultado clave";
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-		$resultado_clave = $this->ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
+		$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 		
 		if ($proyecto && $resultado_clave) {
 			$id_resultado = $resultado_clave->id_resultado;
@@ -120,7 +120,7 @@ class Resultado_clave extends Coordinador {
 		
 		if ($this->item_validacion->validar(array("descripcion"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-			$resultado_clave = $this->ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
+			$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 			
 			if ($proyecto && $resultado_clave) {
 				if ($this->Modelo_resultado_clave->update_resultado_clave($id_resultado_clave, $descripcion)) {
@@ -153,7 +153,7 @@ class Resultado_clave extends Coordinador {
 	
 	private function eliminar_resultado_clave_bd($id_proyecto, $id_resultado_clave) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-		$resultado_clave = $this->ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
+		$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 		
 		if ($proyecto && $resultado_clave) {
 			if ($this->Modelo_resultado_clave->delete_resultado_clave($id_resultado_clave)) {

@@ -25,13 +25,15 @@ class Modelo_resultado_clave extends MY_Model {
 	public function select_resultado_clave_de_proyecto($id_resultado_clave = FALSE, $id_proyecto = FALSE) {
 		$resultado_clave = FALSE;
 
-		if ($id_resultado_clave && $id_proyecto) {
+		if ($id_resultado_clave) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_resultado_clave);
 
-			$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
-			$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
+			if ($id_proyecto) {
+				$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
+				$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
+			}
 
 			$query = $this->db->get();
 
@@ -101,20 +103,20 @@ class Modelo_resultado_clave extends MY_Model {
 
 		return $actualizado;
 	}
-	
+
 	public function delete_resultado_clave($id) {
 		$eliminado = FALSE;
-		
+
 		if ($id) {
 			$this->db->trans_start();
-			
+
 			$this->db->where(self::ID, $id);
-			
+
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
-			
+
 			$this->db->trans_complete();
 		}
-		
+
 		return $eliminado;
 	}
 

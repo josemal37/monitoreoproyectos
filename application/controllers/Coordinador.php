@@ -14,7 +14,7 @@ abstract class Coordinador extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->load->model(array("Modelo_proyecto", "Modelo_resultado", "Modelo_resultado_clave","Modelo_rol_proyecto"));
+		$this->load->model(array("Modelo_proyecto", "Modelo_efecto", "Modelo_resultado", "Modelo_resultado_clave","Modelo_rol_proyecto"));
 
 		$this->load->database("default");
 	}
@@ -33,10 +33,16 @@ abstract class Coordinador extends CI_Controller {
 		return $resultado;
 	}
 	
-	protected function ger_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto) {
+	protected function get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto) {
 		$resultado_clave = $this->Modelo_resultado_clave->select_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 		
 		return $resultado_clave;
+	}
+	
+	protected function get_efecto_de_proyecto($id_efecto, $id_proyecto) {
+		$efecto = $this->Modelo_efecto->select_efecto_de_proyecto($id_efecto, $id_proyecto);
+		
+		return $efecto;
 	}
 
 }
