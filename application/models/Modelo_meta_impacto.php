@@ -65,4 +65,47 @@ class Modelo_meta_impacto extends MY_Model {
 		return $insertado;
 	}
 
+	public function update_meta_impacto_sin_transaccion($id = FALSE, $cantidad = FALSE, $unidad = "") {
+		$actualizado = FALSE;
+
+		if ($id && $cantidad && $unidad != "") {
+			$datos = array(
+				self::CANTIDAD => $cantidad,
+				self::UNIDAD => $unidad
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+		}
+
+		return $actualizado;
+	}
+
+	public function delete_meta_impacto_sin_transaccion($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+
+		return $eliminado;
+	}
+	
+	public function delete_meta_impacto_de_indicador($id_indicador_impacto = FALSE) {
+		$eliminado = FALSE;
+		
+		if ($id_indicador_impacto) {
+			$this->db->where(self::ID_INDICADOR_IMPACTO, $id_indicador_impacto);
+			
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+		
+		return $eliminado;
+	}
+
 }

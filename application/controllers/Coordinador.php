@@ -13,7 +13,7 @@ abstract class Coordinador extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		
+
 		$this->load->model(array("Modelo_proyecto", "Modelo_efecto", "Modelo_producto", "Modelo_resultado", "Modelo_resultado_clave", "Modelo_indicador_impacto", "Modelo_meta_impacto", "Modelo_rol_proyecto"));
 
 		$this->load->database("default");
@@ -32,23 +32,29 @@ abstract class Coordinador extends CI_Controller {
 
 		return $resultado;
 	}
-	
+
 	protected function get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto) {
 		$resultado_clave = $this->Modelo_resultado_clave->select_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
-		
+
 		return $resultado_clave;
 	}
-	
+
 	protected function get_efecto_de_proyecto($id_efecto, $id_proyecto) {
 		$efecto = $this->Modelo_efecto->select_efecto_de_proyecto($id_efecto, $id_proyecto);
-		
+
 		return $efecto;
 	}
-	
+
 	protected function get_producto_de_proyecto($id_producto, $id_proyecto) {
 		$producto = $this->Modelo_producto->select_producto_de_proyecto($id_producto, $id_proyecto);
-		
+
 		return $producto;
+	}
+
+	protected function get_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto) {
+		$indicador = $this->Modelo_indicador_impacto->select_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto);
+
+		return $indicador;
 	}
 
 }

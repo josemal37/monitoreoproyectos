@@ -31,19 +31,27 @@ switch ($accion) {
 
 		</div>
 
+		<?php
+		$con_meta = FALSE;
+
+		if ($accion == "modificar_indicador_impacto" && $indicador_impacto->cantidad) {
+			$con_meta = TRUE;
+		}
+		?>
+
 		<div class="checkbox">
 
-			<label><input type="checkbox" id="con-meta" name="con-meta">Meta</label>
+			<label><input type="checkbox" id="con-meta" name="con-meta"<?php if ($con_meta): ?>checked<?php endif; ?>>Meta</label>
 
 		</div>
 
-		<div id="contenedor-meta" style="display: none;">
+		<div id="contenedor-meta" <?php if (!$con_meta): ?>style="display: none;"<?php endif; ?>>
 
 			<div class="form-group">
 
 				<label>Cantidad</label>
 
-				<input type="number" id="cantidad" name="cantidad" class="form-control">
+				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->cantidad ?>"<?php endif; ?>>
 
 			</div>
 
@@ -51,7 +59,7 @@ switch ($accion) {
 
 				<label>Unidad</label>
 
-				<input type="text" id="unidad" name="unidad" class="form-control">
+				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->unidad ?>"<?php endif; ?>>
 
 			</div>
 
@@ -69,7 +77,7 @@ switch ($accion) {
 
 <script type="text/javascript">
 	$("#con-meta").on("change", function() {
-		if($(this).prop("checked")) {
+		if ($(this).prop("checked")) {
 			$("#contenedor-meta").show();
 		} else {
 			$("#contenedor-meta").hide();

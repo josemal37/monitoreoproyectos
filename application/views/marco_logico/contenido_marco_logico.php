@@ -36,7 +36,7 @@
 
 		<div class="table">
 
-			<table class="table">
+			<table class="table table-bordered">
 
 				<thead>
 
@@ -57,8 +57,16 @@
 						<tr>
 
 							<td><?= $indicador_impacto->descripcion ?></td>
+
 							<td><?= $indicador_impacto->cantidad ?> <?= $indicador_impacto->unidad ?></td>
-							<td><?= $indicador_impacto->id ?></td>
+
+							<td>
+
+								<a href="<?= base_url("indicador_impacto/modificar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+								<a href="<?= base_url("indicador_impacto/eliminar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+							</td>
 
 						</tr>
 
