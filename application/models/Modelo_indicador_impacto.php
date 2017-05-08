@@ -41,10 +41,10 @@ class Modelo_indicador_impacto extends MY_Model {
 
 		return $indicadores;
 	}
-	
+
 	public function select_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto) {
 		$indicador = FALSE;
-		
+
 		if ($id_indicador_impacto && $id_proyecto) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
@@ -55,10 +55,10 @@ class Modelo_indicador_impacto extends MY_Model {
 			$this->db->join(Modelo_meta_impacto::NOMBRE_TABLA, Modelo_meta_impacto::NOMBRE_TABLA . "." . Modelo_meta_impacto::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 
 			$query = $this->db->get();
-			
+
 			$indicador = $this->return_row($query);
 		}
-		
+
 		return $indicador;
 	}
 
@@ -119,6 +119,22 @@ class Modelo_indicador_impacto extends MY_Model {
 		if ($con_meta) {
 			$this->Modelo_meta_impacto->insert_meta_impacto($id, $cantidad, $unidad);
 		}
+	}
+
+	public function delete_indicador_impacto($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }
