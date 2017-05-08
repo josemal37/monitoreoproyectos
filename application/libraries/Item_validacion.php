@@ -47,6 +47,23 @@ class Item_validacion extends Validacion {
 				"required",
 				"min_length[1]"
 			)
+		),
+		"cantidad" => array(
+			"field" => "cantidad",
+			"label" => "cantidad",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
+			)
+		),
+		"unidad" => array(
+			"field" => "unidad",
+			"label" => "unidad",
+			"rules" => array(
+				"required",
+				"min_length[1]"
+			)
 		)
 	);
 

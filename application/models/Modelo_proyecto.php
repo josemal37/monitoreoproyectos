@@ -149,6 +149,9 @@ class Modelo_proyecto extends MY_Model {
 
 			//resultados
 			$proyecto->resultados = $this->obtener_resultados_de_proyecto($filas_proyecto);
+			
+			//indicadores de impacto
+			$proyecto->indicadores_impacto = $this->obtener_indicadores_impacto_de_proyecto($proyecto->id);
 		}
 
 		return $proyecto;
@@ -215,6 +218,12 @@ class Modelo_proyecto extends MY_Model {
 		$resultados_clave = $this->Modelo_resultado_clave->select_resultados_clave_de_resultado($id_resultado);
 
 		return $resultados_clave;
+	}
+	
+	private function obtener_indicadores_impacto_de_proyecto($id_proyecto) {
+		$indicadores = $this->Modelo_indicador_impacto->select_indicadores_impacto_de_proyecto($id_proyecto);
+		
+		return $indicadores;
 	}
 	
 	private function existe_id_en_array($id, $array) {

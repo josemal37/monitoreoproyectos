@@ -32,9 +32,43 @@
 
 	<h2>Indicadores de impacto</h2>
 
-	<?php if (isset($proyecto->indicadores_impacto) && $proyecto->indicadores_inpacto): ?>
+	<?php if (isset($proyecto->indicadores_impacto) && $proyecto->indicadores_impacto): ?>
 
+		<div class="table">
 
+			<table class="table">
+
+				<thead>
+
+					<tr>
+
+						<th>Descripción</th>
+						<th>Meta</th>
+						<th>Acciones</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					<?php foreach ($proyecto->indicadores_impacto as $indicador_impacto): ?>
+
+						<tr>
+
+							<td><?= $indicador_impacto->descripcion ?></td>
+							<td><?= $indicador_impacto->cantidad ?> <?= $indicador_impacto->unidad ?></td>
+							<td><?= $indicador_impacto->id ?></td>
+
+						</tr>
+
+					<?php endforeach; ?>
+
+				</tbody>
+
+			</table>
+
+		</div>
 
 	<?php else: ?>
 
@@ -44,7 +78,7 @@
 
 	<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 
-		<a href="<?= base_url("indicador_impacto/registrar_indicador_impacto") ?>" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador impacto</a>
+		<a href="<?= base_url("indicador_impacto/registrar_indicador_impacto/" . $proyecto->id) ?>" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador impacto</a>
 
 	<?php endif; ?>
 
