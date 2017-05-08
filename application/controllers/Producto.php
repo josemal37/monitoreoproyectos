@@ -135,5 +135,34 @@ class Producto extends Coordinador {
 			$this->modificar_producto($id_proyecto, $id_producto);
 		}
 	}
+	
+	public function eliminar_producto($id_proyecto = FALSE, $id_producto = FALSE) {
+		$rol = $this->session->userdata("rol");
+		
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_producto) {
+				$this->eliminar_producto_bd($id_proyecto, $id_producto);
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+	
+	private function eliminar_producto_bd($id_proyecto, $id_producto) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$producto = $this->get_producto_de_proyecto($id_producto, $id_proyecto);
+		
+		if ($proyecto && $producto) {
+			if ($this->Modelo_producto->delete_producto($id_producto)) {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+			} else {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
 
 }
