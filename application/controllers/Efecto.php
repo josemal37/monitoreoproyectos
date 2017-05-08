@@ -33,6 +33,8 @@ class Efecto extends Coordinador {
 				} else {
 					$this->cargar_vista_registrar_efecto($id_proyecto, $id_resultado);
 				}
+			} else {
+				redirect(base_url("proyecto/proyectos"), "refresh");
 			}
 		} else {
 			redirect(base_url());

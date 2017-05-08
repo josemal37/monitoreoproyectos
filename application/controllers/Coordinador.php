@@ -44,5 +44,11 @@ abstract class Coordinador extends CI_Controller {
 		
 		return $efecto;
 	}
+	
+	protected function get_producto_de_proyecto($id_producto, $id_proyecto) {
+		$producto = $this->Modelo_producto->select_producto_de_proyecto($id_producto, $id_proyecto);
+		
+		return $producto;
+	}
 
 }
