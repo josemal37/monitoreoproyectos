@@ -97,7 +97,7 @@ class Resultado extends Coordinador {
 	private function cargar_vista_modificar_resultado($id_proyecto, $id_resultado) {
 		$titulo = "Modificar resultado";
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-		$resultado = $this->Modelo_resultado->select_resultado_por_id($id_resultado, $id_proyecto);
+		$resultado = $this->Modelo_resultado->select_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		if ($proyecto && $resultado) {
 			$datos = array();

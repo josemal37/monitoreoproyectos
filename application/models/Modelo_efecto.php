@@ -27,15 +27,13 @@ class Modelo_efecto extends MY_Model {
 	public function select_efecto_de_proyecto($id = FALSE, $id_proyecto = FALSE) {
 		$efecto = FALSE;
 
-		if ($id) {
+		if ($id && $id_proyecto) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
 
-			if ($id_proyecto) {
-				$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
-				$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
-			}
+			$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
+			$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
 
 			$query = $this->db->get();
 

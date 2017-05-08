@@ -28,7 +28,7 @@ abstract class Coordinador extends CI_Controller {
 	}
 
 	protected function get_resultado_de_proyecto($id_resultado, $id_proyecto) {
-		$resultado = $this->Modelo_resultado->select_resultado_por_id($id_resultado, $id_proyecto);
+		$resultado = $this->Modelo_resultado->select_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		return $resultado;
 	}

@@ -25,15 +25,13 @@ class Modelo_resultado_clave extends MY_Model {
 	public function select_resultado_clave_de_proyecto($id_resultado_clave = FALSE, $id_proyecto = FALSE) {
 		$resultado_clave = FALSE;
 
-		if ($id_resultado_clave) {
+		if ($id_resultado_clave && $id_proyecto) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_resultado_clave);
 
-			if ($id_proyecto) {
-				$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
-				$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
-			}
+			$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_RESULTADO);
+			$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
 
 			$query = $this->db->get();
 

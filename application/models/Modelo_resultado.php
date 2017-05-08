@@ -24,18 +24,16 @@ class Modelo_resultado extends MY_Model {
 		parent::__construct();
 	}
 
-	public function select_resultado_por_id($id_resultado = FALSE, $id_proyecto = FALSE) {
+	public function select_resultado_de_proyecto($id_resultado = FALSE, $id_proyecto = FALSE) {
 		$resultado = FALSE;
 
-		if ($id_resultado) {
+		if ($id_resultado && $id_proyecto) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
 
 			$this->db->where(self::ID, $id_resultado);
 
-			if ($id_proyecto) {
-				$this->db->where(self::ID_PROYECTO, $id_proyecto);
-			}
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
 
 			$query = $this->db->get();
 
