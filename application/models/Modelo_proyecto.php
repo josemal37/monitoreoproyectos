@@ -88,14 +88,14 @@ class Modelo_proyecto extends MY_Model {
 			if ($id_rol_proyecto) {
 				$this->db->where(self::ID_ROL_PROYECTO_PU, $id_rol_proyecto);
 			}
-			
+
 			$this->set_select_resultados();
-			
+
 			$query = $this->db->get();
 
-			$columnas_proyecto = $this->return_result($query);
-			
-			$proyecto = $this->obtener_objeto_proyecto_de_columnas($columnas_proyecto);
+			$filas_proyecto = $this->return_result($query);
+
+			$proyecto = $this->obtener_objeto_proyecto_de_filas($filas_proyecto);
 		}
 
 		return $proyecto;
@@ -109,85 +109,125 @@ class Modelo_proyecto extends MY_Model {
 		$this->db->join(self::NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 		$this->db->join(self::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_ROL_PROYECTO_PU, "left");
 	}
-	
+
 	private function set_select_resultados() {
 		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_PARA_PROYECTO);
 		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-		
+
 		$this->set_select_efectos();
 	}
-	
+
 	private function set_select_efectos() {
 		$this->db->select(Modelo_efecto::COLUMNAS_SELECT_PARA_PROYECTO);
 		$this->db->join(Modelo_efecto::NOMBRE_TABLA, Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO . " = " . Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID, "left");
+
+		$this->set_select_productos();
 	}
-	
-	private function obtener_objeto_proyecto_de_columnas($columnas_proyecto) {
+
+	private function set_select_productos() {
+		$this->db->select(Modelo_producto::COLUMNAS_SELECT_PARA_PROYECTO);
+		$this->db->join(Modelo_producto::NOMBRE_TABLA, Modelo_producto::NOMBRE_TABLA . "." . Modelo_producto::ID_EFECTO . " = " . Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID, "left");
+	}
+
+	private function obtener_objeto_proyecto_de_filas($filas_proyecto) {
 		$proyecto = FALSE;
-		
-		if (is_array($columnas_proyecto) && sizeof($columnas_proyecto) > 0) {
+
+		if (is_array($filas_proyecto) && sizeof($filas_proyecto) > 0) {
 			$proyecto = new stdClass();
-			
+
 			//datos generales
-			$columna = $columnas_proyecto[0];
-			
-			$proyecto->id = $columna->id;
-			$proyecto->nombre = $columna->nombre;
-			$proyecto->objetivo = $columna->objetivo;
-			$proyecto->fecha_inicio = $columna->fecha_inicio;
-			$proyecto->fecha_fin = $columna->fecha_fin;
-			
+			$fila = $filas_proyecto[0];
+
+			$proyecto->id = $fila->id;
+			$proyecto->nombre = $fila->nombre;
+			$proyecto->objetivo = $fila->objetivo;
+			$proyecto->fecha_inicio = $fila->fecha_inicio;
+			$proyecto->fecha_fin = $fila->fecha_fin;
+
 			$proyecto->usuario = new stdClass();
-			$proyecto->usuario->nombre_rol_proyecto = $columna->nombre_rol_proyecto;
-			
+			$proyecto->usuario->nombre_rol_proyecto = $fila->nombre_rol_proyecto;
+
 			//resultados
-			$proyecto->resultados = $this->obtener_resultados_de_proyecto($columnas_proyecto);
+			$proyecto->resultados = $this->obtener_resultados_de_proyecto($filas_proyecto);
 		}
-		
+
 		return $proyecto;
 	}
-	
-	private function obtener_resultados_de_proyecto($columnas_proyecto) {
+
+	private function obtener_resultados_de_proyecto($filas_proyecto) {
 		$resultados = array();
-		
-		foreach($columnas_proyecto as $columna) {
-			if (isset($columna->id_resultado)) {
+
+		foreach ($filas_proyecto as $fila) {
+			if (isset($fila->id_resultado) && !$this->existe_id_en_array($fila->id_resultado, $resultados)) {
 				$resultado = new stdClass();
-				$resultado->id = $columna->id_resultado;
-				$resultado->nombre = $columna->nombre_resultado;
+				$resultado->id = $fila->id_resultado;
+				$resultado->nombre = $fila->nombre_resultado;
 				$resultado->resultados_clave = $this->obtener_resultados_clave_de_resultado($resultado->id);
-				$resultado->efectos = $this->obtener_efectos_de_resultado($resultado->id, $columnas_proyecto);
+				$resultado->efectos = $this->obtener_efectos_de_resultado($resultado->id, $filas_proyecto);
 				$resultados[] = $resultado;
 			}
 		}
-		
+
 		return $resultados;
 	}
-	
-	private function obtener_efectos_de_resultado($id_resultado, $columnas_proyecto) {
+
+	private function obtener_efectos_de_resultado($id_resultado, $filas_proyecto) {
 		$efectos = array();
-		
-		foreach($columnas_proyecto as $columna) {
-			if (isset($columna->id_resultado) && isset($columna->id_efecto)) {
-				if ($id_resultado == $columna->id_resultado) {
+
+		foreach ($filas_proyecto as $fila) {
+			if (isset($fila->id_resultado) && isset($fila->id_efecto) && !$this->existe_id_en_array($fila->id_efecto, $efectos)) {
+				if ($id_resultado == $fila->id_resultado) {
 					$efecto = new stdClass();
+
+					$efecto->id = $fila->id_efecto;
+					$efecto->descripcion = $fila->descripcion_efecto;
 					
-					$efecto->id = $columna->id_efecto;
-					$efecto->descripcion = $columna->descripcion_efecto;
-					
+					$efecto->productos = $this->obtener_productos_de_efecto($efecto->id, $filas_proyecto);
+
 					$efectos[] = $efecto;
 				}
 			}
 		}
-		
+
 		return $efectos;
 	}
-
+	
+	private function obtener_productos_de_efecto($id_efecto, $filas_proyecto) {
+		$productos = array();
+		
+		foreach ($filas_proyecto as $fila) {
+			if (isset($fila->id_efecto) && isset($fila->id_producto) && !$this->existe_id_en_array($fila->id_producto, $productos)) {
+				if ($id_efecto == $fila->id_efecto) {
+					$producto = new stdClass();
+					
+					$producto->id = $fila->id_producto;
+					$producto->descripcion = $fila->descripcion_producto;
+					
+					$productos[] = $producto;
+				}
+			}
+		}
+		
+		return $productos;
+	}
 
 	private function obtener_resultados_clave_de_resultado($id_resultado) {
 		$resultados_clave = $this->Modelo_resultado_clave->select_resultados_clave_de_resultado($id_resultado);
-		
+
 		return $resultados_clave;
+	}
+	
+	private function existe_id_en_array($id, $array) {
+		$existe = FALSE;
+		
+		foreach($array as $item) {
+			if ($id == $item->id) {
+				$existe = TRUE;
+				break;
+			}
+		}
+		
+		return $existe;
 	}
 
 	public function insert_proyecto($nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $coordinador = FALSE) {

@@ -214,7 +214,57 @@
 
 					<?php foreach ($resultado->efectos as $efecto): ?>
 
-						<li><p class="text-justify"><?= $efecto->descripcion ?></p></li>
+						<li>
+
+							<div>
+
+								<p class="text-justify"><?= $efecto->descripcion ?></p>
+
+								<h3>Productos</h3>
+
+								<?php if ($efecto->productos): ?>
+
+									<ol>
+
+										<?php foreach ($efecto->productos as $producto): ?>
+
+											<li>
+
+												<div>
+
+													<p class="text-justify">
+
+														<?= $producto->descripcion ?>
+
+														<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+															<a href="<?= base_url("producto/modificar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+															<a href="<?= base_url("producto/eliminar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+														<?php endif; ?>
+
+													</p>
+
+												</div>
+
+											</li>
+
+										<?php endforeach; ?>
+
+									</ol>
+
+								<?php endif; ?>
+
+								<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+									<a href="<?= base_url("producto/registrar_producto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Producto</a>
+
+								<?php endif; ?>
+
+							</div>
+
+						</li>
 
 					<?php endforeach; ?>
 
