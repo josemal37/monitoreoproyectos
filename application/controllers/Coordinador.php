@@ -18,6 +18,10 @@ abstract class Coordinador extends CI_Controller {
 
 		$this->load->database("default");
 	}
+	
+	public function index() {
+		redirect(base_url());
+	}
 
 	protected function get_proyecto_de_coordinador($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
