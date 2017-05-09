@@ -149,7 +149,7 @@ class Modelo_proyecto extends MY_Model {
 
 			//resultados
 			$proyecto->resultados = $this->obtener_resultados_de_proyecto($filas_proyecto);
-			
+
 			//indicadores de impacto
 			$proyecto->indicadores_impacto = $this->obtener_indicadores_impacto_de_proyecto($proyecto->id);
 		}
@@ -184,8 +184,10 @@ class Modelo_proyecto extends MY_Model {
 
 					$efecto->id = $fila->id_efecto;
 					$efecto->descripcion = $fila->descripcion_efecto;
-					
+
 					$efecto->productos = $this->obtener_productos_de_efecto($efecto->id, $filas_proyecto);
+
+					$efecto->indicadores = $this->obtener_indicadores_efecto_de_efecto($efecto->id);
 
 					$efectos[] = $efecto;
 				}
@@ -194,23 +196,23 @@ class Modelo_proyecto extends MY_Model {
 
 		return $efectos;
 	}
-	
+
 	private function obtener_productos_de_efecto($id_efecto, $filas_proyecto) {
 		$productos = array();
-		
+
 		foreach ($filas_proyecto as $fila) {
 			if (isset($fila->id_efecto) && isset($fila->id_producto) && !$this->existe_id_en_array($fila->id_producto, $productos)) {
 				if ($id_efecto == $fila->id_efecto) {
 					$producto = new stdClass();
-					
+
 					$producto->id = $fila->id_producto;
 					$producto->descripcion = $fila->descripcion_producto;
-					
+
 					$productos[] = $producto;
 				}
 			}
 		}
-		
+
 		return $productos;
 	}
 
@@ -219,23 +221,29 @@ class Modelo_proyecto extends MY_Model {
 
 		return $resultados_clave;
 	}
-	
+
 	private function obtener_indicadores_impacto_de_proyecto($id_proyecto) {
 		$indicadores = $this->Modelo_indicador_impacto->select_indicadores_impacto_de_proyecto($id_proyecto);
-		
+
 		return $indicadores;
 	}
-	
+
+	private function obtener_indicadores_efecto_de_efecto($id_efecto) {
+		$indicadores = $this->Modelo_indicador_efecto->select_indicadores_efecto_de_efecto($id_efecto);
+
+		return $indicadores;
+	}
+
 	private function existe_id_en_array($id, $array) {
 		$existe = FALSE;
-		
-		foreach($array as $item) {
+
+		foreach ($array as $item) {
 			if ($id == $item->id) {
 				$existe = TRUE;
 				break;
 			}
 		}
-		
+
 		return $existe;
 	}
 

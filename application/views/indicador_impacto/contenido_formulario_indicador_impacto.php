@@ -53,6 +53,8 @@ switch ($accion) {
 
 				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->cantidad ?>"<?php endif; ?>>
 
+				<?= form_error("cantidad") ?>
+
 			</div>
 
 			<div class="form-group">
@@ -60,6 +62,8 @@ switch ($accion) {
 				<label>Unidad</label>
 
 				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->unidad ?>"<?php endif; ?>>
+
+				<?= form_error("unidad") ?>
 
 			</div>
 

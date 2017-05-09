@@ -64,6 +64,24 @@ class Item_validacion extends Validacion {
 				"required",
 				"min_length[1]"
 			)
+		),
+		"porcentaje" => array(
+			"field" => "porcentaje",
+			"label" => "porcentaje",
+			"rules" => array(
+				"required",
+				"greater_than[0]",
+				"less_than_equal_to[100]"
+			)
+		),
+		"indicador-impacto" => array(
+			"field" => "indicador-impacto",
+			"label" => "indicador de impacto",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
+			)
 		)
 	);
 

@@ -17,6 +17,7 @@ class Modelo_indicador_impacto extends MY_Model {
 	const ID_PROYECTO = "id_proyecto";
 	const DESCRIPCION = "descripcion";
 	const COLUMNAS_SELECT = "indicador_impacto.id, indicador_impacto.descripcion";
+	const COLUMNAS_SELECT_OTRA_TABLA = "indicador_impacto.id as id_indicador_impacto, indicador_impacto.descripcion as descripcion_indicador_impacto";
 	const NOMBRE_TABLA = "indicador_impacto";
 
 	public function __construct() {

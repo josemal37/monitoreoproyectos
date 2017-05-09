@@ -32,9 +32,9 @@
 
 	<h2>Indicadores de impacto</h2>
 
-	<?php if (isset($proyecto->indicadores_impacto) && $proyecto->indicadores_impacto): ?>
+	<?php if ($proyecto->indicadores_impacto): ?>
 
-		<div class="table">
+		<div class="table-responsive">
 
 			<table class="table table-bordered">
 
@@ -43,8 +43,14 @@
 					<tr>
 
 						<th>Descripción</th>
+
 						<th>Meta</th>
-						<th>Acciones</th>
+
+						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+							<th>Acciones</th>
+
+						<?php endif; ?>
 
 					</tr>
 
@@ -60,13 +66,17 @@
 
 							<td><?= $indicador_impacto->cantidad ?> <?= $indicador_impacto->unidad ?></td>
 
-							<td>
+							<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 
-								<a href="<?= base_url("indicador_impacto/modificar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+								<td>
 
-								<a href="<?= base_url("indicador_impacto/eliminar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+									<a href="<?= base_url("indicador_impacto/modificar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
-							</td>
+									<a href="<?= base_url("indicador_impacto/eliminar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+								</td>
+
+							<?php endif; ?>
 
 						</tr>
 
@@ -261,6 +271,88 @@
 							<div>
 
 								<p class="text-justify"><?= $efecto->descripcion ?></p>
+
+								<h3>Indicadores de efecto</h3>
+
+								<?php if ($efecto->indicadores): ?>
+
+									<div class="table-responsive">
+
+										<table class="table table-bordered">
+
+											<thead>
+
+												<tr>
+
+													<th>Descripción</th>
+
+													<th>Meta</th>
+
+													<th>Indicador de impacto</th>
+
+													<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+														<th>Acciones</th>
+
+													<?php endif; ?>
+
+												</tr>
+
+											</thead>
+
+											<tbody>
+
+												<?php foreach ($efecto->indicadores as $indicador_efecto): ?>
+
+													<tr>
+
+														<td><?= $indicador_efecto->descripcion ?></td>
+
+														<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
+
+														<td>
+
+															<?php if ($indicador_efecto->id_indicador_impacto): ?>
+
+																<p><?= $indicador_efecto->descripcion_indicador_impacto ?> (<?= $indicador_efecto->porcentaje ?> %)</p>
+
+															<?php else: ?>
+
+																<p>Ninguno</p>
+
+															<?php endif; ?>
+
+														</td>
+
+														<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+															<td>
+
+																<a href="<?= base_url("indicador_efecto/modificar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+																<a href="<?= base_url("indicador_efecto/eliminar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+															</td>
+
+														<?php endif; ?>
+
+													</tr>
+
+												<?php endforeach; ?>
+
+											</tbody>
+
+										</table>
+
+									</div>
+
+								<?php endif; ?>
+
+								<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+									<a href="<?= base_url("indicador_efecto/registrar_indicador_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de efecto</a>
+
+								<?php endif; ?>
 
 								<h3>Productos</h3>
 
