@@ -109,7 +109,7 @@ switch ($accion) {
 
 							<?php foreach ($indicadores_impacto as $indicador_impacto): ?>
 
-						<option value="<?= $indicador_impacto->id ?>" <?php if($indicador_impacto->id == $indicador_efecto->id_indicador_impacto):?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
+						<option value="<?= $indicador_impacto->id ?>" <?php if(isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto):?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
 
 							<?php endforeach; ?>
 
