@@ -18,6 +18,7 @@ class Modelo_efecto extends MY_Model {
 	const DESCRIPCION = "descripcion";
 	const COLUMNAS_SELECT = "efecto.id, efecto.id_resultado, efecto.descripcion";
 	const COLUMNAS_SELECT_PARA_PROYECTO = "efecto.id as id_efecto, efecto.descripcion as descripcion_efecto";
+	const COLUMNAS_SELECT_OTRA_TABLA = "efecto.descripcion as descripcion_efecto, id_resultado";
 	const NOMBRE_TABLA = "efecto";
 
 	public function __construct() {

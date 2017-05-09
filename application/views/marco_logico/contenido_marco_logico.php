@@ -316,10 +316,6 @@
 
 																<p><?= $indicador_efecto->descripcion_indicador_impacto ?> (<?= $indicador_efecto->porcentaje ?> %)</p>
 
-															<?php else: ?>
-
-																<p>Ninguno</p>
-
 															<?php endif; ?>
 
 														</td>

@@ -18,7 +18,7 @@ abstract class Coordinador extends CI_Controller {
 
 		$this->load->database("default");
 	}
-	
+
 	public function index() {
 		redirect(base_url());
 	}
@@ -57,6 +57,12 @@ abstract class Coordinador extends CI_Controller {
 
 	protected function get_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto) {
 		$indicador = $this->Modelo_indicador_impacto->select_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto);
+
+		return $indicador;
+	}
+
+	protected function get_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto) {
+		$indicador = $this->Modelo_indicador_efecto->select_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto);
 
 		return $indicador;
 	}

@@ -23,7 +23,7 @@ class Modelo_meta_efecto extends MY_Model {
 		parent::__construct();
 	}
 
-	public function insert_meta_efecto_sin_transaccion($id_indicador_efecto = FALSE, $cantidad = FALSE, $unidad = "") {
+	public function insert_meta_efecto_st($id_indicador_efecto = FALSE, $cantidad = FALSE, $unidad = "") {
 		$insertado = FALSE;
 
 		if ($id_indicador_efecto && $cantidad && $unidad) {
@@ -39,6 +39,18 @@ class Modelo_meta_efecto extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function delete_meta_de_indicador_efecto_st($id_indicador_efecto = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_indicador_efecto) {
+			$this->db->where(self::ID_INDICADOR_EFECTO, $id_indicador_efecto);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+
+		return $eliminado;
 	}
 
 }

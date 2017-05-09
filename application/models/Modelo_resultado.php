@@ -18,6 +18,7 @@ class Modelo_resultado extends MY_Model {
 	const NOMBRE = "nombre";
 	const COLUMNAS_SELECT = "resultado.id, resultado.id_proyecto, resultado.nombre";
 	const COLUMNAS_SELECT_PARA_PROYECTO = "resultado.id as id_resultado, resultado.nombre as nombre_resultado";
+	const COLUMNAS_SELECT_OTRA_TABLA = "resultado.nombre as nombre_resultado, resultado.id_proyecto";
 	const NOMBRE_TABLA = "resultado";
 
 	public function __construct() {

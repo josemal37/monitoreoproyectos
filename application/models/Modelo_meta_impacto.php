@@ -47,7 +47,7 @@ class Modelo_meta_impacto extends MY_Model {
 		return $insertado;
 	}
 
-	public function insert_meta_impacto_sin_transaccion($id_indicador_impacto = FALSE, $cantidad = FALSE, $unidad = "") {
+	public function insert_meta_impacto_st($id_indicador_impacto = FALSE, $cantidad = FALSE, $unidad = "") {
 		$insertado = FALSE;
 
 		if ($id_indicador_impacto && $cantidad && $unidad != "") {
@@ -65,7 +65,7 @@ class Modelo_meta_impacto extends MY_Model {
 		return $insertado;
 	}
 
-	public function update_meta_impacto_sin_transaccion($id = FALSE, $cantidad = FALSE, $unidad = "") {
+	public function update_meta_impacto_st($id = FALSE, $cantidad = FALSE, $unidad = "") {
 		$actualizado = FALSE;
 
 		if ($id && $cantidad && $unidad != "") {
@@ -84,7 +84,7 @@ class Modelo_meta_impacto extends MY_Model {
 		return $actualizado;
 	}
 
-	public function delete_meta_impacto_sin_transaccion($id = FALSE) {
+	public function delete_meta_impacto_st($id = FALSE) {
 		$eliminado = FALSE;
 
 		if ($id) {

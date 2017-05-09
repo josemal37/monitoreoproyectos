@@ -93,7 +93,7 @@ switch ($accion) {
 
 					<label>Porcentaje que aporta al indicador de impacto</label>
 
-					<input type="number" id="porcentaje" name="porcentaje" class="form-control">
+					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_impacto): ?>value="<?= $indicador_efecto->porcentaje ?>"<?php endif; ?>>
 
 					<?= form_error("porcentaje") ?>
 
@@ -109,7 +109,7 @@ switch ($accion) {
 
 							<?php foreach ($indicadores_impacto as $indicador_impacto): ?>
 
-								<option value="<?= $indicador_impacto->id ?>"><?= $indicador_impacto->descripcion ?></option>
+						<option value="<?= $indicador_impacto->id ?>" <?php if($indicador_impacto->id == $indicador_efecto->id_indicador_impacto):?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
 
 							<?php endforeach; ?>
 

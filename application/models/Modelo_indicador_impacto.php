@@ -81,7 +81,7 @@ class Modelo_indicador_impacto extends MY_Model {
 			if ($insertado && $con_meta) {
 				$id_indicador_impacto = $this->db->insert_id();
 
-				$this->Modelo_meta_impacto->insert_meta_impacto_sin_transaccion($id_indicador_impacto, $cantidad, $unidad);
+				$this->Modelo_meta_impacto->insert_meta_impacto_st($id_indicador_impacto, $cantidad, $unidad);
 			}
 
 			$this->db->trans_complete();
