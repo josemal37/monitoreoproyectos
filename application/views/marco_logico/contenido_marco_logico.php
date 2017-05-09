@@ -253,6 +253,8 @@
 	<?php endif; ?>
 
 	<!-- Efectos -->
+	
+	<hr>
 
 	<?php if ($tiene_efectos): ?>
 

@@ -182,4 +182,33 @@ class Indicador_efecto extends Coordinador {
 		}
 	}
 
+	public function eliminar_indicador_efecto($id_proyecto = FALSE, $id_indicador_efecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_indicador_efecto) {
+				$this->eliminar_indicador_efecto_bd($id_proyecto, $id_indicador_efecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_indicador_efecto_bd($id_proyecto, $id_indicador_efecto) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$indicador_efecto = $this->get_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto);
+
+		if ($proyecto && $indicador_efecto) {
+			if ($this->Modelo_indicador_efecto->delete_indicador_efecto($id_indicador_efecto)) {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+			} else {
+				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
 }
