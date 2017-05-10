@@ -42,5 +42,17 @@ class Modelo_meta_producto extends MY_Model {
 
 		return $insertado;
 	}
+	
+	public function delete_meta_de_indicador_producto_st($id_indicador_producto = FALSE) {
+		$eliminado = FALSE;
+		
+		if ($id_indicador_producto) {
+			$this->db->where(self::ID_INDICADOR_PRODUCTO, $id_indicador_producto);
+			
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+		
+		return $eliminado;
+	}
 
 }
