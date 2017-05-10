@@ -207,6 +207,7 @@ class Modelo_proyecto extends MY_Model {
 
 					$producto->id = $fila->id_producto;
 					$producto->descripcion = $fila->descripcion_producto;
+					$producto->indicadores = $this->Modelo_indicador_producto->select_indicadores_producto_de_producto($producto->id);
 
 					$productos[] = $producto;
 				}

@@ -82,6 +82,15 @@ class Item_validacion extends Validacion {
 				"numeric",
 				"is_natural"
 			)
+		),
+		"indicador-efecto" => array(
+			"field" => "indicador-efecto",
+			"label" => "indicador de efecto",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
+			)
 		)
 	);
 
