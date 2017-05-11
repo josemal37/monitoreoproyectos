@@ -84,6 +84,7 @@
                 ol.lista-productos {
                     counter-reset: counter-productos;
                     list-style-type: none;
+                    margin-bottom: 1.5em;
                     &>li {
                         text-align: justify;
                         counter-increment: counter-productos;
