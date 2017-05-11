@@ -1,10 +1,10 @@
 <div class="productos">
 
-	<h3>Productos</h3>
+	<h4>Productos</h4>
 
 	<?php if ($efecto->productos): ?>
 
-		<ol>
+		<ol class="lista-productos">
 
 			<?php foreach ($efecto->productos as $producto): ?>
 

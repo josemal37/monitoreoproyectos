@@ -31,4 +31,75 @@ Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
     text-align: center;
     padding: 5px; }
 
+.marco-logico .btn {
+  margin-bottom: 5px; }
+.marco-logico > .resultados > ol.lista-resultados {
+  padding: 0;
+  counter-reset: counter-resultados;
+  list-style-type: none; }
+  .marco-logico > .resultados > ol.lista-resultados > li {
+    text-align: justify;
+    counter-increment: counter-resultados; }
+    .marco-logico > .resultados > ol.lista-resultados > li:before {
+      content: counter(counter-resultados,decimal) ". ";
+      font-size: 1.75em;
+      font-weight: semibold; }
+    .marco-logico > .resultados > ol.lista-resultados > li > h3 {
+      display: inline; }
+    .marco-logico > .resultados > ol.lista-resultados > li > ol.lista-efectos {
+      margin-top: 0.75em;
+      margin-bottom: 0.75em;
+      counter-reset: counter-efectos;
+      list-style-type: none; }
+      .marco-logico > .resultados > ol.lista-resultados > li > ol.lista-efectos > li {
+        text-align: justify;
+        counter-increment: counter-efectos; }
+        .marco-logico > .resultados > ol.lista-resultados > li > ol.lista-efectos > li:before {
+          content: "Efecto " counter(counter-efectos,decimal) ": ";
+          font-weight: bold; }
+        .marco-logico > .resultados > ol.lista-resultados > li > ol.lista-efectos > li > p {
+          display: inline; }
+.marco-logico > .resultados-clave > ol.lista-resultados {
+  padding: 0;
+  counter-reset: counter-resultados;
+  list-style-type: none; }
+  .marco-logico > .resultados-clave > ol.lista-resultados > li {
+    text-align: justify;
+    counter-increment: counter-resultados; }
+    .marco-logico > .resultados-clave > ol.lista-resultados > li:before {
+      content: counter(counter-resultados,decimal) ". ";
+      font-size: 1.75em;
+      font-weight: semibold; }
+    .marco-logico > .resultados-clave > ol.lista-resultados > li > h3 {
+      display: inline; }
+    .marco-logico > .resultados-clave > ol.lista-resultados > li > ul.lista-resultados-clave {
+      margin-top: 0.75em;
+      margin-bottom: 0.75em;
+      list-style-type: disc; }
+      .marco-logico > .resultados-clave > ol.lista-resultados > li > ul.lista-resultados-clave > li {
+        text-align: justify; }
+        .marco-logico > .resultados-clave > ol.lista-resultados > li > ul.lista-resultados-clave > li > p {
+          display: inline; }
+.marco-logico > .efectos > ol.lista-efectos {
+  padding: 0;
+  counter-reset: counter-efectos;
+  list-style-type: none; }
+  .marco-logico > .efectos > ol.lista-efectos > li {
+    text-align: justify;
+    counter-increment: counter-efectos; }
+    .marco-logico > .efectos > ol.lista-efectos > li:before {
+      content: "Efecto " counter(counter-efectos,decimal);
+      font-size: 1.75em;
+      font-weight: semibold; }
+    .marco-logico > .efectos > ol.lista-efectos > li ol.lista-productos {
+      counter-reset: counter-productos;
+      list-style-type: none; }
+      .marco-logico > .efectos > ol.lista-efectos > li ol.lista-productos > li {
+        text-align: justify;
+        counter-increment: counter-productos; }
+        .marco-logico > .efectos > ol.lista-efectos > li ol.lista-productos > li:before {
+          content: "Producto " counter(counter-productos,decimal);
+          font-size: 1.5em;
+          font-weight: semibold; }
+
 /*# sourceMappingURL=monitoreo.css.map */

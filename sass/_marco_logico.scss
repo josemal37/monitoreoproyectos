@@ -1,0 +1,100 @@
+.marco-logico {
+    .btn {
+        margin-bottom: 5px;
+    }
+    &>.resultados {
+        &>ol.lista-resultados {
+            padding: 0;
+            counter-reset: counter-resultados;
+            list-style-type: none;
+            &>li {
+                text-align: justify;
+                counter-increment: counter-resultados;
+                &:before {
+                    content: counter(counter-resultados, decimal) ". ";
+                    font-size: 1.75em;
+                    font-weight: semibold;
+                }
+                &>h3 {
+                    display: inline;
+                }
+                &>ol.lista-efectos {
+                    margin-top: 0.75em;
+                    margin-bottom: 0.75em;
+                    counter-reset: counter-efectos;
+                    list-style-type: none;
+                    &>li {
+                        text-align: justify;
+                        counter-increment: counter-efectos;
+                        &:before {
+                            content: "Efecto " counter(counter-efectos, decimal) ": ";
+                            font-weight: bold;
+                        }
+                        &>p {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &>.resultados-clave {
+        &>ol.lista-resultados {
+            padding: 0;
+            counter-reset: counter-resultados;
+            list-style-type: none;
+            &>li {
+                text-align: justify;
+                counter-increment: counter-resultados;
+                &:before {
+                    content: counter(counter-resultados, decimal) ". ";
+                    font-size: 1.75em;
+                    font-weight: semibold;
+                }
+                &>h3 {
+                    display: inline;
+                }
+                &>ul.lista-resultados-clave {
+                    margin-top: 0.75em;
+                    margin-bottom: 0.75em;
+                    list-style-type:disc;
+                    &>li {
+                        text-align: justify;
+                        &>p {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &>.efectos {
+        &>ol.lista-efectos {
+            padding: 0;
+            counter-reset: counter-efectos;
+            list-style-type: none;
+            &>li {
+                text-align: justify;
+                counter-increment: counter-efectos;
+                &:before {
+                    content: "Efecto " counter(counter-efectos, decimal);
+                    font-size: 1.75em;
+                    font-weight: semibold;
+                }
+                ol.lista-productos {
+                    counter-reset: counter-productos;
+                    list-style-type: none;
+                    &>li {
+                        text-align: justify;
+                        counter-increment: counter-productos;
+                        &:before {
+                            content: "Producto " counter(counter-productos, decimal);
+                            font-size: 1.5em;
+                            font-weight: semibold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

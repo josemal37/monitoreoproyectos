@@ -16,7 +16,7 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 		<h2>Efectos</h2>
 
-		<ol>
+		<ol class="lista-efectos">
 
 			<?php foreach ($proyecto->resultados as $resultado): ?>
 
@@ -26,91 +26,87 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 						<li>
 
-							<div>
+							<p class="text-justify"><?= $efecto->descripcion ?></p>
 
-								<p class="text-justify"><?= $efecto->descripcion ?></p>
+							<h4>Indicadores de efecto</h4>
 
-								<h3>Indicadores de efecto</h3>
+							<?php if ($efecto->indicadores): ?>
 
-								<?php if ($efecto->indicadores): ?>
+								<div class="table-responsive">
 
-									<div class="table-responsive">
+									<table class="table table-bordered">
 
-										<table class="table table-bordered">
+										<thead>
 
-											<thead>
+											<tr>
+
+												<th>Descripción</th>
+
+												<th>Meta</th>
+
+												<th>Indicador de impacto</th>
+
+												<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+
+													<th>Acciones</th>
+
+												<?php endif; ?>
+
+											</tr>
+
+										</thead>
+
+										<tbody>
+
+											<?php foreach ($efecto->indicadores as $indicador_efecto): ?>
 
 												<tr>
 
-													<th>Descripción</th>
+													<td><?= $indicador_efecto->descripcion ?></td>
 
-													<th>Meta</th>
+													<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
 
-													<th>Indicador de impacto</th>
+													<td>
+
+														<?php if ($indicador_efecto->id_indicador_impacto): ?>
+
+															<p><?= $indicador_efecto->descripcion_indicador_impacto ?> (<?= $indicador_efecto->porcentaje ?> %)</p>
+
+														<?php endif; ?>
+
+													</td>
 
 													<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 
-														<th>Acciones</th>
+														<td>
+
+															<a href="<?= base_url("indicador_efecto/modificar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+															<a href="<?= base_url("indicador_efecto/eliminar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+														</td>
 
 													<?php endif; ?>
 
 												</tr>
 
-											</thead>
+											<?php endforeach; ?>
 
-											<tbody>
+										</tbody>
 
-												<?php foreach ($efecto->indicadores as $indicador_efecto): ?>
+									</table>
 
-													<tr>
+								</div>
 
-														<td><?= $indicador_efecto->descripcion ?></td>
+							<?php endif; ?>
 
-														<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
+							<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
 
-														<td>
+								<a href="<?= base_url("indicador_efecto/registrar_indicador_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de efecto</a>
 
-															<?php if ($indicador_efecto->id_indicador_impacto): ?>
+							<?php endif; ?>
 
-																<p><?= $indicador_efecto->descripcion_indicador_impacto ?> (<?= $indicador_efecto->porcentaje ?> %)</p>
-
-															<?php endif; ?>
-
-														</td>
-
-														<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
-
-															<td>
-
-																<a href="<?= base_url("indicador_efecto/modificar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-
-																<a href="<?= base_url("indicador_efecto/eliminar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-
-															</td>
-
-														<?php endif; ?>
-
-													</tr>
-
-												<?php endforeach; ?>
-
-											</tbody>
-
-										</table>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
-
-									<a href="<?= base_url("indicador_efecto/registrar_indicador_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de efecto</a>
-
-								<?php endif; ?>
-
-								<?php $this->load->view("marco_logico/productos", array("efecto" => $efecto)); ?>
-
-							</div>
+							<?php $this->load->view("marco_logico/productos", array("efecto" => $efecto)); ?>
 
 						</li>
 
