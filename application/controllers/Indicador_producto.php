@@ -86,7 +86,7 @@ class Indicador_producto extends Coordinador {
 
 			if ($proyecto && $producto) {
 				if ($this->Modelo_indicador_producto->insert_indicador_producto($id_producto, $descripcion, $con_meta, $cantidad, $unidad, $con_indicador_efecto, $id_indicador_efecto, $porcentaje)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("indicador_producto/registrar_indicador_producto/" . $id_proyecto . "/" . $id_producto), "refresh");
 				}
@@ -168,7 +168,7 @@ class Indicador_producto extends Coordinador {
 
 			if ($proyecto && $indicador_producto) {
 				if ($this->Modelo_indicador_producto->update_indicador_producto($id_indicador_producto, $descripcion, $con_meta, $cantidad, $unidad, $con_indicador_efecto, $id_indicador_efecto, $porcentaje)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("indicador_producto/modificar_indicador_producto/" . $id_proyecto . "/" . $id_indicador_producto), "refresh");
 				}
@@ -201,9 +201,9 @@ class Indicador_producto extends Coordinador {
 
 		if ($proyecto && $indicador_producto) {
 			if ($this->Modelo_indicador_producto->delete_indicador_producto($id_indicador_producto)) {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

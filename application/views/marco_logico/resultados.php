@@ -16,7 +16,7 @@
 
 						<?= $resultado->nombre ?>
 
-						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 							<a href="<?= base_url("resultado/modificar_resultado/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
@@ -40,7 +40,7 @@
 
 										<?= $efecto->descripcion ?>
 
-										<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+										<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 											<a href="<?= base_url("efecto/modificar_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
@@ -58,7 +58,7 @@
 
 					<?php endif; ?>
 
-					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 						<a href="<?= base_url("efecto/registrar_efecto/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Efecto</a>
 
@@ -76,9 +76,9 @@
 
 	<?php endif; ?>
 
-	<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+	<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
-		<a href="<?= base_url("resultado/registrar_resultado/" . $proyecto->id) ?>" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span> Resultado</a>
+		<a href="<?= base_url("resultado/registrar_resultado/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Resultado</a>
 
 	<?php endif; ?>
 

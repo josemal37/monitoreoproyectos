@@ -26,7 +26,7 @@
 
 										<?= $resultado_clave->descripcion ?>
 
-										<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+										<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 											<a href="<?= base_url("resultado_clave/modificar_resultado_clave/" . $proyecto->id . "/" . $resultado_clave->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
@@ -44,7 +44,7 @@
 
 					<?php endif; ?>
 
-					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 						<a href="<?= base_url("resultado_clave/registrar_resultado_clave/" . $proyecto->id . "/" . $resultado->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Resultado clave</a>
 

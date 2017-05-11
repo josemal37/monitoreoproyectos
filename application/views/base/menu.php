@@ -25,6 +25,7 @@
             <ul class="nav navbar-nav">
 
                 <!-- Inicio -->
+
                 <li <?php if ($this->uri->segment(1) == "administrador" || $this->uri->segment(1) == "empleado"): ?>class="active open"<?php endif; ?>>
 
 					<a href="<?= base_url() ?>">Inicio<span class="glyphicon glyphicon-menu-hamburger pull-right"></span></a>
@@ -33,9 +34,9 @@
 
 				<?php if ($this->session->userdata("rol") == "empleado"): ?>
 
-					<li class="separator">Proyecto</li>
-
 					<!-- Proyectos -->
+
+					<li class="separator">Proyecto</li>
 
 					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "proyectos"): ?>class="active open"<?php endif; ?>>
 
@@ -49,11 +50,31 @@
 
 					</li>
 
+					<?php if ($this->uri->segment(1) == "marco_logico"): ?>
+
+						<!-- Marco logico -->
+
+						<li class="separator">Marco lógico</li>
+
+						<li <?php if ($this->uri->segment(1) == "marco_logico" && $this->uri->segment(2) == "ver_marco_logico"): ?>class="active open"<?php endif; ?>>
+
+							<a href="<?= base_url("marco_logico/ver_marco_logico/" . $proyecto->id) ?>">Ver marco lógico<span class="glyphicon glyphicon-book pull-right"></span></a>
+
+						</li>
+
+						<li <?php if ($this->uri->segment(1) == "marco_logico" && $this->uri->segment(2) == "editar_marco_logico"): ?>class="active open"<?php endif; ?>>
+
+							<a href="<?= base_url("marco_logico/editar_marco_logico/" . $proyecto->id) ?>">Editar marco lógico<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+
+						</li>
+
+					<?php endif; ?>
+
 				<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
-					<li class="separator">Administrador</li>
-
 					<!-- Administrador -->
+
+					<li class="separator">Administrador</li>
 
 					<li <?php if ($this->uri->segment(1) == "usuario" && $this->uri->segment(2) == "usuarios"): ?>class="active open"<?php endif; ?>>
 

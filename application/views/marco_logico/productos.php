@@ -10,101 +10,97 @@
 
 				<li>
 
-					<div>
+					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
-						<p class="text-justify">
+						<a href="<?= base_url("producto/modificar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
-							<?= $producto->descripcion ?>
+						<a href="<?= base_url("producto/eliminar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
 
-							<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+					<?php endif; ?>
 
-								<a href="<?= base_url("producto/modificar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+					<p class="text-justify">
 
-								<a href="<?= base_url("producto/eliminar_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+						<?= $producto->descripcion ?>
 
-							<?php endif; ?>
+					</p>
 
-						</p>
+					<h4>Indicadores de producto</h4>
 
-						<h4>Indicadores de producto</h4>
+					<?php if ($producto->indicadores): ?>
 
-						<?php if ($producto->indicadores): ?>
+						<div class="table-responsive">
 
-							<div class="table-responsive">
+							<table class="table table-bordered">
 
-								<table class="table table-bordered">
+								<thead>
 
-									<thead>
+									<tr>
+
+										<th>Descripción</th>
+
+										<th>Meta</th>
+
+										<th>Indicador de efecto</th>
+
+										<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
+
+											<th>Acciones</th>
+
+										<?php endif; ?>
+
+									</tr>
+
+								</thead>
+
+								<tbody>
+
+									<?php foreach ($producto->indicadores as $indicador_producto): ?>
 
 										<tr>
 
-											<th>Descripción</th>
+											<td><?= $indicador_producto->descripcion ?></td>
 
-											<th>Meta</th>
+											<td><?= $indicador_producto->cantidad ?> <?= $indicador_producto->unidad ?></td>
 
-											<th>Indicador de efecto</th>
+											<td>
 
-											<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+												<?php if ($indicador_producto->id_indicador_efecto): ?>
 
-												<th>Acciones</th>
+													<?= $indicador_producto->descripcion_indicador_efecto ?> (<?= $indicador_producto->porcentaje ?> %)
+
+												<?php endif; ?>
+
+											</td>
+
+											<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
+
+												<td>
+
+													<a href="<?= base_url("indicador_producto/modificar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+													<a href="<?= base_url("indicador_producto/eliminar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+												</td>
 
 											<?php endif; ?>
 
 										</tr>
 
-									</thead>
+									<?php endforeach; ?>
 
-									<tbody>
+								</tbody>
 
-										<?php foreach ($producto->indicadores as $indicador_producto): ?>
+							</table>
 
-											<tr>
+						</div>
 
-												<td><?= $indicador_producto->descripcion ?></td>
+					<?php endif; ?>
 
-												<td><?= $indicador_producto->cantidad ?> <?= $indicador_producto->unidad ?></td>
+					<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
-												<td>
+						<a href="<?= base_url("indicador_producto/registrar_indicador_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de producto</a>
 
-													<?php if ($indicador_producto->id_indicador_efecto): ?>
-
-														<?= $indicador_producto->descripcion_indicador_efecto ?> (<?= $indicador_producto->porcentaje ?> %)
-
-													<?php endif; ?>
-
-												</td>
-
-												<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
-
-													<td>
-
-														<a href="<?= base_url("indicador_producto/modificar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-
-														<a href="<?= base_url("indicador_producto/eliminar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-
-													</td>
-
-												<?php endif; ?>
-
-											</tr>
-
-										<?php endforeach; ?>
-
-									</tbody>
-
-								</table>
-
-							</div>
-
-						<?php endif; ?>
-
-						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
-
-							<a href="<?= base_url("indicador_producto/registrar_indicador_producto/" . $proyecto->id . "/" . $producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de producto</a>
-
-						<?php endif; ?>
-
-					</div>
+					<?php endif; ?>
 
 				</li>
 
@@ -114,7 +110,7 @@
 
 	<?php endif; ?>
 
-	<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+	<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
 
 		<a href="<?= base_url("producto/registrar_producto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Producto</a>
 

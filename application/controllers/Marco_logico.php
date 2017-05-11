@@ -19,10 +19,24 @@ class Marco_logico extends CI_Controller {
 	}
 
 	public function index() {
-		$this->ver_marco_logico();
+		$this->editar_marco_logico();
 	}
 
 	public function ver_marco_logico($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->cargar_vista_marco_logico($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function editar_marco_logico($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "empleado") {

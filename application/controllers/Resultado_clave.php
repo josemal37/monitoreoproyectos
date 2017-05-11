@@ -63,7 +63,7 @@ class Resultado_clave extends Coordinador {
 
 			if ($proyecto && $resultado) {
 				if ($this->Modelo_resultado_clave->insert_resultado_clave($id_resultado, $descripcion)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("resultado_clave/registrar_resultado_clave/" . $id_proyecto . "/" . $id_resultado), "refresh");
 				}
@@ -124,7 +124,7 @@ class Resultado_clave extends Coordinador {
 			
 			if ($proyecto && $resultado_clave) {
 				if ($this->Modelo_resultado_clave->update_resultado_clave($id_resultado_clave, $descripcion)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("resultado_clave/modificar_resultado_clave/" . $id_proyecto . "/" . $id_resultado_clave), "refresh");
 				}
@@ -157,9 +157,9 @@ class Resultado_clave extends Coordinador {
 		
 		if ($proyecto && $resultado_clave) {
 			if ($this->Modelo_resultado_clave->delete_resultado_clave($id_resultado_clave)) {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

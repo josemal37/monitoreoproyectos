@@ -63,7 +63,7 @@ class Resultado extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			if ($proyecto) {
 				if ($this->Modelo_resultado->insert_resultado($id_proyecto, $nombre)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("resultado/registrar_resultado/" . $id_proyecto), "refresh");
 				}
@@ -119,7 +119,7 @@ class Resultado extends Coordinador {
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 			if ($proyecto && $resultado) {
 				if ($this->Modelo_resultado->update_resultado($id_resultado, $nombre)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("resultado/modificar_resultado/" . $id_proyecto . "/" . $id_resultado));
 				}
@@ -152,9 +152,9 @@ class Resultado extends Coordinador {
 
 		if ($proyecto && $resultado) {
 			if ($this->Modelo_resultado->delete_resultado($id_resultado)) {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

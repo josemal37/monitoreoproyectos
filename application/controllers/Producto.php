@@ -63,7 +63,7 @@ class Producto extends Coordinador {
 
 			if ($proyecto && $efecto) {
 				if ($this->Modelo_producto->insert_producto($id_efecto, $descripcion)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("producto/registrar_producto/" . $id_proyecto . "/" . $id_efecto), "refresh");
 				}
@@ -123,7 +123,7 @@ class Producto extends Coordinador {
 			
 			if ($proyecto && $producto) {
 				if ($this->Modelo_producto->update_producto($id_producto, $descripcion)) {
-					redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
 					redirect(base_url("producto/modificar_producto/" . $id_proyecto . "/" . $id_producto), "refresh");
 				}
@@ -156,9 +156,9 @@ class Producto extends Coordinador {
 		
 		if ($proyecto && $producto) {
 			if ($this->Modelo_producto->delete_producto($id_producto)) {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto));
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {
-				redirect(base_url("marco_logico/ver_marco_logico/" . $id_proyecto), "refresh");
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));
