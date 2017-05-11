@@ -152,9 +152,9 @@ class Modelo_indicador_producto extends MY_Model {
 			if ($con_meta) {
 				$this->Modelo_meta_producto->insert_meta_indicador_producto_st($id_indicador_producto, $cantidad, $unidad);
 			}
-			
+
 			$this->desasociar_indicador_producto_con_efecto($id_indicador_producto);
-			
+
 			if ($con_indicador_efecto) {
 				$this->asociar_indicador_producto_con_efecto($id_indicador_producto, $id_indicador_efecto, $porcentaje);
 			}
@@ -193,6 +193,22 @@ class Modelo_indicador_producto extends MY_Model {
 		}
 
 		return $desasociado;
+	}
+
+	public function delete_indicador_producto($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }
