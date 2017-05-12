@@ -43,10 +43,13 @@ class Producto extends Coordinador {
 		$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
 		if ($proyecto && $efecto) {
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
+			
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["efecto"] = $efecto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("producto/formulario_producto", $datos);
 		} else {
@@ -101,12 +104,14 @@ class Producto extends Coordinador {
 
 		if ($proyecto && $producto) {
 			$efecto = $this->get_efecto_de_proyecto($producto->id_efecto, $id_proyecto);
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["efecto"] = $efecto;
 			$datos["producto"] = $producto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("producto/formulario_producto", $datos);
 		} else {
