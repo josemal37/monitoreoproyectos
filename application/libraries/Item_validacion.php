@@ -93,5 +93,73 @@ class Item_validacion extends Validacion {
 			)
 		)
 	);
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"id_proyecto" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => true
+		),
+		"descripcion" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"cantidad" => array(
+			"required" => true,
+			"number" => true
+		),
+		"unidad" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"indicador-impacto" => array(
+			"required" => true,
+			"number" => true
+		),
+		"indicador-efecto" => array(
+			"required" => true,
+			"number" => true
+		)
+	);
+	protected $mensajes_jquery_validate = array(
+		"id" => array(
+			"required" => "Ocurrió un error con la identificación.",
+			"number" => "El id debe ser un número."
+		),
+		"id_proyecto" => array(
+			"required" => "Ocurrió un error con la identificación del proyecto.",
+			"number" => "El id debe ser un número."
+		),
+		"nombre" => array(
+			"required" => "Por favor introduzca un nombre.",
+			"minlength" => "La cantidad mínina de caracteres es de 1."
+		),
+		"descripcion" => array(
+			"required" => "Por favor introduzca una descripción.",
+			"minlength" => "La cantidad mínina de caracteres es de 1."
+		),
+		"cantidad" => array(
+			"required" => "Por favor introduzca la cantidad.",
+			"number" => "La cantidad debe ser un número.",
+		),
+		"unidad" => array(
+			"required" => "Por favor introduzca la unidad.",
+			"minlength" => "La cantidad mínina de caracteres es de 1."
+		),
+		"indicador-impacto" => array(
+			"required" => "Ocurrió un error con la identificación del indicador de impacto.",
+			"number" => "El indicador de impacto debe ser un número."
+		),
+		"indicador-efecto" => array(
+			"required" => "Ocurrió un error con la identificación del indicador de efecto.",
+			"number" => "El indicador de efecto debe ser un número."
+		)
+	);
 
 }

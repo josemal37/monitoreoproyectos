@@ -42,10 +42,12 @@ class Indicador_impacto extends Coordinador {
 
 		if ($proyecto) {
 			$titulo = "Registrar indicador de impacto";
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("indicador_impacto/formulario_indicador_impacto", $datos);
 		} else {
@@ -109,11 +111,13 @@ class Indicador_impacto extends Coordinador {
 
 		if ($proyecto && $indicador_impacto) {
 			$titulo = "Modificar indicador de impacto";
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["indicador_impacto"] = $indicador_impacto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("indicador_impacto/formulario_indicador_impacto", $datos);
 		} else {
