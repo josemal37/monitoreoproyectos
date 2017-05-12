@@ -60,9 +60,11 @@ class Proyecto extends CI_Controller {
 
 	private function cargar_vista_registrar_proyecto() {
 		$titulo = "Registrar proyecto";
+		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array("nombre", "objetivo", "fecha_inicio", "fecha_fin"));
 
 		$datos = array();
 		$datos["titulo"] = $titulo;
+		$datos["reglas_cliente"] = $reglas_cliente;
 
 		$this->load->view("proyecto/formulario_proyecto", $datos);
 	}
@@ -109,11 +111,13 @@ class Proyecto extends CI_Controller {
 		$id_usuario = $this->session->userdata("id");
 		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
+		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"));
 
 		if ($proyecto) {
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("proyecto/formulario_proyecto", $datos);
 		} else {
@@ -158,7 +162,7 @@ class Proyecto extends CI_Controller {
 		$id_usuario = $this->session->userdata("id");
 		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
-		
+
 		if ($proyecto) {
 			if ($this->Modelo_proyecto->delete_proyecto($id)) {
 				redirect(base_url("proyecto/proyectos"));

@@ -13,6 +13,8 @@ abstract class Validacion {
 
 	protected $ci;
 	protected $reglas_validacion_ci;
+	protected $jquery_validate;
+	protected $mensajes_jquery_validate;
 
 	public function __construct() {
 		$this->ci = & get_instance();
@@ -56,6 +58,34 @@ abstract class Validacion {
 			}
 		}
 
+		return $reglas;
+	}
+	
+	public function get_reglas_cliente($campos) {
+		return $this->get_reglas_jquery_validate($campos);
+	}
+	
+	private function get_reglas_jquery_validate($campos) {
+		$reglas = "";
+		
+		if (is_array($campos)) {
+			$seleccion = array();
+			$seleccion_mensajes = array();
+			
+			foreach ($campos as $campo) {
+				if (isset($this->jquery_validate[$campo])) {
+					$seleccion[$campo] = $this->jquery_validate[$campo];
+					$seleccion_mensajes[$campo] = $this->mensajes_jquery_validate[$campo];
+				}
+			}
+			
+			$reglas = json_encode(array("rules" => $seleccion, "messages" => $seleccion_mensajes));
+		} else if (is_string($campos)) {
+			if (isset($this->jquery_validate[$campos])) {
+				$reglas = json_encode(array("rules" => array($campos => $this->jquery_validate[$campos]), "messages" => array($campos => $this->mensajes_jquery_validate[$campos])));
+			}
+		}
+		
 		return $reglas;
 	}
 

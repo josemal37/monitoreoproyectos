@@ -38,6 +38,14 @@
 
 		<script src="<?= base_url("assets/jquery-matchheight/jquery.matchHeight.js") ?>"></script>
 
+		<!-- Jquery validate -->
+
+		<script src="<?= base_url("assets/jquery-validate/jquery.validate.min.js") ?>"></script>
+
+		<script src="<?= base_url("assets/jquery-validate/jquery.validate.bootstrap.defaults.js") ?>"></script>
+
+		<script src="<?= base_url("assets/jquery-validate/jquery.validate.html.array.extend.js") ?>"></script>
+
 		<!-- Estilos del sistema -->
 
 		<link href="<?= base_url("assets/monitoreo/monitoreo.css") ?>" rel="stylesheet">
