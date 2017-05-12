@@ -46,9 +46,12 @@ class Resultado extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
 		if ($proyecto) {
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("nombre"));
+			
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("resultado/formulario_resultado", $datos);
 		} else {
@@ -100,10 +103,13 @@ class Resultado extends Coordinador {
 		$resultado = $this->Modelo_resultado->select_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		if ($proyecto && $resultado) {
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("nombre"));
+			
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["resultado"] = $resultado;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("resultado/formulario_resultado", $datos);
 		} else {
