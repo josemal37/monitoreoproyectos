@@ -47,10 +47,13 @@ class Efecto extends Coordinador {
 		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		if ($proyecto && $resultado) {
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
+
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["resultado"] = $resultado;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("efecto/formulario_efecto", $datos);
 		} else {
@@ -105,12 +108,14 @@ class Efecto extends Coordinador {
 
 		if ($proyecto && $efecto) {
 			$resultado = $this->get_resultado_de_proyecto($efecto->id_resultado, $id_proyecto);
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["efecto"] = $efecto;
 			$datos["resultado"] = $resultado;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("efecto/formulario_efecto", $datos);
 		} else {
