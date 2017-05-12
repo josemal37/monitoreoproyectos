@@ -43,10 +43,13 @@ class Resultado_clave extends Coordinador {
 		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
 		if ($proyecto && $resultado) {
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
+			
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["resultado"] = $resultado;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("resultado_clave/formulario_resultado_clave", $datos);
 		} else {
@@ -102,12 +105,14 @@ class Resultado_clave extends Coordinador {
 		if ($proyecto && $resultado_clave) {
 			$id_resultado = $resultado_clave->id_resultado;
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 			
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["resultado"] = $resultado;
 			$datos["resultado_clave"] = $resultado_clave;
+			$datos["reglas_cliente"] = $reglas_cliente;
 			
 			$this->load->view("resultado_clave/formulario_resultado_clave", $datos);
 		} else {
