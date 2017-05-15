@@ -21,7 +21,7 @@ switch ($accion) {
 
 	<p class="text-justify"><label>Efecto:</label> <?= $efecto->descripcion ?></p>
 
-	<form action="<?= $url ?>" method="post">
+	<form id="form-indicador-efecto" action="<?= $url ?>" method="post">
 
 		<div class="form-group">
 
@@ -152,3 +152,11 @@ switch ($accion) {
 		}
 	});
 </script>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+		$("#form-indicador-efecto").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>

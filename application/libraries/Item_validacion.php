@@ -118,6 +118,11 @@ class Item_validacion extends Validacion {
 			"required" => true,
 			"minlength" => 1
 		),
+		"porcentaje"=>array(
+			"required"=>true,
+			"number"=>true,
+			"range"=>[1, 100]
+		),
 		"indicador-impacto" => array(
 			"required" => true,
 			"number" => true
@@ -151,6 +156,11 @@ class Item_validacion extends Validacion {
 		"unidad" => array(
 			"required" => "Por favor introduzca la unidad.",
 			"minlength" => "La cantidad mínina de caracteres es de 1."
+		),
+		"porcentaje"=>array(
+			"required"=>"Por favor introduzca el porcentaje.",
+			"number"=>"El porcentaje debe ser un número.",
+			"range"=>"El porcentaje debe estar entre 1 y 100."
 		),
 		"indicador-impacto" => array(
 			"required" => "Ocurrió un error con la identificación del indicador de impacto.",
