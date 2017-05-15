@@ -12,7 +12,7 @@
 
 		<div class="table-responsive">
 
-			<table class="table">
+			<table class="table table-bordered">
 
 				<thead>
 
@@ -44,11 +44,11 @@
 
 							<td>
 
-								<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>">Modificar</a>
+								<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Modificar</a>
 
-								<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>">Modificar contraseña</a>
+								<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Modificar contraseña</a>
 
-								<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>">Eliminar</a>
+								<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
 
 							</td>
 
