@@ -21,7 +21,7 @@ switch ($accion) {
 
 	<h1><?= $titulo ?></h1>
 
-	<form action="<?= $url ?>" method="post">
+	<form id="form-usuario" action="<?= $url ?>" method="post">
 
 		<?php if ($accion == "registrar_usuario" || $accion == "modificar_usuario"): ?>
 
@@ -168,3 +168,11 @@ switch ($accion) {
 	</form>
 
 </div>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+		$("#form-usuario").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>

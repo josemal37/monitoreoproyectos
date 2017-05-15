@@ -61,10 +61,12 @@ class Usuario extends CI_Controller {
 	private function cargar_vista_registrar_usuario() {
 		$titulo = "Registrar usuario";
 		$roles = $this->Modelo_rol->select_roles();
+		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "password", "confirmacion_password", "rol"));
 
 		$datos = array();
 		$datos["titulo"] = $titulo;
 		$datos["roles"] = $roles;
+		$datos["reglas_cliente"] = $reglas_cliente;
 
 		$this->load->view("usuario/formulario_usuario", $datos);
 	}
@@ -111,12 +113,14 @@ class Usuario extends CI_Controller {
 		$titulo = "Modificar usuario";
 		$roles = $this->Modelo_rol->select_roles();
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
+		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "rol"));
 
 		if ($usuario) {
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["roles"] = $roles;
 			$datos["usuario"] = $usuario;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("usuario/formulario_usuario", $datos);
 		} else {
@@ -226,11 +230,13 @@ class Usuario extends CI_Controller {
 	private function cargar_vista_modificar_password($id) {
 		$titulo = "Modificar password";
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
+		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("login", "password", "confirmacion_password", "password_anterior"));
 
 		if ($usuario) {
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["usuario"] = $usuario;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("usuario/formulario_usuario", $datos);
 		} else {
