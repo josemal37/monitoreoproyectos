@@ -44,12 +44,14 @@ class Indicador_producto extends Coordinador {
 		if ($proyecto && $producto) {
 			$titulo = "Registrar indicador de producto";
 			$indicadores_efecto = $this->Modelo_indicador_efecto->select_indicadores_efecto_de_efecto($producto->id_efecto);
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad", "porcentaje", "indicador-efecto"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["indicadores_efecto"] = $indicadores_efecto;
 			$datos["producto"] = $producto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("indicador_producto/formulario_indicador_producto", $datos);
 		} else {
@@ -125,6 +127,7 @@ class Indicador_producto extends Coordinador {
 			$titulo = "Modificar indicador producto";
 			$producto = $this->get_producto_de_proyecto($indicador_producto->id_producto, $id_proyecto);
 			$indicadores_efecto = $this->Modelo_indicador_efecto->select_indicadores_efecto_de_efecto($producto->id_efecto);
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad", "porcentaje", "indicador-efecto"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
@@ -132,6 +135,7 @@ class Indicador_producto extends Coordinador {
 			$datos["indicador_producto"] = $indicador_producto;
 			$datos["producto"] = $producto;
 			$datos["indicadores_efecto"] = $indicadores_efecto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("indicador_producto/formulario_indicador_producto", $datos);
 		} else {
