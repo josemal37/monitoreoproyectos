@@ -29,5 +29,21 @@ class Login_validacion extends Validacion {
 			)
 		)
 	);
+	protected $jquery_validate = array(
+		"login" => array(
+			"required" => true
+		),
+		"password" => array(
+			"required" => true
+		)
+	);
+	protected $mensajes_jquery_validate = array(
+		"login" => array(
+			"required" => "Por favor introduzca su nombre de usuario."
+		),
+		"password" => array(
+			"required" => "Por favor introduzca su contraseña."
+		)
+	);
 
 }

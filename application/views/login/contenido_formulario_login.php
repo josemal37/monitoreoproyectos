@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<form action="<?= base_url("login/iniciar_sesion") ?>" method="post">
+<form id="form-login" action="<?= base_url("login/iniciar_sesion") ?>" method="post">
 
 	<div class="form-group <?php if (form_error("login")): ?>has-error<?php endif; ?>">
 
@@ -37,3 +37,11 @@
 	<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-default">
 
 </form>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+		$("#form-login").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>

@@ -26,12 +26,7 @@ class Login extends CI_Controller {
 
 		switch ($rol) {
 			case "":
-				$datos = array();
-
-				$datos["titulo"] = "Sistema de Monitoreo - Fundación Atica";
-				$datos["token"] = $this->token();
-
-				$this->load->view("login/formulario_login", $datos);
+				$this->cargar_vista_login();
 				break;
 
 			case "administrador":
@@ -43,14 +38,20 @@ class Login extends CI_Controller {
 				break;
 
 			default:
-				$datos = array();
+				$this->cargar_vista_login();
 
-				$datos["titulo"] = "Sistema de Monitoreo - Fundación Atica";
-				$datos["token"] = $this->token();
-
-				$this->load->view("login/formulario_login", $datos);
 				break;
 		}
+	}
+
+	private function cargar_vista_login() {
+		$datos = array();
+
+		$datos["titulo"] = "Sistema de Monitoreo - Fundación Atica";
+		$datos["token"] = $this->token();
+		$datos["reglas_cliente"] = $this->login_validacion->get_reglas_cliente(array("login", "password"));
+
+		$this->load->view("login/formulario_login", $datos);
 	}
 
 	public function iniciar_sesion() {

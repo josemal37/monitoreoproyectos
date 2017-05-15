@@ -104,7 +104,7 @@ class Item_validacion extends Validacion {
 		),
 		"nombre" => array(
 			"required" => true,
-			"minlength" => true
+			"minlength" => 1
 		),
 		"descripcion" => array(
 			"required" => true,
