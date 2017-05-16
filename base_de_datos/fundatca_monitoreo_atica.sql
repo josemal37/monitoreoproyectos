@@ -58,6 +58,37 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
+CREATE TABLE `actividad` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `id_proyecto` INTEGER  NOT NULL  ,
+  `nombre` VARCHAR(1024)  NULL  ,
+  `fecha_inicio` DATE  NULL  ,
+  `fecha_fin` DATE  NULL  ,
+  `finalizada` BOOL  NULL    ,
+PRIMARY KEY(`id`)  ,
+INDEX `actividad_FKIndex1`(`id_proyecto`),
+  FOREIGN KEY(`id_proyecto`)
+    REFERENCES `proyecto`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
+CREATE TABLE `avance` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
+  `cantidad` INTEGER UNSIGNED  NULL    ,
+PRIMARY KEY(`id`)  ,
+INDEX `avance_FKIndex1`(`id_actividad`),
+  FOREIGN KEY(`id_actividad`)
+    REFERENCES `actividad`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
 CREATE TABLE `efecto` (
   `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
   `id_resultado` INTEGER UNSIGNED  NOT NULL  ,
@@ -66,6 +97,21 @@ PRIMARY KEY(`id`)  ,
 INDEX `efecto_FKIndex1`(`id_resultado`),
   FOREIGN KEY(`id_resultado`)
     REFERENCES `resultado`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
+CREATE TABLE `meta_actividad` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
+  `unidad` VARCHAR(1024)  NOT NULL  ,
+  `cantidad` INTEGER UNSIGNED  NULL    ,
+PRIMARY KEY(`id`)  ,
+INDEX `meta_actividad_FKIndex1`(`id_actividad`),
+  FOREIGN KEY(`id_actividad`)
+    REFERENCES `actividad`(`id`)
       ON DELETE CASCADE
       ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
@@ -86,30 +132,15 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
-CREATE TABLE `actividad` (
-  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  `id_proyecto` INTEGER  NOT NULL  ,
-  `nombre` VARCHAR(1024)  NULL  ,
-  `fecha_inicio` DATE  NULL  ,
-  `fecha_fin` DATE  NULL  ,
-  `finalizada` BOOL  NULL    ,
-PRIMARY KEY(`id`)  ,
-INDEX `actividad_FKIndex1`(`id_proyecto`),
-  FOREIGN KEY(`id_proyecto`)
-    REFERENCES `proyecto`(`id`)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE)
-engine = innodb default character set = utf8 collate = utf8_general_ci;
-
-
-
-CREATE TABLE `meta_actividad` (
-  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+CREATE TABLE `usuario_actividad` (
   `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
-  `unidad` VARCHAR(1024)  NOT NULL  ,
-  `cantidad` INTEGER UNSIGNED  NULL    ,
-PRIMARY KEY(`id`)  ,
-INDEX `meta_actividad_FKIndex1`(`id_actividad`),
+  `id_usuario` INTEGER UNSIGNED  NOT NULL    ,
+INDEX `usuario_actividad_FKIndex1`(`id_usuario`)  ,
+INDEX `usuario_actividad_FKIndex2`(`id_actividad`),
+  FOREIGN KEY(`id_usuario`)
+    REFERENCES `usuario`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
   FOREIGN KEY(`id_actividad`)
     REFERENCES `actividad`(`id`)
       ON DELETE CASCADE
@@ -194,20 +225,6 @@ PRIMARY KEY(`id`)  ,
 INDEX `meta_impacto_FKIndex1`(`id_indicador_impacto`),
   FOREIGN KEY(`id_indicador_impacto`)
     REFERENCES `indicador_impacto`(`id`)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE)
-engine = innodb default character set = utf8 collate = utf8_general_ci;
-
-
-
-CREATE TABLE `avance` (
-  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
-  `cantidad` INTEGER UNSIGNED  NULL    ,
-PRIMARY KEY(`id`)  ,
-INDEX `avance_FKIndex1`(`id_actividad`),
-  FOREIGN KEY(`id_actividad`)
-    REFERENCES `actividad`(`id`)
       ON DELETE CASCADE
       ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
