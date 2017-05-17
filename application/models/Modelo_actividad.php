@@ -44,6 +44,8 @@ class Modelo_actividad extends MY_Model {
 			$this->set_select_indicador_producto_asociado();
 
 			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+			
+			$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO);
 
 			$query = $this->db->get();
 

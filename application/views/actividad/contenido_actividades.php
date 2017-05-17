@@ -20,65 +20,23 @@
 
 					<p><label>Fecha de fin:</label> <?= $actividad->fecha_fin ?></p>
 
-					<div class="table-responsive">
+					<?php if (isset($actividad->id_meta_actividad)): ?>
 
-						<table class="table table-bordered">
+						<p><label>Meta:</label> <?= $actividad->cantidad ?> <?= $actividad->unidad ?></p>
 
-							<thead>
+					<?php endif; ?>
 
-								<tr>
+					<?php if (isset($actividad->id_producto)): ?>
 
-									<th>Meta</th>
+						<p><label>Producto asociado:</label> <?= $actividad->descripcion_producto ?></p>
 
-									<th>Producto asociado</th>
-									
-									<th>Indicador producto asociado</th>
+					<?php endif; ?>
 
-								</tr>
+					<?php if (isset($actividad->id_indicador_producto)): ?>
 
-							</thead>
+						<p><label>Indicador de producto asociado:</label> <?= $actividad->descripcion_indicador_producto ?> (<?= $actividad->porcentaje ?>%)</p>
 
-							<tbody>
-
-								<tr>
-
-									<td>
-
-										<?php if (isset($actividad->id_meta_actividad)): ?>
-
-											<?= $actividad->cantidad ?> <?= $actividad->unidad ?>
-
-										<?php endif; ?>
-
-									</td>
-
-									<td>
-
-										<?php if (isset($actividad->id_producto)): ?>
-
-											<?= $actividad->descripcion_producto ?>
-
-										<?php endif; ?>
-
-									</td>
-									
-									<td>
-										
-										<?php if (isset($actividad->id_indicador_producto)):?>
-										
-											<?= $actividad->descripcion_indicador_producto?> (<?= $actividad->porcentaje?>%)
-										
-										<?php endif; ?>
-										
-									</td>
-
-								</tr>
-
-							</tbody>
-
-						</table>
-
-					</div>
+					<?php endif; ?>
 
 				</li>
 
