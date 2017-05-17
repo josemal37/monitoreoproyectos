@@ -58,13 +58,12 @@ class Indicador_impacto extends Coordinador {
 	private function registrar_indicador_impacto_bd($id_proyecto) {
 		$descripcion = $this->input->post("descripcion");
 		$con_meta = $this->input->post("con-meta") == "on";
+		$cantidad = $this->input->post("cantidad");
+		$unidad = $this->input->post("unidad");
 
 		$array_validacion = array("descripcion");
 
 		if ($con_meta) {
-			$cantidad = $this->input->post("cantidad");
-			$unidad = $this->input->post("unidad");
-
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
 		}

@@ -62,22 +62,20 @@ class Indicador_producto extends Coordinador {
 	private function registrar_indicador_producto_bd($id_proyecto, $id_producto) {
 		$descripcion = $this->input->post("descripcion");
 		$con_meta = $this->input->post("con-meta") == "on";
+		$cantidad = $this->input->post("cantidad");
+		$unidad = $this->input->post("unidad");
 		$con_indicador_efecto = $this->input->post("con-indicador-efecto") == "on";
+		$id_indicador_efecto = $this->input->post("indicador-efecto");
+		$porcentaje = $this->input->post("porcentaje");
 
 		$array_validacion = array("descripcion");
 
 		if ($con_meta) {
-			$cantidad = $this->input->post("cantidad");
-			$unidad = $this->input->post("unidad");
-
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
 		}
 
 		if ($con_indicador_efecto) {
-			$id_indicador_efecto = $this->input->post("indicador-efecto");
-			$porcentaje = $this->input->post("porcentaje");
-
 			$array_validacion[] = "indicador-efecto";
 			$array_validacion[] = "porcentaje";
 		}
@@ -213,7 +211,7 @@ class Indicador_producto extends Coordinador {
 			redirect(base_url("proyecto/proyectos"));
 		}
 	}
-	
+
 	public function get_indicadores_de_producto_ajax() {
 		if ($this->input->is_ajax_request() && isset($_POST["id_producto"])) {
 			$id_producto = $this->input->post("id_producto");

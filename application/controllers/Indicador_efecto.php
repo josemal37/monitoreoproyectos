@@ -62,22 +62,20 @@ class Indicador_efecto extends Coordinador {
 	private function registrar_indicador_efecto_bd($id_proyecto, $id_efecto) {
 		$descripcion = $this->input->post("descripcion");
 		$con_meta = $this->input->post("con-meta") == "on";
+		$cantidad = $this->input->post("cantidad");
+		$unidad = $this->input->post("unidad");
 		$con_indicador_impacto = $this->input->post("con-indicador-impacto") == "on";
+		$id_indicador_impacto = $this->input->post("indicador-impacto");
+		$porcentaje = $this->input->post("porcentaje");
 
 		$array_validacion = array("descripcion");
 
 		if ($con_meta) {
-			$cantidad = $this->input->post("cantidad");
-			$unidad = $this->input->post("unidad");
-
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
 		}
 
 		if ($con_indicador_impacto) {
-			$id_indicador_impacto = $this->input->post("indicador-impacto");
-			$porcentaje = $this->input->post("porcentaje");
-
 			$array_validacion[] = "indicador-impacto";
 			$array_validacion[] = "porcentaje";
 		}
