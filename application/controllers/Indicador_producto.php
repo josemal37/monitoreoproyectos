@@ -213,5 +213,17 @@ class Indicador_producto extends Coordinador {
 			redirect(base_url("proyecto/proyectos"));
 		}
 	}
+	
+	public function get_indicadores_de_producto_ajax() {
+		if ($this->input->is_ajax_request() && isset($_POST["id_producto"])) {
+			$id_producto = $this->input->post("id_producto");
+
+			$indicadores_producto = $this->Modelo_indicador_producto->select_indicadores_producto_de_producto($id_producto);
+
+			echo (json_encode($indicadores_producto));
+		} else {
+			echo("false");
+		}
+	}
 
 }

@@ -21,6 +21,25 @@ class Modelo_producto extends MY_Model {
 	public function __construct() {
 		parent::__construct();
 	}
+	
+	public function select_productos_de_proyecto($id_proyecto = FALSE) {
+		$producto = FALSE;
+
+		if ($id_proyecto) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+
+			$this->db->join(Modelo_efecto::NOMBRE_TABLA, Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID . " = " . Modelo_producto::NOMBRE_TABLA . "." . Modelo_producto::ID_EFECTO);
+			$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO);
+			$this->db->where(Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO, $id_proyecto);
+
+			$query = $this->db->get();
+
+			$producto = $this->return_result($query);
+		}
+
+		return $producto;
+	}
 
 	public function select_producto_de_proyecto($id_producto = FALSE, $id_proyecto = FALSE) {
 		$producto = FALSE;

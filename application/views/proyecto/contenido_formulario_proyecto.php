@@ -68,7 +68,7 @@ switch ($accion) {
 
 		<div>
 
-			<input type="submit" id="submit" name="submit" class="btn btn-primary">
+			<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 
 		</div>
 

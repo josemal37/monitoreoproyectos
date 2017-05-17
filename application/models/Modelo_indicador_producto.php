@@ -22,6 +22,7 @@ class Modelo_indicador_producto extends MY_Model {
 	const PORCENTAJE = "porcentaje";
 	const COLUMNAS_SELECT_ASOC_EFECTO = "indicador_producto_efecto.porcentaje";
 	const NOMBRE_TABLA_ASOC_EFECTO = "indicador_producto_efecto";
+	const COLUMNAS_SELECT_OTRA_TABLA = "indicador_producto.id as id_indicador_producto, indicador_producto.descripcion as descripcion_indicador_producto";
 
 	public function __construct() {
 		parent::__construct();
