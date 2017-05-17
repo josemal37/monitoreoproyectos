@@ -25,7 +25,7 @@ switch ($accion) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control">
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -35,7 +35,7 @@ switch ($accion) {
 
 			<label>Fecha de inicio</label>
 
-			<input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control">
+			<input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->fecha_inicio ?>"<?php endif; ?>>
 
 			<?= form_error("fecha_inicio") ?>
 
@@ -45,7 +45,7 @@ switch ($accion) {
 
 			<label>Fecha de fin</label>
 
-			<input type="text" id="fecha_fin" name="fecha_fin" class="form-control">
+			<input type="text" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->fecha_fin ?>"<?php endif; ?>>
 
 			<?= form_error("fecha_fin") ?>
 
@@ -54,7 +54,7 @@ switch ($accion) {
 		<?php
 		$con_meta = FALSE;
 
-		if ($accion == "modificar_indicador_producto" && $indicador_producto->cantidad) {
+		if ($accion == "modificar_actividad" && $actividad->cantidad) {
 			$con_meta = TRUE;
 		}
 		?>
@@ -71,7 +71,7 @@ switch ($accion) {
 
 				<label>Cantidad</label>
 
-				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_producto->cantidad ?>"<?php endif; ?>>
+				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $actividad->cantidad ?>"<?php endif; ?>>
 
 				<?= form_error("cantidad") ?>
 
@@ -81,7 +81,7 @@ switch ($accion) {
 
 				<label>Unidad</label>
 
-				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_producto->unidad ?>"<?php endif; ?>>
+				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $actividad->unidad ?>"<?php endif; ?>>
 
 				<?= form_error("unidad") ?>
 
@@ -115,7 +115,7 @@ switch ($accion) {
 
 						<?php foreach ($productos as $producto): ?>
 
-							<option value="<?= $producto->id ?>" title="<?= $producto->descripcion ?>"><?= $producto->descripcion ?></option>
+							<option value="<?= $producto->id ?>" title="<?= $producto->descripcion ?>" <?php if ($accion == "modificar_actividad" && isset($actividad->id_producto) && $producto->id == $actividad->id_producto): ?>selected<?php endif; ?>><?= $producto->descripcion ?></option>
 
 						<?php endforeach; ?>
 
@@ -143,7 +143,7 @@ switch ($accion) {
 
 						<label>Porcentaje</label>
 
-						<input type="number" id="porcentaje" name="porcentaje" class="form-control">
+						<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto)): ?>value="<?= $actividad->porcentaje ?>"<?php endif; ?>>
 
 						<?= form_error("porcentaje") ?>
 
@@ -159,7 +159,7 @@ switch ($accion) {
 
 								<?php foreach ($indicadores_producto as $indicador_producto): ?>
 
-									<option value="<?= $indicador_producto->id ?>" title="<?= $indicador_producto->descripcion ?>"><?= $indicador_producto->descripcion ?></option>
+									<option value="<?= $indicador_producto->id ?>" title="<?= $indicador_producto->descripcion ?>" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto) && $indicador_producto->id == $actividad->id_indicador_producto): ?>selected<?php endif; ?>><?= $indicador_producto->descripcion ?></option>
 
 								<?php endforeach; ?>
 

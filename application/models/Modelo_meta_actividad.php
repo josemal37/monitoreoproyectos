@@ -43,4 +43,16 @@ class Modelo_meta_actividad extends MY_Model {
 		return $insertado;
 	}
 
+	public function delete_meta_actividad_st($id_actividad = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_actividad) {
+			$this->db->where(self::ID_ACTIVIDAD, $id_actividad);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+
+		return $eliminado;
+	}
+
 }

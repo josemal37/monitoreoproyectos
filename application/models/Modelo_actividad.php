@@ -44,7 +44,7 @@ class Modelo_actividad extends MY_Model {
 			$this->set_select_indicador_producto_asociado();
 
 			$this->db->where(self::ID_PROYECTO, $id_proyecto);
-			
+
 			$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO);
 
 			$query = $this->db->get();
@@ -53,6 +53,26 @@ class Modelo_actividad extends MY_Model {
 		}
 
 		return $actividades;
+	}
+
+	public function select_actividad_de_proyecto($id_actividad = FALSE, $id_proyecto = FALSE) {
+		$actividad = FALSE;
+
+		if ($id_actividad && $id_proyecto) {
+			$this->set_select_actividad();
+			$this->set_select_meta_actividad();
+			$this->set_select_producto_asociado();
+			$this->set_select_indicador_producto_asociado();
+
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_actividad);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
+
+			$query = $this->db->get();
+
+			$actividad = $this->return_row($query);
+		}
+
+		return $actividad;
 	}
 
 	private function set_select_actividad() {
@@ -117,6 +137,48 @@ class Modelo_actividad extends MY_Model {
 		return $insertado;
 	}
 
+	public function update_actividad($id_actividad = FALSE, $nombre = "", $fecha_inicio = "", $fecha_fin = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_producto = FALSE, $id_producto = FALSE, $con_indicador_producto = FALSE, $porcentaje = FALSE, $id_indicador_producto = FALSE) {
+		$actualizado = FALSE;
+
+		if ($id_actividad && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "") {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::NOMBRE => $nombre,
+				self::FECHA_INICIO => $fecha_inicio,
+				self::FECHA_FIN => $fecha_fin
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID, $id_actividad);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			if ($actualizado) {
+				$this->Modelo_meta_actividad->delete_meta_actividad_st($id_actividad);
+				$this->desasociar_actividad_de_producto_st($id_actividad);
+				$this->desasociar_actividad_de_indicador_producto_st($id_actividad);
+
+				if ($con_meta) {
+					$this->Modelo_meta_actividad->insert_meta_actividad_st($id_actividad, $cantidad, $unidad);
+				}
+
+				if ($con_producto) {
+					$this->asociar_actividad_a_producto_st($id_actividad, $id_producto);
+
+					if ($con_indicador_producto) {
+						$this->asociar_actividad_a_indicador_producto_st($id_actividad, $id_indicador_producto, $porcentaje);
+					}
+				}
+			}
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
+	}
+
 	private function asociar_actividad_a_producto_st($id_actividad = FALSE, $id_producto = FALSE) {
 		$asociado = FALSE;
 
@@ -150,6 +212,30 @@ class Modelo_actividad extends MY_Model {
 		}
 
 		return $asociado;
+	}
+
+	private function desasociar_actividad_de_producto_st($id_actividad = FALSE) {
+		$desasociado = FALSE;
+
+		if ($id_actividad) {
+			$this->db->where(self::ID_ACTIVIDAD, $id_actividad);
+
+			$desasociado = $this->db->delete(self::NOMBRE_TABLA_ASOC_PRODUCTO);
+		}
+
+		return $desasociado;
+	}
+
+	private function desasociar_actividad_de_indicador_producto_st($id_actividad = FALSE) {
+		$desasociado = FALSE;
+
+		if ($id_actividad) {
+			$this->db->where(self::ID_ACTIVIDAD, $id_actividad);
+
+			$desasociado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO);
+		}
+
+		return $desasociado;
 	}
 
 }
