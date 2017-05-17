@@ -240,4 +240,33 @@ class Actividad extends Coordinador {
 		}
 	}
 
+	public function eliminar_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_actividad) {
+				$this->eliminar_actividad_bd($id_proyecto, $id_actividad);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_actividad_bd($id_proyecto, $id_actividad) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+
+		if ($proyecto && $actividad) {
+			if ($this->Modelo_actividad->delete_actividad($id_actividad)) {
+				redirect(base_url("actividad/actividades/" . $id_proyecto));
+			} else {
+				redirect(base_url("actividad/actividades/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
 }

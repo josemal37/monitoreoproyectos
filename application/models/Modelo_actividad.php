@@ -238,4 +238,20 @@ class Modelo_actividad extends MY_Model {
 		return $desasociado;
 	}
 
+	public function delete_actividad($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
+	}
+
 }
