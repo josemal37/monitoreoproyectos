@@ -132,9 +132,9 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
-CREATE TABLE `usuario_actividad` (
-  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
-  `id_usuario` INTEGER UNSIGNED  NOT NULL    ,
+CREATE TABLE `actividad_usuario` (
+  `id_usuario` INTEGER UNSIGNED  NOT NULL  ,
+  `id_actividad` INTEGER UNSIGNED  NOT NULL    ,
 INDEX `usuario_actividad_FKIndex1`(`id_usuario`)  ,
 INDEX `usuario_actividad_FKIndex2`(`id_actividad`),
   FOREIGN KEY(`id_usuario`)
@@ -262,6 +262,7 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 CREATE TABLE `actividad_indicador_producto` (
   `id_indicador_producto` INTEGER UNSIGNED  NOT NULL  ,
   `id_actividad` INTEGER UNSIGNED  NOT NULL    ,
+  `porcentaje` DOUBLE UNSIGNED   ,
 INDEX `actividad_indicador_producto_FKIndex1`(`id_actividad`)  ,
 INDEX `actividad_indicador_producto_FKIndex2`(`id_indicador_producto`),
   FOREIGN KEY(`id_actividad`)
@@ -343,3 +344,17 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
+CREATE TABLE `actividad_producto` (
+  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
+  `id_producto` INTEGER UNSIGNED  NOT NULL    ,
+INDEX `actividad_producto_FKIndex1`(`id_actividad`)  ,
+INDEX `actividad_producto_FKIndex2`(`id_producto`),
+  FOREIGN KEY(`id_actividad`)
+    REFERENCES `actividad`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+  FOREIGN KEY(`id_producto`)
+    REFERENCES `producto`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
