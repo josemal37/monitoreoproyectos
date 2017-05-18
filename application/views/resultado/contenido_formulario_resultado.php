@@ -23,7 +23,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Nombre</label>
+			<label>Nombre <span class="text-red">*</span></label>
 
 			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_resultado"): ?>value="<?= $resultado->nombre ?>"<?php endif; ?>>
 

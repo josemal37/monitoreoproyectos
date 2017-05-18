@@ -23,7 +23,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Nombre</label>
+			<label>Nombre <span class="text-red">*</span></label>
 
 			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->nombre ?>"<?php endif; ?>>
 
@@ -33,7 +33,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Fecha de inicio</label>
+			<label>Fecha de inicio <span class="text-red">*</span></label>
 
 			<input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->fecha_inicio ?>"<?php endif; ?>>
 
@@ -43,7 +43,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Fecha de fin</label>
+			<label>Fecha de fin <span class="text-red">*</span></label>
 
 			<input type="text" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar_actividad"): ?>value="<?= $actividad->fecha_fin ?>"<?php endif; ?>>
 
@@ -69,7 +69,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Cantidad</label>
+				<label>Cantidad <span class="text-red">*</span></label>
 
 				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $actividad->cantidad ?>"<?php endif; ?>>
 
@@ -79,7 +79,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Unidad</label>
+				<label>Unidad <span class="text-red">*</span></label>
 
 				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $actividad->unidad ?>"<?php endif; ?>>
 
@@ -109,7 +109,7 @@ switch ($accion) {
 
 				<div class="form-group">
 
-					<label>Producto</label>
+					<label>Producto <span class="text-red">*</span></label>
 
 					<select id="producto" name="producto" class="form-control">
 
@@ -141,7 +141,7 @@ switch ($accion) {
 
 					<div class="form-group">
 
-						<label>Porcentaje</label>
+						<label>Porcentaje <span class="text-red">*</span></label>
 
 						<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto)): ?>value="<?= $actividad->porcentaje ?>"<?php endif; ?>>
 
@@ -151,7 +151,7 @@ switch ($accion) {
 
 					<div class="form-group">
 
-						<label>Indicador de producto</label>
+						<label>Indicador de producto <span class="text-red">*</span></label>
 
 						<select id="indicador-producto" name="indicador-producto" class="form-control">
 

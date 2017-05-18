@@ -23,7 +23,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Descripción</label>
+			<label>Descripción <span class="text-red">*</span></label>
 
 			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar_indicador_impacto"): ?><?= $indicador_impacto->descripcion ?><?php endif; ?></textarea>
 
@@ -49,7 +49,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Cantidad</label>
+				<label>Cantidad <span class="text-red">*</span></label>
 
 				<input type="number" id="cantidad" name="cantidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->cantidad ?>"<?php endif; ?>>
 
@@ -59,7 +59,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Unidad</label>
+				<label>Unidad <span class="text-red">*</span></label>
 
 				<input type="text" id="unidad" name="unidad" class="form-control" <?php if ($con_meta): ?>value="<?= $indicador_impacto->unidad ?>"<?php endif; ?>>
 

@@ -25,7 +25,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Descripción</label>
+			<label>Descripción <span class="text-red">*</span></label>
 
 			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar_efecto"): ?><?= $efecto->descripcion ?><?php endif; ?></textarea>
 

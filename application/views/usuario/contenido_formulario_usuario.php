@@ -27,7 +27,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Nombre</label>
+				<label>Nombre <span class="text-red">*</span></label>
 
 				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?>>
 
@@ -57,7 +57,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Rol</label>
+				<label>Rol <span class="text-red">*</span></label>
 
 				<select id="rol" name="rol" class="form-control">
 
@@ -77,7 +77,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Nombre de usuario</label>
+				<label>Nombre de usuario <span class="text-red">*</span></label>
 
 				<input type="text" id="login" name="login" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->login ?>"<?php endif; ?>>
 
@@ -107,7 +107,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Contraseña anterior</label>
+				<label>Contraseña anterior <span class="text-red">*</span></label>
 
 				<input type="password" id="password_anterior" name="password_anterior" class="form-control">
 
@@ -129,13 +129,13 @@ switch ($accion) {
 
 				<?php if ($accion == "registrar_usuario" || $accion == "modificar_password_usuario"): ?>
 
-					<label>Contraseña</label>
+					<label>Contraseña <span class="text-red">*</span></label>
 
 				<?php endif; ?>
 
 				<?php if ($accion == "modificar_password"): ?>
 
-					<label>Contraseña nueva</label>
+					<label>Contraseña nueva <span class="text-red">*</span></label>
 
 				<?php endif; ?>
 
@@ -147,7 +147,7 @@ switch ($accion) {
 
 			<div class="form-group">
 
-				<label>Confirmar contraseña</label>
+				<label>Confirmar contraseña <span class="text-red">*</span></label>
 
 				<input type="password" id="confirmacion_password" name="confirmacion_password" class="form-control">
 

@@ -22,7 +22,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Nombre</label>
+			<label>Nombre <span class="text-red">*</span></label>
 
 			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_proyecto"): ?>value="<?= $proyecto->nombre ?>"<?php endif; ?>>
 
@@ -42,7 +42,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Fecha de inicio</label>
+			<label>Fecha de inicio <span class="text-red">*</span></label>
 
 			<input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar_proyecto"): ?>value="<?= $proyecto->fecha_inicio ?>"<?php endif; ?>>
 
@@ -52,7 +52,7 @@ switch ($accion) {
 
 		<div class="form-group">
 
-			<label>Fecha de fin</label>
+			<label>Fecha de fin <span class="text-red">*</span></label>
 
 			<input type="text" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar_proyecto"): ?>value="<?= $proyecto->fecha_fin ?>"<?php endif; ?>>
 
