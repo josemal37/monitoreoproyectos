@@ -22,6 +22,12 @@
 
 		<script src="<?= base_url("assets/jquery/jquery-3.1.0.min.js") ?>"></script>
 
+		<!-- JQuery UI -->
+
+		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.css") ?>" rel="stylesheet">
+		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.structure.css") ?>" rel="stylesheet">
+		<script src="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.js") ?>"></script>
+
 		<!-- Bootstrap -->
 
 		<link href="<?= base_url("assets/bootstrap/3.3.7/css/bootstrap.min.css") ?>" rel="stylesheet">

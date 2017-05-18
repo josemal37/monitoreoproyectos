@@ -76,6 +76,20 @@ switch ($accion) {
 
 </div>
 
+<script type="text/javascript">
+	$("#fecha_inicio").datepicker({dateFormat: 'yy-mm-dd'});
+	$("#fecha_fin").datepicker({dateFormat: 'yy-mm-dd'});
+
+	$('#fecha_inicio').change(function() {
+		var fecha_inicio = $("#fecha_inicio").datepicker("getDate");
+		$("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
+	});
+	$('#fecha_fin').change(function() {
+		var fecha_fin = $("#fecha_fin").datepicker("getDate");
+		$("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
+	});
+</script>
+
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
