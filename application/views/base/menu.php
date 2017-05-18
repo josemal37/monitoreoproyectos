@@ -74,6 +74,30 @@
 
 					<?php endif; ?>
 
+					<?php if ($this->uri->segment(1) == "actividad"): ?>
+
+						<!-- Actividades -->
+
+						<li class="separator">Actividades</li>
+
+						<li <?php if ($this->uri->segment(1) == "actividad" && $this->uri->segment(2) == "ver_actividades"): ?>class="active open"<?php endif; ?>>
+
+							<a href="<?= base_url("actividad/ver_actividades/" . $proyecto->id) ?>">Ver actividades<span class="glyphicon glyphicon-book pull-right"></span></a>
+
+						</li>
+
+						<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
+
+							<li <?php if ($this->uri->segment(1) == "actividad" && $this->uri->segment(2) == "editar_actividades"): ?>class="active open"<?php endif; ?>>
+
+								<a href="<?= base_url("actividad/editar_actividades/" . $proyecto->id) ?>">Editar actividades<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+
+							</li>
+
+						<?php endif; ?>
+
+					<?php endif; ?>
+
 				<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
 					<!-- Administrador -->

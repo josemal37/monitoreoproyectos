@@ -20,10 +20,24 @@ class Actividad extends Coordinador {
 	}
 
 	public function index() {
-		$this->actividades();
+		$this->editar_actividades();
+	}
+	
+	public function ver_actividades($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+		
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->cargar_vista_actividades($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
 	}
 
-	public function actividades($id_proyecto = FALSE) {
+	public function editar_actividades($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "empleado") {
@@ -131,7 +145,7 @@ class Actividad extends Coordinador {
 
 			if ($proyecto) {
 				if ($this->Modelo_actividad->insert_actividad($id_proyecto, $nombre, $fecha_inicio, $fecha_fin, $con_meta, $cantidad, $unidad, $con_producto, $id_producto, $con_indicador_producto, $porcentaje, $id_indicador_producto)) {
-					redirect(base_url("actividad/actividades/" . $id_proyecto));
+					redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 				} else {
 					redirect(base_url("actividad/registrar_actividad/" . $id_proyecto), "refresh");
 				}
@@ -227,7 +241,7 @@ class Actividad extends Coordinador {
 
 			if ($proyecto && $actividad) {
 				if ($this->Modelo_actividad->update_actividad($id_actividad, $nombre, $fecha_inicio, $fecha_fin, $con_meta, $cantidad, $unidad, $con_producto, $id_producto, $con_indicador_producto, $porcentaje, $id_indicador_producto)) {
-					redirect(base_url("actividad/actividades/" . $id_proyecto));
+					redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 				} else {
 					redirect(base_url("actividad/modificar_actividad/" . $id_proyecto . "/" . $id_actividad), "refresh");
 				}
@@ -260,9 +274,9 @@ class Actividad extends Coordinador {
 
 		if ($proyecto && $actividad) {
 			if ($this->Modelo_actividad->delete_actividad($id_actividad)) {
-				redirect(base_url("actividad/actividades/" . $id_proyecto));
+				redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 			} else {
-				redirect(base_url("actividad/actividades/" . $id_proyecto), "refresh");
+				redirect(base_url("actividad/editar_actividades/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

@@ -14,7 +14,25 @@
 
 				<li>
 
-					<h3><?= $actividad->nombre ?> <a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a> <a href="<?= base_url("actividad/eliminar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></h3>
+					<h3><?= $actividad->nombre ?> 
+
+						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
+
+							<a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs">
+
+								<span class="glyphicon glyphicon-pencil"></span>
+
+							</a> 
+
+							<a href="<?= base_url("actividad/eliminar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-danger btn-xs">
+
+								<span class="glyphicon glyphicon-trash"></span>
+
+							</a>
+
+						<?php endif; ?>
+
+					</h3>
 
 					<p><label>Fecha de inicio:</label> <?= $actividad->fecha_inicio ?></p>
 
@@ -50,6 +68,9 @@
 
 	<?php endif; ?>
 
-	<a href="<?= base_url("actividad/registrar_actividad/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Actividad</a>
+	<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
 
+		<a href="<?= base_url("actividad/registrar_actividad/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Actividad</a>
+
+	<?php endif; ?>
 </div>

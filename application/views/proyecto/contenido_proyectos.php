@@ -36,7 +36,7 @@
 
 							<div class="acciones">
 
-								<a href="<?= base_url("actividad/actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Actividades</a>
+								<a href="<?= base_url("actividad/editar_actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Actividades</a>
 
 								<a href="<?= base_url("marco_logico/ver_marco_logico/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Marco lógico</a>
 
