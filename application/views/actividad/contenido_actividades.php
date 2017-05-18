@@ -6,71 +6,76 @@
 
 	<h2>Actividades</h2>
 
-	<?php if ($actividades): ?>
+	<div class="actividades">
 
-		<ol>
+		<?php if ($actividades): ?>
 
-			<?php foreach ($actividades as $actividad): ?>
+			<ol class="lista-actividades">
 
-				<li>
+				<?php foreach ($actividades as $actividad): ?>
 
-					<h3><?= $actividad->nombre ?> 
+					<li>
 
-						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
+						<h3><?= $actividad->nombre ?> 
 
-							<a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs">
+							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
 
-								<span class="glyphicon glyphicon-pencil"></span>
+								<a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs">
 
-							</a> 
+									<span class="glyphicon glyphicon-pencil"></span>
 
-							<a href="<?= base_url("actividad/eliminar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-danger btn-xs">
+								</a> 
 
-								<span class="glyphicon glyphicon-trash"></span>
+								<a href="<?= base_url("actividad/eliminar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-danger btn-xs">
 
-							</a>
+									<span class="glyphicon glyphicon-trash"></span>
+
+								</a>
+
+							<?php endif; ?>
+
+						</h3>
+
+						<p><label>Fecha de inicio:</label> <?= $actividad->fecha_inicio ?></p>
+
+						<p><label>Fecha de fin:</label> <?= $actividad->fecha_fin ?></p>
+
+						<?php if (isset($actividad->id_meta_actividad)): ?>
+
+							<p><label>Meta:</label> <?= $actividad->cantidad ?> <?= $actividad->unidad ?></p>
 
 						<?php endif; ?>
 
-					</h3>
+						<?php if (isset($actividad->id_producto)): ?>
 
-					<p><label>Fecha de inicio:</label> <?= $actividad->fecha_inicio ?></p>
+							<p><label>Producto asociado:</label> <?= $actividad->descripcion_producto ?></p>
 
-					<p><label>Fecha de fin:</label> <?= $actividad->fecha_fin ?></p>
+						<?php endif; ?>
 
-					<?php if (isset($actividad->id_meta_actividad)): ?>
+						<?php if (isset($actividad->id_indicador_producto)): ?>
 
-						<p><label>Meta:</label> <?= $actividad->cantidad ?> <?= $actividad->unidad ?></p>
+							<p><label>Indicador de producto asociado:</label> <?= $actividad->descripcion_indicador_producto ?> (<?= $actividad->porcentaje ?>%)</p>
 
-					<?php endif; ?>
+						<?php endif; ?>
 
-					<?php if (isset($actividad->id_producto)): ?>
+					</li>
 
-						<p><label>Producto asociado:</label> <?= $actividad->descripcion_producto ?></p>
+				<?php endforeach; ?>
 
-					<?php endif; ?>
+			</ol>
 
-					<?php if (isset($actividad->id_indicador_producto)): ?>
+		<?php else: ?>
 
-						<p><label>Indicador de producto asociado:</label> <?= $actividad->descripcion_indicador_producto ?> (<?= $actividad->porcentaje ?>%)</p>
+			<p class="text-justify">No se registraron actividades.</p>
 
-					<?php endif; ?>
+		<?php endif; ?>
 
-				</li>
+		<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
 
-			<?php endforeach; ?>
+			<a href="<?= base_url("actividad/registrar_actividad/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Actividad</a>
 
-		</ol>
+		<?php endif; ?>
 
-	<?php else: ?>
+	</div>
 
-		<p class="text-justify">No se registraron actividades.</p>
-
-	<?php endif; ?>
-
-	<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
-
-		<a href="<?= base_url("actividad/registrar_actividad/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Actividad</a>
-
-	<?php endif; ?>
 </div>

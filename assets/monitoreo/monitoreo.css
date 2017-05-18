@@ -103,4 +103,20 @@ Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
           font-size: 1.5em;
           font-weight: semibold; }
 
+.actividades .btn {
+  margin-bottom: 5px; }
+.actividades ol.lista-actividades {
+  padding: 0;
+  counter-reset: counter-actividades;
+  list-style-type: none; }
+  .actividades ol.lista-actividades > li {
+    text-align: justify;
+    counter-increment: counter-actividades; }
+    .actividades ol.lista-actividades > li:before {
+      content: counter(counter-actividades,decimal) ". ";
+      font-size: 1.75em;
+      font-weight: semibold; }
+    .actividades ol.lista-actividades > li > h3 {
+      display: inline; }
+
 /*# sourceMappingURL=monitoreo.css.map */

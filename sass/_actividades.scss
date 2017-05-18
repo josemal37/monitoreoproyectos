@@ -1,0 +1,22 @@
+.actividades {
+    .btn {
+        margin-bottom: 5px;
+    }
+    ol.lista-actividades {
+        padding: 0;
+        counter-reset: counter-actividades;
+        list-style-type: none;
+        &>li {
+            text-align: justify;
+            counter-increment: counter-actividades;
+            &:before {
+                content: counter(counter-actividades, decimal) ". ";
+                font-size: 1.75em;
+                font-weight: semibold;
+            }
+            &>h3 {
+                display: inline;
+            }
+        }
+    }
+}
