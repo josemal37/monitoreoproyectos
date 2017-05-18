@@ -22,10 +22,10 @@ class Actividad extends Coordinador {
 	public function index() {
 		$this->editar_actividades();
 	}
-	
+
 	public function ver_actividades($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
-		
+
 		if ($rol == "empleado") {
 			if ($id_proyecto) {
 				$this->cargar_vista_actividades($id_proyecto);
@@ -93,6 +93,7 @@ class Actividad extends Coordinador {
 		if ($proyecto) {
 			$titulo = "Registrar actividad";
 			$productos = $this->Modelo_producto->select_productos_de_proyecto($id_proyecto);
+			$reglas_cliente = $this->actividad_validacion->get_reglas_cliente(array("nombre", "fecha_inicio", "fecha_fin", "cantidad", "unidad", "producto", "porcentaje", "indicador-producto"));
 			$indicadores_producto = FALSE;
 
 			if ($productos) {
@@ -104,6 +105,7 @@ class Actividad extends Coordinador {
 			$datos["proyecto"] = $proyecto;
 			$datos["productos"] = $productos;
 			$datos["indicadores_producto"] = $indicadores_producto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("actividad/formulario_actividad", $datos);
 		} else {
@@ -183,6 +185,7 @@ class Actividad extends Coordinador {
 		if ($proyecto && $actividad) {
 			$titulo = "Modificar actividad";
 			$productos = $this->Modelo_producto->select_productos_de_proyecto($id_proyecto);
+			$reglas_cliente = $this->actividad_validacion->get_reglas_cliente(array("nombre", "fecha_inicio", "fecha_fin", "cantidad", "unidad", "producto", "porcentaje", "indicador-producto"));
 			$indicadores_producto = FALSE;
 
 			if ($productos) {
@@ -199,6 +202,7 @@ class Actividad extends Coordinador {
 			$datos["actividad"] = $actividad;
 			$datos["productos"] = $productos;
 			$datos["indicadores_producto"] = $indicadores_producto;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("actividad/formulario_actividad", $datos);
 		} else {

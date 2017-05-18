@@ -232,3 +232,11 @@ switch ($accion) {
 		});
 	});
 </script>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+		$("#form-actividad").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>
