@@ -219,16 +219,22 @@ switch ($accion) {
 			data: {
 				id_producto: id_producto
 			},
-			dataType: "json"
-		}).done(function(response) {
-			var opciones = Array();
-			for (var i = 0; i < response.length; i++) {
-				var indicador_producto = response[i];
-				var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion);
-				opciones.push(opcion);
+			dataType: "json",
+			beforeSend: function() {
+				$("#submit").attr("disabled", true);
+			},
+			success: function(response) {
+				var opciones = Array();
+				for (var i = 0; i < response.length; i++) {
+					var indicador_producto = response[i];
+					var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion);
+					opciones.push(opcion);
+				}
+				$("#indicador-producto").find("option").remove();
+				$("#indicador-producto").append(opciones);
+
+				$("#submit").attr("disabled", false);
 			}
-			$("#indicador-producto").find("option").remove();
-			$("#indicador-producto").append(opciones);
 		});
 	});
 </script>
