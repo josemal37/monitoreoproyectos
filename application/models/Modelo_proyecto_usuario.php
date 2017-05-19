@@ -23,34 +23,7 @@ class Modelo_proyecto_usuario extends MY_Model {
 		parent::__construct();
 	}
 
-	public function insert_proyecto_usuario($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
-		$insertado = FALSE;
-
-		if ($id_usuario && $id_proyecto && $id_rol_proyecto) {
-			$this->db->trans_start();
-
-			$registro = $this->select_registro($id_usuario, $id_proyecto);
-
-			if (!$registro) {
-
-				$datos = array(
-					self::ID_USUARIO => $id_usuario,
-					self::ID_PROYECTO => $id_proyecto,
-					self::ID_ROL_PROYECTO => $id_rol_proyecto
-				);
-
-				$this->db->set($datos);
-
-				$insertado = $this->db->insert(self::NOMBRE_TABLA);
-			}
-
-			$this->db->trans_complete();
-		}
-
-		return $insertado;
-	}
-
-	private function select_registro($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
+	public function select_registro($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
 
 		$registro = FALSE;
 
@@ -68,10 +41,75 @@ class Modelo_proyecto_usuario extends MY_Model {
 
 			$query = $this->db->get();
 
-			$registro = $this->return_result($query);
+			$registro = $this->return_row($query);
 		}
 
 		return $registro;
+	}
+
+	public function insert_proyecto_usuario($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
+		$insertado = FALSE;
+
+		if ($id_usuario && $id_proyecto && $id_rol_proyecto) {
+			$this->db->trans_start();
+
+			$insertado = $this->insert_proyecto_usuario_st($id_usuario, $id_proyecto, $id_rol_proyecto);
+
+			$this->db->trans_complete();
+		}
+
+		return $insertado;
+	}
+
+	private function insert_proyecto_usuario_st($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
+		$insertado = FALSE;
+
+		if ($id_usuario && $id_proyecto && $id_rol_proyecto) {
+			$registro = $this->select_registro($id_usuario, $id_proyecto);
+
+			if (!$registro) {
+
+				$datos = array(
+					self::ID_USUARIO => $id_usuario,
+					self::ID_PROYECTO => $id_proyecto,
+					self::ID_ROL_PROYECTO => $id_rol_proyecto
+				);
+
+				$this->db->set($datos);
+
+				$insertado = $this->db->insert(self::NOMBRE_TABLA);
+			}
+		}
+
+		return $insertado;
+	}
+
+	public function update_proyecto_usuario($id_usuario = FALSE, $id_proyecto = FALSE, $id_rol_proyecto = FALSE) {
+		$actualizado = FALSE;
+
+		if ($id_usuario && $id_proyecto && $id_rol_proyecto) {
+			$this->db->trans_start();
+
+			$this->delete_proyecto_usuario_st($id_usuario, $id_proyecto);
+			$actualizado = $this->insert_proyecto_usuario_st($id_usuario, $id_proyecto, $id_rol_proyecto);
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
+	}
+
+	private function delete_proyecto_usuario_st($id_usuario = FALSE, $id_proyecto = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_usuario && $id_proyecto) {
+			$this->db->where(self::ID_USUARIO, $id_usuario);
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+
+		return $eliminado;
 	}
 
 }

@@ -25,11 +25,11 @@ switch ($accion) {
 
 			<label>Usuario</label>
 
-			<select id="usuario" name="usuario" class="form-control">
+			<select id="usuario" name="usuario" class="form-control" <?php if ($accion == "modificar_personal_proyecto"): ?>disabled<?php endif; ?>>
 
 				<?php foreach ($usuarios as $usuario): ?>
 
-					<option value="<?= $usuario->id ?>"><?= $usuario->nombre_completo ?></option>
+					<option value="<?= $usuario->id ?>" <?php if ($accion == "modificar_personal_proyecto" && $usuario->id == $registro->id_usuario): ?>selected<?php endif; ?>><?= $usuario->nombre_completo ?></option>
 
 				<?php endforeach; ?>
 
@@ -53,7 +53,7 @@ switch ($accion) {
 
 				<?php foreach ($roles as $rol): ?>
 
-					<option value="<?= $rol->id ?>"><?= $rol->nombre ?></option>
+					<option value="<?= $rol->id ?>" <?php if ($accion == "modificar_personal_proyecto" && $rol->id == $registro->id_rol_proyecto): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
 
 				<?php endforeach; ?>
 

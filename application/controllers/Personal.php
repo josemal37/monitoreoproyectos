@@ -112,4 +112,68 @@ class Personal extends Coordinador {
 		}
 	}
 
+	public function modificar_personal_proyecto($id_proyecto = FALSE, $id_usuario = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_usuario) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_personal_proyecto_bd($id_proyecto, $id_usuario);
+				} else {
+					$this->cargar_vista_modificar_personal_proyecto($id_proyecto, $id_usuario);
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_modificar_personal_proyecto($id_proyecto, $id_usuario) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$registro = $this->Modelo_proyecto_usuario->select_registro($id_usuario, $id_proyecto);
+		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
+
+		if ($proyecto && $registro && $usuario) {
+			$titulo = "Modificar personal";
+			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
+			$roles = $this->Modelo_rol_proyecto->select_roles();
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+			$datos["usuarios"] = $usuarios;
+			$datos["roles"] = $roles;
+			$datos["registro"] = $registro;
+			$datos["usuario"] = $usuario;
+
+			$this->load->view("personal/formulario_personal", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function modificar_personal_proyecto_bd($id_proyecto, $id_usuario) {
+		$id_rol_proyecto = $this->input->post("rol_proyecto");
+
+		if ($this->usuario_validacion->validar(array("rol_proyecto"))) {
+			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+
+			if ($proyecto) {
+				if ($this->Modelo_proyecto_usuario->update_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
+					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+				} else {
+					$this->session->set_flashdata("error", "El usuario seleccionado ya se encuentra registrado en este proyecto.");
+					redirect(base_url("personal/modificar_personal_proyecto/" . $id_proyecto . "/" . $id_usuario), "refresh");
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_personal_proyecto($id_proyecto, $id_usuario);
+		}
+	}
+
 }
