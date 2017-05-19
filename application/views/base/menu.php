@@ -62,7 +62,7 @@
 
 						</li>
 
-						<?php if ($proyecto->usuario->nombre_rol_proyecto == "coordinador"): ?>
+						<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
 
 							<li <?php if ($this->uri->segment(1) == "marco_logico" && $this->uri->segment(2) == "editar_marco_logico"): ?>class="active open"<?php endif; ?>>
 

@@ -23,6 +23,15 @@ class Usuario_validacion extends Validacion {
 				"is_natural"
 			)
 		),
+		"usuario" => array(
+			"field" => "usuario",
+			"label" => "usuario",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
+			)
+		),
 		"nombre" => array(
 			"field" => "nombre",
 			"label" => "nombre",
@@ -68,6 +77,24 @@ class Usuario_validacion extends Validacion {
 				"required",
 				"min_length[5]",
 				"matches[password]"
+			)
+		),
+		"rol" => array(
+			"field" => "rol",
+			"label" => "rol",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
+			)
+		),
+		"rol_proyecto" => array(
+			"field" => "rol_proyecto",
+			"label" => "rol_proyecto",
+			"rules" => array(
+				"required",
+				"numeric",
+				"is_natural"
 			)
 		)
 	);

@@ -16,6 +16,7 @@ class Modelo_rol_proyecto extends MY_Model {
 	const ID = "id";
 	const NOMBRE = "nombre";
 	const COLUMNAS_SELECT = "rol_proyecto.id, rol_proyecto.nombre";
+	const COLUMNAS_SELECT_OTRA_TABLA = "rol_proyecto.id as id_rol_proyecto, rol_proyecto.nombre as nombre_rol_proyecto";
 	const NOMBRE_TABLA = "rol_proyecto";
 	//roles
 	const ROL_COORDINADOR = "coordinador";

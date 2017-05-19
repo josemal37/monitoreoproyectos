@@ -144,8 +144,7 @@ class Modelo_proyecto extends MY_Model {
 			$proyecto->fecha_inicio = $fila->fecha_inicio;
 			$proyecto->fecha_fin = $fila->fecha_fin;
 
-			$proyecto->usuario = new stdClass();
-			$proyecto->usuario->nombre_rol_proyecto = $fila->nombre_rol_proyecto;
+			$proyecto->nombre_rol_proyecto = $fila->nombre_rol_proyecto;
 
 			//resultados
 			$proyecto->resultados = $this->obtener_resultados_de_proyecto($filas_proyecto);

@@ -28,7 +28,10 @@ abstract class Coordinador extends CI_Controller {
 			"Modelo_meta_producto",
 			"Modelo_rol_proyecto",
 			"Modelo_actividad",
-			"Modelo_meta_actividad"
+			"Modelo_meta_actividad",
+			"Modelo_usuario",
+			"Modelo_proyecto_usuario",
+			"Modelo_rol"
 		));
 
 		$this->load->database("default");

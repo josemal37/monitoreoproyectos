@@ -17,6 +17,8 @@ class Modelo_rol extends MY_Model {
 	const NOMBRE = "nombre";
 	const COLUMNAS_SELECT = "rol_usuario.id, rol_usuario.nombre";
 	const NOMBRE_TABLA = "rol_usuario";
+	const COORDINADOR = "coordinador";
+	const EMPLEADO = "empleado";
 
 	public function __construct() {
 		parent::__construct();
@@ -25,11 +27,11 @@ class Modelo_rol extends MY_Model {
 	public function select_roles() {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
-		
+
 		$query = $this->db->get();
-		
+
 		$roles = $this->return_result($query);
-		
+
 		return $roles;
 	}
 

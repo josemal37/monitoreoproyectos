@@ -46,6 +46,8 @@
 
 									<a href="<?= base_url("proyecto/eliminar_proyecto/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
 
+									<a href="<?= base_url("personal/personal_proyecto/" . $proyecto->id)?>" class="btn btn-default btn-xs">Asignar personal</a>
+									
 								<?php endif; ?>
 
 							</div>

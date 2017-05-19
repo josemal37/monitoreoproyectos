@@ -43,6 +43,51 @@ class Modelo_usuario extends MY_Model {
 		return $usuarios;
 	}
 
+	public function select_usuarios_empleados() {
+		$this->set_select_usuario_y_rol();
+
+		$this->db->where(Modelo_rol::NOMBRE_TABLA . "." . Modelo_rol::NOMBRE, Modelo_rol::EMPLEADO);
+
+		$query = $this->db->get();
+
+		$usuarios = $this->return_result($query);
+
+		if ($usuarios) {
+			foreach ($usuarios as $usuario) {
+				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+			}
+		}
+
+		return $usuarios;
+	}
+
+	public function select_usuarios_de_proyecto($id_proyecto = FALSE) {
+		$usuarios = FALSE;
+
+		if ($id_proyecto) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+
+			$this->db->join(Modelo_proyecto_usuario::NOMBRE_TABLA, Modelo_proyecto_usuario::NOMBRE_TABLA . "." . Modelo_proyecto_usuario::ID_USUARIO . " = " . self::NOMBRE_TABLA . "." . self::ID);
+			$this->db->where(Modelo_proyecto_usuario::ID_PROYECTO, $id_proyecto);
+
+			$this->db->select(Modelo_rol_proyecto::COLUMNAS_SELECT_OTRA_TABLA);
+			$this->db->join(Modelo_rol_proyecto::NOMBRE_TABLA, Modelo_rol_proyecto::NOMBRE_TABLA . "." . Modelo_rol_proyecto::ID . " = " . Modelo_proyecto_usuario::NOMBRE_TABLA . "." . Modelo_proyecto_usuario::ID_ROL_PROYECTO);
+
+			$query = $this->db->get();
+
+			$usuarios = $this->return_result($query);
+
+			if ($usuarios) {
+				foreach ($usuarios as $usuario) {
+					$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+				}
+			}
+		}
+
+		return $usuarios;
+	}
+
 	public function select_usuario_por_id($id = FALSE) {
 		$usuario = FALSE;
 
