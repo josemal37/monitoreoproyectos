@@ -100,6 +100,7 @@ class Personal extends Coordinador {
 				if ($this->Modelo_proyecto_usuario->insert_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
 					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 				} else {
+					$this->session->set_flashdata("error", "El usuario seleccionado ya se encuentra registrado en este proyecto.");
 					redirect(base_url("personal/registrar_personal_proyecto/" . $id_proyecto), "refresh");
 				}
 			} else {

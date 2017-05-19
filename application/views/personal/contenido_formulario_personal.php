@@ -37,6 +37,12 @@ switch ($accion) {
 
 			<?= form_error("usuario") ?>
 
+			<?php if ($this->session->flashdata("error")): ?>
+
+				<label class="text-danger"><?= $this->session->flashdata("error") ?></label>
+
+			<?php endif; ?>
+
 		</div>
 
 		<div class="form-group">

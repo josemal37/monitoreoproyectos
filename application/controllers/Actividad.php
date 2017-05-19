@@ -28,12 +28,32 @@ class Actividad extends Coordinador {
 
 		if ($rol == "empleado") {
 			if ($id_proyecto) {
-				$this->cargar_vista_actividades($id_proyecto);
+				$this->cargar_vista_ver_actividades($id_proyecto);
 			} else {
 				redirect(base_url("proyecto/proyectos"));
 			}
 		} else {
 			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_ver_actividades($id_proyecto) {
+		$id_usuario = $this->session->userdata("id");
+
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+
+		if ($proyecto) {
+			$titulo = "Actividades";
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto($id_proyecto);
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+			$datos["actividades"] = $actividades;
+
+			$this->load->view("actividad/actividades", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
 		}
 	}
 
