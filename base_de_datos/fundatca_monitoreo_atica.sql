@@ -132,23 +132,6 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
-CREATE TABLE `actividad_usuario` (
-  `id_usuario` INTEGER UNSIGNED  NOT NULL  ,
-  `id_actividad` INTEGER UNSIGNED  NOT NULL    ,
-INDEX `usuario_actividad_FKIndex1`(`id_usuario`)  ,
-INDEX `usuario_actividad_FKIndex2`(`id_actividad`),
-  FOREIGN KEY(`id_usuario`)
-    REFERENCES `usuario`(`id`)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE,
-  FOREIGN KEY(`id_actividad`)
-    REFERENCES `actividad`(`id`)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE)
-engine = innodb default character set = utf8 collate = utf8_general_ci;
-
-
-
 CREATE TABLE `indicador_efecto_impacto` (
   `id_indicador_efecto` INTEGER UNSIGNED  NOT NULL  ,
   `id_indicador_impacto` INTEGER UNSIGNED  NOT NULL  ,
@@ -171,6 +154,7 @@ CREATE TABLE `proyecto_usuario` (
   `id_usuario` INTEGER UNSIGNED  NOT NULL  ,
   `id_proyecto` INTEGER  NOT NULL  ,
   `id_rol_proyecto` INTEGER UNSIGNED  NOT NULL    ,
+PRIMARY KEY(`id_usuario`, `id_proyecto`)  ,
 INDEX `proyecto_usuario_FKIndex1`(`id_usuario`)  ,
 INDEX `proyecto_usuario_FKIndex2`(`id_proyecto`)  ,
 INDEX `proyecto_usuario_FKIndex3`(`id_rol_proyecto`),
@@ -302,6 +286,25 @@ PRIMARY KEY(`id`)  ,
 INDEX `documento_avance_FKIndex1`(`id_avance`),
   FOREIGN KEY(`id_avance`)
     REFERENCES `avance`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
+CREATE TABLE `actividad_usuario` (
+  `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
+  `id_proyecto` INTEGER  NOT NULL  ,
+  `id_usuario` INTEGER UNSIGNED  NOT NULL    ,
+PRIMARY KEY(`id_actividad`, `id_proyecto`, `id_usuario`)  ,
+INDEX `usuario_actividad_FKIndex2`(`id_actividad`)  ,
+INDEX `actividad_usuario_FKIndex2`(`id_usuario`, `id_proyecto`),
+  FOREIGN KEY(`id_actividad`)
+    REFERENCES `actividad`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+  FOREIGN KEY(`id_usuario`, `id_proyecto`)
+    REFERENCES `proyecto_usuario`(`id_usuario`, `id_proyecto`)
       ON DELETE CASCADE
       ON UPDATE CASCADE)
 engine = innodb default character set = utf8 collate = utf8_general_ci;
