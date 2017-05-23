@@ -238,4 +238,34 @@ class Personal extends Coordinador {
 		}
 	}
 
+	public function eliminar_personal_actividad($id_proyecto = FALSE, $id_actividad = FALSE, $id_usuario) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_actividad && $id_usuario) {
+				$this->eliminar_personal_actividad_bd($id_proyecto, $id_actividad, $id_usuario);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_personal_actividad_bd($id_proyecto, $id_actividad, $id_usuario) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
+
+		if ($proyecto && $actividad && $usuario) {
+			if ($this->Modelo_actividad_usuario->delete_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
+				redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+			} else {
+				redirect(base_url("personal/personal_proyecto/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
 }

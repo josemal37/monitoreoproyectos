@@ -102,7 +102,7 @@
 
 												<td><?= $usuario->nombre_completo ?></td>
 
-												<td><a href="<?= base_url("personal/eliminar_personal_actividad/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+												<td><a href="<?= base_url("personal/eliminar_personal_actividad/" . $proyecto->id . "/" . $actividad->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
 
 											</tr>
 

@@ -88,4 +88,22 @@ class Modelo_actividad_usuario extends MY_Model {
 		return $insertado;
 	}
 
+	public function delete_actividad_usuario($id_actividad = FALSE, $id_proyecto = FALSE, $id_usuario = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_actividad && $id_proyecto && $id_usuario) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID_ACTIVIDAD, $id_actividad);
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+			$this->db->where(self::ID_USUARIO, $id_usuario);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
+	}
+
 }
