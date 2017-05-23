@@ -62,4 +62,78 @@
 
 	<a href="<?= base_url("personal/registrar_personal_proyecto/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Personal</a>
 
+	<div class="actividades">
+
+		<h2>Responsables de actividades</h2>
+
+		<?php if ($actividades): ?>
+
+			<ol class="lista-actividades">
+
+				<?php foreach ($actividades as $actividad): ?>
+
+					<li>
+
+						<h3><?= $actividad->nombre ?></h3>
+
+						<?php if ($actividad->usuarios): ?>
+
+							<div class="table-responsive">
+
+								<table class="table table-bordered">
+
+									<thead>
+
+										<tr>
+
+											<th>Nombre completo</th>
+
+											<th>Acciones</th>
+
+										</tr>
+
+									</thead>
+
+									<tbody>
+
+										<?php foreach ($actividad->usuarios as $usuario): ?>
+
+											<tr>
+
+												<td><?= $usuario->nombre_completo ?></td>
+
+												<td><a href="<?= base_url("personal/eliminar_personal_actividad/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+											</tr>
+
+										<?php endforeach; ?>
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						<?php endif; ?>
+
+						<div>
+
+							<a href="<?= base_url("personal/registrar_personal_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Responsable</a>
+
+						</div>
+
+					</li>
+
+				<?php endforeach; ?>
+
+			</ol>
+
+		<?php else: ?>
+
+			<p class="text-justify">No se registraron actividades.</p>
+
+		<?php endif; ?>
+
+	</div>
+
 </div>

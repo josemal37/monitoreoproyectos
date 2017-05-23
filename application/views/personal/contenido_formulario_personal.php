@@ -10,6 +10,9 @@ switch ($accion) {
 	case "modificar_personal_proyecto":
 		$url = base_url("personal/modificar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id);
 		break;
+	case "registrar_personal_actividad":
+		$url = base_url("personal/registrar_personal_actividad/" . $proyecto->id . "/" . $actividad->id);
+		break;
 }
 ?>
 
@@ -45,21 +48,25 @@ switch ($accion) {
 
 		</div>
 
-		<div class="form-group">
+		<?php if ($accion == "registrar_personal_proyecto" || $accion == "modificar_personal_proyecto"): ?>
 
-			<label>Rol en el proyecto</label>
+			<div class="form-group">
 
-			<select id="rol_proyecto" name="rol_proyecto" class="form-control">
+				<label>Rol en el proyecto</label>
 
-				<?php foreach ($roles as $rol): ?>
+				<select id="rol_proyecto" name="rol_proyecto" class="form-control">
 
-					<option value="<?= $rol->id ?>" <?php if ($accion == "modificar_personal_proyecto" && $rol->id == $registro->id_rol_proyecto): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
+					<?php foreach ($roles as $rol): ?>
 
-				<?php endforeach; ?>
+						<option value="<?= $rol->id ?>" <?php if ($accion == "modificar_personal_proyecto" && $rol->id == $registro->id_rol_proyecto): ?>selected<?php endif; ?>><?= $rol->nombre ?></option>
 
-			</select>
+					<?php endforeach; ?>
 
-		</div>
+				</select>
+
+			</div>
+
+		<?php endif; ?>
 
 		<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 

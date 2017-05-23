@@ -39,11 +39,13 @@ class Personal extends Coordinador {
 		if ($proyecto) {
 			$titulo = "Personal del proyecto";
 			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_personal($id_proyecto);
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["usuarios"] = $usuarios;
+			$datos["actividades"] = $actividades;
 
 			$this->load->view("personal/personal_proyecto", $datos);
 		} else {
@@ -173,6 +175,66 @@ class Personal extends Coordinador {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_personal_proyecto($id_proyecto, $id_usuario);
+		}
+	}
+
+	public function registrar_personal_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_actividad) {
+				if (isset($_POST["submit"])) {
+					$this->registrar_personal_actividad_bd($id_proyecto, $id_actividad);
+				} else {
+					$this->cargar_vista_registrar_personal_actividad($id_proyecto, $id_actividad);
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_registrar_personal_actividad($id_proyecto, $id_actividad) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+
+		if ($proyecto && $actividad) {
+			$titulo = "Registrar responsable";
+			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+			$datos["actividad"] = $actividad;
+			$datos["usuarios"] = $usuarios;
+
+			$this->load->view("personal/formulario_personal", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function registrar_personal_actividad_bd($id_proyecto, $id_actividad) {
+		$id_usuario = $this->input->post("usuario");
+
+		if ($this->usuario_validacion->validar(array("usuario"))) {
+			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+			$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+
+			if ($proyecto && $actividad) {
+				if ($this->Modelo_actividad_usuario->insert_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
+					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+				} else {
+					redirect(base_url("personal/registrar_personal_actividad/" . $id_proyecto . "/" . $id_actividad), "refresh");
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->registrar_personal_actividad($id_proyecto, $id_actividad);
 		}
 	}
 

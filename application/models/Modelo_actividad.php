@@ -55,6 +55,30 @@ class Modelo_actividad extends MY_Model {
 		return $actividades;
 	}
 
+	public function select_actividades_de_proyecto_con_personal($id_proyecto = FALSE) {
+		$actividades = FALSE;
+
+		if ($id_proyecto) {
+			$this->set_select_actividad();
+
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+
+			$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO);
+
+			$query = $this->db->get();
+
+			$actividades = $this->return_result($query);
+
+			if ($actividades) {
+				foreach ($actividades as $actividad) {
+					$actividad->usuarios = $this->Modelo_usuario->select_usuarios_actividad($actividad->id);
+				}
+			}
+		}
+
+		return $actividades;
+	}
+
 	public function select_actividad_de_proyecto($id_actividad = FALSE, $id_proyecto = FALSE) {
 		$actividad = FALSE;
 

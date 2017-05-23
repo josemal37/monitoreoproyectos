@@ -88,6 +88,31 @@ class Modelo_usuario extends MY_Model {
 		return $usuarios;
 	}
 
+	public function select_usuarios_actividad($id_actividad = FALSE) {
+		$usuarios = FALSE;
+
+		if ($id_actividad) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+
+			$this->db->join(Modelo_actividad_usuario::NOMBRE_TABLA, Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_USUARIO . " = " . self::NOMBRE_TABLA . "." . self::ID);
+
+			$this->db->where(Modelo_actividad_usuario::ID_ACTIVIDAD, $id_actividad);
+
+			$query = $this->db->get();
+
+			$usuarios = $this->return_result($query);
+
+			if ($usuarios) {
+				foreach ($usuarios as $usuario) {
+					$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+				}
+			}
+		}
+
+		return $usuarios;
+	}
+
 	public function select_usuario_por_id($id = FALSE) {
 		$usuario = FALSE;
 
