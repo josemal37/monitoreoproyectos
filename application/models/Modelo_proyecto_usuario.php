@@ -99,6 +99,20 @@ class Modelo_proyecto_usuario extends MY_Model {
 		return $actualizado;
 	}
 
+	public function delete_proyecto_usuario($id_usuario = FALSE, $id_proyecto = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_usuario && $id_proyecto) {
+			$this->db->trans_start();
+
+			$this->delete_proyecto_usuario_st($id_usuario, $id_proyecto);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
+	}
+
 	private function delete_proyecto_usuario_st($id_usuario = FALSE, $id_proyecto = FALSE) {
 		$eliminado = FALSE;
 
