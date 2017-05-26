@@ -21,6 +21,7 @@ class Modelo_usuario extends MY_Model {
 	const LOGIN = "login";
 	const PASSWORD = "passwd";
 	const COLUMNAS_SELECT = "usuario.id, usuario.id_rol_usuario as id_rol, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno, usuario.login, usuario.passwd as password";
+	const COLUMNAS_SELECT_OTRA_TABLA = "usuario.id as id_usuario, usuario.id_rol_usuario as id_rol_usuario, usuario.nombre as nombre_usuario, usuario.apellido_paterno as apellido_paterno_usuario, usuario.apellido_materno as apellido_materno_usuario";
 	const NOMBRE_TABLA = "usuario";
 
 	public function __construct() {

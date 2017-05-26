@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
 
-	<?php $this->load->view("actividad/datos_generales"); ?>
+	<?php $this->load->view("avance/datos_generales"); ?>
 
 	<h2>Actividades</h2>
 
@@ -16,25 +16,7 @@
 
 					<li>
 
-						<h3><?= $actividad->nombre ?> 
-
-							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
-
-								<a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs">
-
-									<span class="glyphicon glyphicon-pencil"></span>
-
-								</a> 
-
-								<a href="<?= base_url("actividad/eliminar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-danger btn-xs">
-
-									<span class="glyphicon glyphicon-trash"></span>
-
-								</a>
-
-							<?php endif; ?>
-
-						</h3>
+						<h3><?= $actividad->nombre ?></h3>
 
 						<p><label>Fecha de inicio:</label> <?= $actividad->fecha_inicio ?></p>
 
@@ -46,15 +28,79 @@
 
 						<?php endif; ?>
 
-						<?php if (isset($actividad->id_producto)): ?>
+						<h4>Avances</h4>
 
-							<p><label>Producto asociado:</label> <?= $actividad->descripcion_producto ?></p>
+						<?php if ($actividad->avances): ?>
+
+							<div class="table-responsive">
+
+								<table class="table table-bordered">
+
+									<thead>
+
+										<tr>
+
+											<th>Cantidad</th>
+
+											<th>Descripción</th>
+
+											<th>Documentos</th>
+
+										</tr>
+
+									</thead>
+
+									<tbody>
+
+										<?php foreach ($actividad->avances as $avance): ?>
+
+											<tr>
+
+												<td><?= $avance->cantidad ?></td>
+
+												<td><?= $avance->descripcion ?></td>
+
+												<td>
+
+													<?php if ($avance->documentos): ?>
+
+														<ul>
+
+															<?php foreach ($avance->documentos as $documento): ?>
+
+																<li><a href="<?= base_url($documento->documento) ?>"><?= $documento->nombre ?></a></li>
+
+															<?php endforeach; ?>
+
+														</ul>
+
+													<?php endif; ?>
+
+												</td>
+
+											</tr>
+
+										<?php endforeach; ?>
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						<?php else: ?>
+
+							<p class="text-justify">No se registraron avances.</p>
 
 						<?php endif; ?>
 
-						<?php if (isset($actividad->id_indicador_producto)): ?>
+						<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
 
-							<p><label>Indicador de producto asociado:</label> <?= $actividad->descripcion_indicador_producto ?> (<?= $actividad->porcentaje ?>%)</p>
+							<div>
+
+								<a href="<?= base_url("avance/registrar_avance/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Avance</a>
+
+							</div>
 
 						<?php endif; ?>
 
@@ -67,12 +113,6 @@
 		<?php else: ?>
 
 			<p class="text-justify">No se registraron actividades.</p>
-
-		<?php endif; ?>
-
-		<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
-
-			<a href="<?= base_url("actividad/registrar_actividad/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Actividad</a>
 
 		<?php endif; ?>
 

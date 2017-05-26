@@ -62,9 +62,15 @@
 
 						</li>
 
-						<li class="separator">Editar proyecto</li>
+						<li <?php if ($this->uri->segment(1) == "avance" && $this->uri->segment(2) == "ver_avances"): ?>class="active open"<?php endif; ?>>
+
+							<a href="<?= base_url("avance/ver_avances/" . $proyecto->id) ?>">Ver avances<span class="glyphicon glyphicon-book pull-right"></span></a>
+
+						</li>
 
 						<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
+
+							<li class="separator">Editar proyecto</li>
 
 							<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "modificar_proyecto"): ?>class="active open"<?php endif; ?>>
 

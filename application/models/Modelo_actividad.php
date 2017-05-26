@@ -79,17 +79,51 @@ class Modelo_actividad extends MY_Model {
 		return $actividades;
 	}
 
-	public function select_actividad_de_proyecto($id_actividad = FALSE, $id_proyecto = FALSE) {
+	public function select_actividades_de_proyecto_con_avance($id_proyecto = FALSE) {
+		$actividades = FALSE;
+
+		if ($id_proyecto) {
+			$this->set_select_actividad();
+			$this->set_select_meta_actividad();
+
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
+
+			$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO);
+
+			$query = $this->db->get();
+
+			$actividades = $this->return_result($query);
+
+			if ($actividades) {
+				foreach ($actividades as $actividad) {
+					$actividad->avances = $this->Modelo_avance->select_avances_de_actividad($actividad->id);
+					$actividad->usuarios = $this->Modelo_usuario->select_usuarios_actividad($actividad->id);
+				}
+			}
+		}
+
+		return $actividades;
+	}
+
+	public function select_actividad_por_id($id_actividad = FALSE, $id_proyecto = FALSE, $id_usuario = FALSE) {
 		$actividad = FALSE;
 
-		if ($id_actividad && $id_proyecto) {
+		if ($id_actividad) {
 			$this->set_select_actividad();
 			$this->set_select_meta_actividad();
 			$this->set_select_producto_asociado();
 			$this->set_select_indicador_producto_asociado();
 
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_actividad);
-			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
+
+			if ($id_proyecto) {
+				$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
+			}
+
+			if ($id_usuario) {
+				$this->set_select_usuarios_asociados();
+				$this->db->where(Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::ID, $id_usuario);
+			}
 
 			$query = $this->db->get();
 
@@ -120,6 +154,12 @@ class Modelo_actividad extends MY_Model {
 		$this->db->select(self::COLUMNAS_SELECT_ASOC_INDICADOR_PRODUCTO);
 		$this->db->join(self::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO, self::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . self::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 		$this->db->join(Modelo_indicador_producto::NOMBRE_TABLA, Modelo_indicador_producto::NOMBRE_TABLA . "." . Modelo_indicador_producto::ID . " = " . self::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . self::ID_INDICADOR_PRODUCTO, "left");
+	}
+
+	private function set_select_usuarios_asociados() {
+		$this->db->select(Modelo_usuario::COLUMNAS_SELECT_OTRA_TABLA);
+		$this->db->join(Modelo_actividad_usuario::NOMBRE_TABLA, Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->join(Modelo_usuario::NOMBRE_TABLA, Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::ID . " = " . Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_USUARIO, "left");
 	}
 
 	public function insert_actividad($id_proyecto = FALSE, $nombre = "", $fecha_inicio = "", $fecha_fin = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_producto = FALSE, $id_producto = FALSE, $con_indicador_producto = FALSE, $porcentaje = FALSE, $id_indicador_producto = FALSE) {

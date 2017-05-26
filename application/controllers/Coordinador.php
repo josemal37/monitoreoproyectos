@@ -93,7 +93,7 @@ abstract class Coordinador extends CI_Controller {
 	}
 
 	protected function get_actividad_de_proyecto($id_actividad, $id_proyecto) {
-		$actividad = $this->Modelo_actividad->select_actividad_de_proyecto($id_actividad, $id_proyecto);
+		$actividad = $this->Modelo_actividad->select_actividad_por_id($id_actividad, $id_proyecto);
 
 		return $actividad;
 	}
