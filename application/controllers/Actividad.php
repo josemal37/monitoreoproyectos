@@ -13,6 +13,9 @@ require_once 'Coordinador.php';
 
 class Actividad extends Coordinador {
 
+	const CANTIDAD_META_POR_DEFECTO = 100;
+	const UNIDAD_META_POR_DEFECTO = "%";
+
 	public function __construct() {
 		parent::__construct();
 
@@ -50,6 +53,8 @@ class Actividad extends Coordinador {
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["actividades"] = $actividades;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("actividad/actividades", $datos);
 		} else {
@@ -82,6 +87,8 @@ class Actividad extends Coordinador {
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["actividades"] = $actividades;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("actividad/actividades", $datos);
 		} else {
@@ -126,6 +133,8 @@ class Actividad extends Coordinador {
 			$datos["productos"] = $productos;
 			$datos["indicadores_producto"] = $indicadores_producto;
 			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("actividad/formulario_actividad", $datos);
 		} else {
@@ -223,6 +232,8 @@ class Actividad extends Coordinador {
 			$datos["productos"] = $productos;
 			$datos["indicadores_producto"] = $indicadores_producto;
 			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("actividad/formulario_actividad", $datos);
 		} else {

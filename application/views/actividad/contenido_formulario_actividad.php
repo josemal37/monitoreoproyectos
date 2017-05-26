@@ -65,6 +65,8 @@ switch ($accion) {
 
 		</div>
 
+		<p class="text-info">En caso de no registrar una meta se establecerá la meta por defecto. (<?= $cantidad_meta_por_defecto ?> <?= $unidad_meta_por_defecto ?>)</p>
+
 		<div id="contenedor-meta" <?php if (!$con_meta): ?>style="display: none;"<?php endif; ?>>
 
 			<div class="form-group">
@@ -186,77 +188,77 @@ switch ($accion) {
 </div>
 
 <script type="text/javascript">
-	$("#con-meta").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-meta").show();
-		} else {
-			$("#contenedor-meta").hide();
-		}
-	});
+    $("#con-meta").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-meta").show();
+        } else {
+            $("#contenedor-meta").hide();
+        }
+    });
 
-	$("#con-indicador-producto").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-indicador-producto").show();
-		} else {
-			$("#contenedor-indicador-producto").hide();
-		}
-	});
+    $("#con-indicador-producto").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-indicador-producto").show();
+        } else {
+            $("#contenedor-indicador-producto").hide();
+        }
+    });
 
-	$("#con-producto").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-producto").show();
-		} else {
-			$("#contenedor-producto").hide();
-		}
-	});
+    $("#con-producto").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-producto").show();
+        } else {
+            $("#contenedor-producto").hide();
+        }
+    });
 
-	$("#producto").on("change", function() {
-		var id_producto = $(this).find("option:selected").prop("value");
+    $("#producto").on("change", function () {
+        var id_producto = $(this).find("option:selected").prop("value");
 
-		$.ajax({
-			url: "<?= base_url("indicador_producto/get_indicadores_de_producto_ajax") ?>",
-			method: "POST",
-			data: {
-				id_producto: id_producto
-			},
-			dataType: "json",
-			beforeSend: function() {
-				$("#submit").attr("disabled", true);
-			},
-			success: function(response) {
-				var opciones = Array();
-				for (var i = 0; i < response.length; i++) {
-					var indicador_producto = response[i];
-					var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion);
-					opciones.push(opcion);
-				}
-				$("#indicador-producto").find("option").remove();
-				$("#indicador-producto").append(opciones);
+        $.ajax({
+            url: "<?= base_url("indicador_producto/get_indicadores_de_producto_ajax") ?>",
+            method: "POST",
+            data: {
+                id_producto: id_producto
+            },
+            dataType: "json",
+            beforeSend: function () {
+                $("#submit").attr("disabled", true);
+            },
+            success: function (response) {
+                var opciones = Array();
+                for (var i = 0; i < response.length; i++) {
+                    var indicador_producto = response[i];
+                    var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion);
+                    opciones.push(opcion);
+                }
+                $("#indicador-producto").find("option").remove();
+                $("#indicador-producto").append(opciones);
 
-				$("#submit").attr("disabled", false);
-			}
-		});
-	});
+                $("#submit").attr("disabled", false);
+            }
+        });
+    });
 </script>
 
 <script type="text/javascript">
-	$("#fecha_inicio").datepicker({dateFormat: 'yy-mm-dd'});
-	$("#fecha_fin").datepicker({dateFormat: 'yy-mm-dd'});
+    $("#fecha_inicio").datepicker({dateFormat: 'yy-mm-dd'});
+    $("#fecha_fin").datepicker({dateFormat: 'yy-mm-dd'});
 
-	$('#fecha_inicio').change(function() {
-		var fecha_inicio = $("#fecha_inicio").datepicker("getDate");
-		$("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
-	});
-	$('#fecha_fin').change(function() {
-		var fecha_fin = $("#fecha_fin").datepicker("getDate");
-		$("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
-	});
+    $('#fecha_inicio').change(function () {
+        var fecha_inicio = $("#fecha_inicio").datepicker("getDate");
+        $("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
+    });
+    $('#fecha_fin').change(function () {
+        var fecha_fin = $("#fecha_fin").datepicker("getDate");
+        $("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
+    });
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-		$("#form-actividad").validate(<?= $reglas_cliente ?>);
+	    $("#form-actividad").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

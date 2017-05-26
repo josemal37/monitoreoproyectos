@@ -44,6 +44,10 @@
 
 							<p><label>Meta:</label> <?= $actividad->cantidad ?> <?= $actividad->unidad ?></p>
 
+						<?php else: ?>
+
+							<p><label>Meta:</label> <?= $cantidad_meta_por_defecto ?> <?= $unidad_meta_por_defecto ?></p>
+
 						<?php endif; ?>
 
 						<?php if (isset($actividad->id_producto)): ?>

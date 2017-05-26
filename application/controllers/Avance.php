@@ -10,6 +10,7 @@
  * @author Jose
  */
 require_once 'Coordinador.php';
+require_once 'Actividad.php';
 
 class Avance extends CI_Controller {
 
@@ -61,6 +62,8 @@ class Avance extends CI_Controller {
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["actividades"] = $actividades;
+			$datos["cantidad_meta_por_defecto"] = Actividad::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = Actividad::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("avance/avances", $datos);
 		} else {
