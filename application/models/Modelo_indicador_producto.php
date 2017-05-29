@@ -56,6 +56,7 @@ class Modelo_indicador_producto extends MY_Model {
 			$this->set_select_indicador_producto();
 			$this->set_select_meta_indicador_producto();
 			$this->set_select_indicador_efecto_asociado();
+			$this->set_select_avance_acumulado();
 
 			$this->db->where(self::ID_PRODUCTO, $id_producto);
 
@@ -99,6 +100,31 @@ class Modelo_indicador_producto extends MY_Model {
 		$this->set_select_efecto_asociado();
 		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_OTRA_TABLA);
 		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO);
+	}
+
+	private function set_select_avance_acumulado() {
+		$this->db->select(
+				"COALESCE(ROUND
+				(
+					(
+						(
+							(
+								COALESCE(SUM(avance.cantidad), 0)/meta_actividad.cantidad
+							)*
+							actividad_indicador_producto.porcentaje
+						)*
+						meta_indicador_producto.cantidad
+					)/
+					100, 
+					2
+				), 0) as cantidad_avance_actividad", FALSE);
+
+		$this->db->join(Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO, Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . Modelo_actividad::ID_INDICADOR_PRODUCTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->join(Modelo_actividad::NOMBRE_TABLA, Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID . " = " . Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . Modelo_actividad::ID_ACTIVIDAD, "left");
+		$this->db->join(Modelo_meta_actividad::NOMBRE_TABLA, Modelo_meta_actividad::NOMBRE_TABLA . "." . Modelo_meta_actividad::ID_ACTIVIDAD . " = " . Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID, "left");
+		$this->db->join(Modelo_avance::NOMBRE_TABLA, Modelo_avance::NOMBRE_TABLA . "." . Modelo_avance::ID_ACTIVIDAD . " = " . Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID, "left");
+
+		$this->db->group_by(self::NOMBRE_TABLA . "." . self::ID);
 	}
 
 	public function insert_indicador_producto($id_producto = FALSE, $descripcion = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = FALSE, $con_indicador_efecto = FALSE, $id_indicador_efecto = FALSE, $porcentaje = FALSE) {

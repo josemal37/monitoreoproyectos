@@ -42,6 +42,7 @@ class Modelo_actividad extends MY_Model {
 			$this->set_select_meta_actividad();
 			$this->set_select_producto_asociado();
 			$this->set_select_indicador_producto_asociado();
+			$this->set_select_avance_acumulado();
 
 			$this->db->where(self::ID_PROYECTO, $id_proyecto);
 

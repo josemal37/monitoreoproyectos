@@ -40,6 +40,8 @@
 
 										<th>Descripción</th>
 
+										<th>Avance</th>
+
 										<th>Meta</th>
 
 										<th>Indicador de efecto</th>
@@ -61,6 +63,8 @@
 										<tr>
 
 											<td><?= $indicador_producto->descripcion ?></td>
+
+											<td><?= $indicador_producto->cantidad_avance_actividad + 0 ?> <?= $indicador_producto->unidad ?></td>
 
 											<td><?= $indicador_producto->cantidad ?> <?= $indicador_producto->unidad ?></td>
 

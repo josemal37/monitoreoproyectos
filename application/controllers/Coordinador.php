@@ -32,6 +32,7 @@ abstract class Coordinador extends CI_Controller {
 			"Modelo_usuario",
 			"Modelo_proyecto_usuario",
 			"Modelo_actividad_usuario",
+			"Modelo_avance", 
 			"Modelo_rol"
 		));
 
