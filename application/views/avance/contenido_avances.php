@@ -26,10 +26,6 @@
 
 							<p><label>Meta:</label> <?= $actividad->cantidad ?> <?= $actividad->unidad ?></p>
 
-						<?php else: ?>
-
-							<p><label>Meta:</label> <?= $cantidad_meta_por_defecto ?> <?= $unidad_meta_por_defecto ?></p>
-
 						<?php endif; ?>
 
 						<h4>Avances</h4>
@@ -60,17 +56,7 @@
 
 											<tr>
 
-												<td><?= $avance->cantidad ?> 
-
-													<?php if ($actividad->unidad): ?>
-
-														<?= $actividad->unidad ?>
-
-													<?php else: ?>
-
-														<?= $unidad_meta_por_defecto ?>
-
-													<?php endif; ?>
+												<td><?= $avance->cantidad ?> <?= $actividad->unidad ?>
 
 												</td>
 

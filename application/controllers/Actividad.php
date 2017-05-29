@@ -160,6 +160,10 @@ class Actividad extends Coordinador {
 		if ($con_meta) {
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
+		} else {
+			$con_meta = TRUE;
+			$cantidad = self::CANTIDAD_META_POR_DEFECTO;
+			$unidad = self::UNIDAD_META_POR_DEFECTO;
 		}
 
 		if ($con_producto) {
@@ -259,6 +263,10 @@ class Actividad extends Coordinador {
 		if ($con_meta) {
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
+		} else {
+			$con_meta = TRUE;
+			$cantidad = self::CANTIDAD_META_POR_DEFECTO;
+			$unidad = self::UNIDAD_META_POR_DEFECTO;
 		}
 
 		if ($con_producto) {
