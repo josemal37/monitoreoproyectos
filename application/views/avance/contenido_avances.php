@@ -28,6 +28,8 @@
 
 						<?php endif; ?>
 
+						<p><label>Avance:</label> <?= $actividad->avance_acumulado ?> <?= $actividad->unidad ?></p>
+
 						<h4>Avances</h4>
 
 						<?php if ($actividad->avances): ?>

@@ -85,6 +85,7 @@ class Modelo_actividad extends MY_Model {
 		if ($id_proyecto) {
 			$this->set_select_actividad();
 			$this->set_select_meta_actividad();
+			$this->set_select_avance_acumulado();
 
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
 
@@ -160,6 +161,12 @@ class Modelo_actividad extends MY_Model {
 		$this->db->select(Modelo_usuario::COLUMNAS_SELECT_OTRA_TABLA);
 		$this->db->join(Modelo_actividad_usuario::NOMBRE_TABLA, Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 		$this->db->join(Modelo_usuario::NOMBRE_TABLA, Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::ID . " = " . Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_USUARIO, "left");
+	}
+
+	private function set_select_avance_acumulado() {
+		$this->db->select(" COALESCE(SUM(`" . Modelo_avance::NOMBRE_TABLA . "`.`" . Modelo_avance::CANTIDAD . "`), 0) as avance_acumulado", FALSE);
+		$this->db->join(Modelo_avance::NOMBRE_TABLA, Modelo_avance::NOMBRE_TABLA . "." . Modelo_avance::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->group_by(self::NOMBRE_TABLA . "." . self::ID);
 	}
 
 	public function insert_actividad($id_proyecto = FALSE, $nombre = "", $fecha_inicio = "", $fecha_fin = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_producto = FALSE, $id_producto = FALSE, $con_indicador_producto = FALSE, $porcentaje = FALSE, $id_indicador_producto = FALSE) {
