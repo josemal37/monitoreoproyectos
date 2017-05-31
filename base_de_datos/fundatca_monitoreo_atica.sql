@@ -408,3 +408,33 @@ LEFT JOIN `avance` ON `avance`.`id_actividad` = `actividad`.`id`
 GROUP BY
 	`actividad`.`id`   ;
 
+
+
+CREATE 
+VIEW `avance_indicador_producto`AS 
+SELECT
+	`indicador_producto`.`id` AS `id_indicador_producto`,
+	ROUND(
+		COALESCE (
+			(
+				SUM(
+					(
+						`avance_actividad`.`avance_acumulado` / `meta_actividad`.`cantidad`
+					) * (
+						`actividad_indicador_producto`.`porcentaje`
+					)
+				) / 100
+			) * `meta_indicador_producto`.`cantidad`,
+			0
+		),
+		3
+	) AS `avance_acumulado`
+FROM
+	`indicador_producto`
+LEFT JOIN `meta_indicador_producto` ON `meta_indicador_producto`.`id_indicador_producto` = `indicador_producto`.`id`
+LEFT JOIN `actividad_indicador_producto` ON `actividad_indicador_producto`.`id_indicador_producto` = `indicador_producto`.`id`
+LEFT JOIN `avance_actividad` ON `avance_actividad`.`id_actividad` = `actividad_indicador_producto`.`id_actividad`
+LEFT JOIN `meta_actividad` ON `meta_actividad`.`id_actividad` = `actividad_indicador_producto`.`id_actividad`
+GROUP BY
+	`indicador_producto`.`id` ;
+
