@@ -16,9 +16,9 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 	<!-- Efectos -->
 
-	<?php if ($tiene_efectos): ?>
+	<h2>Efectos</h2>
 
-		<h2>Efectos</h2>
+	<?php if ($tiene_efectos): ?>
 
 		<ol class="lista-efectos">
 
@@ -125,6 +125,10 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 			<?php endforeach; ?>
 
 		</ol>
+
+	<?php else: ?>
+
+		<p class="text-justify">No se registraron efectos.</p>
 
 	<?php endif; ?>
 

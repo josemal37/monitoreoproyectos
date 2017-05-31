@@ -4,9 +4,9 @@
 
 	<!-- Resultados clave -->
 
-	<?php if (isset($proyecto->resultados) && $proyecto->resultados): ?>
+	<h2>Resultados clave</h2>
 
-		<h2>Resultados clave</h2>
+	<?php if (isset($proyecto->resultados) && $proyecto->resultados): ?>
 
 		<ol class="lista-resultados">
 
@@ -61,6 +61,10 @@
 			<?php endforeach; ?>
 
 		</ol>
+
+	<?php else: ?>
+
+		<p class="text-justify">No se registraron resultados clave.</p>
 
 	<?php endif; ?>
 
