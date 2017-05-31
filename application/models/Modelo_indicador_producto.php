@@ -23,6 +23,9 @@ class Modelo_indicador_producto extends MY_Model {
 	const COLUMNAS_SELECT_ASOC_EFECTO = "indicador_producto_efecto.porcentaje";
 	const NOMBRE_TABLA_ASOC_EFECTO = "indicador_producto_efecto";
 	const COLUMNAS_SELECT_OTRA_TABLA = "indicador_producto.id as id_indicador_producto, indicador_producto.descripcion as descripcion_indicador_producto";
+	//tabla avance indicador producto
+	const COLUMNAS_SELECT_AVANCE_INDICADOR_PRODUCTO = "avance_indicador_producto.avance_acumulado";
+	const NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO = "avance_indicador_producto";
 
 	public function __construct() {
 		parent::__construct();
@@ -103,28 +106,8 @@ class Modelo_indicador_producto extends MY_Model {
 	}
 
 	private function set_select_avance_acumulado() {
-		$this->db->select(
-				"COALESCE(ROUND
-				(
-					(
-						(
-							(
-								COALESCE(SUM(avance.cantidad), 0)/meta_actividad.cantidad
-							)*
-							actividad_indicador_producto.porcentaje
-						)*
-						meta_indicador_producto.cantidad
-					)/
-					100, 
-					2
-				), 0) as cantidad_avance_actividad", FALSE);
-
-		$this->db->join(Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO, Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . Modelo_actividad::ID_INDICADOR_PRODUCTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-		$this->db->join(Modelo_actividad::NOMBRE_TABLA, Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID . " = " . Modelo_actividad::NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO . "." . Modelo_actividad::ID_ACTIVIDAD, "left");
-		$this->db->join(Modelo_meta_actividad::NOMBRE_TABLA, Modelo_meta_actividad::NOMBRE_TABLA . "." . Modelo_meta_actividad::ID_ACTIVIDAD . " = " . Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID, "left");
-		$this->db->join(Modelo_avance::NOMBRE_TABLA, Modelo_avance::NOMBRE_TABLA . "." . Modelo_avance::ID_ACTIVIDAD . " = " . Modelo_actividad::NOMBRE_TABLA . "." . Modelo_actividad::ID, "left");
-
-		$this->db->group_by(self::NOMBRE_TABLA . "." . self::ID);
+		$this->db->select(self::COLUMNAS_SELECT_AVANCE_INDICADOR_PRODUCTO);
+		$this->db->join(self::NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO, self::NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO . "." . self::ID_INDICADOR_PRODUCTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_indicador_producto($id_producto = FALSE, $descripcion = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = FALSE, $con_indicador_efecto = FALSE, $id_indicador_efecto = FALSE, $porcentaje = FALSE) {

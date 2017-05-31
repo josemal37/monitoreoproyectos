@@ -29,6 +29,9 @@ class Modelo_actividad extends MY_Model {
 	const PORCENTAJE = "porcentaje";
 	const COLUMNAS_SELECT_ASOC_INDICADOR_PRODUCTO = "actividad_indicador_producto.id_indicador_producto, actividad_indicador_producto.porcentaje";
 	const NOMBRE_TABLA_ASOC_INDICADOR_PRODUCTO = "actividad_indicador_producto";
+	//tabla avance actividad
+	const COLUMNAS_SELECT_AVANCE_ACTIVIDAD = "avance_actividad.avance_acumulado";
+	const NOMBRE_TABLA_AVANCE_ACTIVIDAD = "avance_actividad";
 
 	public function __construct() {
 		parent::__construct();
@@ -165,9 +168,8 @@ class Modelo_actividad extends MY_Model {
 	}
 
 	private function set_select_avance_acumulado() {
-		$this->db->select(" COALESCE(SUM(`" . Modelo_avance::NOMBRE_TABLA . "`.`" . Modelo_avance::CANTIDAD . "`), 0) as avance_acumulado", FALSE);
-		$this->db->join(Modelo_avance::NOMBRE_TABLA, Modelo_avance::NOMBRE_TABLA . "." . Modelo_avance::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-		$this->db->group_by(self::NOMBRE_TABLA . "." . self::ID);
+		$this->db->select(self::COLUMNAS_SELECT_AVANCE_ACTIVIDAD);
+		$this->db->join(self::NOMBRE_TABLA_AVANCE_ACTIVIDAD, self::NOMBRE_TABLA_AVANCE_ACTIVIDAD . "." . self::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_actividad($id_proyecto = FALSE, $nombre = "", $fecha_inicio = "", $fecha_fin = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_producto = FALSE, $id_producto = FALSE, $con_indicador_producto = FALSE, $porcentaje = FALSE, $id_indicador_producto = FALSE) {

@@ -46,7 +46,7 @@
 
 						<?php endif; ?>
 
-						<p><label>Avance:</label> <?= $actividad->avance_acumulado ?> <?= $actividad->unidad ?></p>
+						<p><label>Avance:</label> <?= $actividad->avance_acumulado + 0 ?> <?= $actividad->unidad ?></p>
 
 						<?php if (isset($actividad->id_producto)): ?>
 

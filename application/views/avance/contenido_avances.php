@@ -28,7 +28,7 @@
 
 						<?php endif; ?>
 
-						<p><label>Avance:</label> <?= $actividad->avance_acumulado ?> <?= $actividad->unidad ?></p>
+						<p><label>Avance:</label> <?= $actividad->avance_acumulado + 0 ?> <?= $actividad->unidad ?></p>
 
 						<h4>Avances</h4>
 

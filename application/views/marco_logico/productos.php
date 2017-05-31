@@ -64,7 +64,7 @@
 
 											<td><?= $indicador_producto->descripcion ?></td>
 
-											<td><?= $indicador_producto->cantidad_avance_actividad + 0 ?> <?= $indicador_producto->unidad ?></td>
+											<td><?= $indicador_producto->avance_acumulado + 0 ?> <?= $indicador_producto->unidad ?></td>
 
 											<td><?= $indicador_producto->cantidad ?> <?= $indicador_producto->unidad ?></td>
 
