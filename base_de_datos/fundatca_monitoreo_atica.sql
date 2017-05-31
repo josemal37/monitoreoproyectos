@@ -394,4 +394,17 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
+CREATE 
+VIEW `avance_actividad`AS 
+SELECT
+	`actividad`.`id` AS `id_actividad`,
+	ROUND(
+		COALESCE (SUM(`avance`.`cantidad`), 0),
+		3
+	) AS `avance_acumulado`
+FROM
+	`actividad`
+LEFT JOIN `avance` ON `avance`.`id_actividad` = `actividad`.`id`
+GROUP BY
+	`actividad`.`id`   ;
 
