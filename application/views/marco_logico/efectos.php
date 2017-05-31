@@ -46,6 +46,8 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 												<th>Descripción</th>
 
+												<th>Avance</th>
+
 												<th>Meta</th>
 
 												<th>Indicador de impacto</th>
@@ -67,6 +69,8 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 												<tr>
 
 													<td><?= $indicador_efecto->descripcion ?></td>
+
+													<td><?= $indicador_efecto->avance_acumulado + 0 ?> <?= $indicador_efecto->unidad ?></td>
 
 													<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
 

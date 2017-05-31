@@ -25,6 +25,9 @@ class Modelo_indicador_efecto extends MY_Model {
 	const PORCENTAJE = "porcentaje";
 	const COLUMNAS_SELECT_ASOC_IMPACTO = "indicador_efecto_impacto.porcentaje";
 	const NOMBRE_TABLA_ASOC_IMPACTO = "indicador_efecto_impacto";
+	//Tabla avance indicador efecto
+	const COLUMNAS_SELECT_AVANCE_INDICADOR_EFECTO = "avance_indicador_efecto.avance_acumulado";
+	const NOMBRE_TABLA_AVANCE_INDICADOR_EFECTO = "avance_indicador_efecto";
 
 	public function __construct() {
 		parent::__construct();
@@ -37,6 +40,7 @@ class Modelo_indicador_efecto extends MY_Model {
 			$this->set_select_indicador_efecto();
 			$this->set_select_meta_efecto();
 			$this->set_select_indicador_impacto_asociado();
+			$this->set_select_avance_acumulado();
 
 			$this->db->where(self::ID_EFECTO, $id_efecto);
 
@@ -98,6 +102,11 @@ class Modelo_indicador_efecto extends MY_Model {
 		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID . " = " . Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO);
 	}
 
+	private function set_select_avance_acumulado() {
+		$this->db->select(self::COLUMNAS_SELECT_AVANCE_INDICADOR_EFECTO);
+		$this->db->join(self::NOMBRE_TABLA_AVANCE_INDICADOR_EFECTO, self::NOMBRE_TABLA_AVANCE_INDICADOR_EFECTO . "." . self::ID_INDICADOR_EFECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+	}
+	
 	public function insert_indicador_efecto($id_efecto = FALSE, $descripcion = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_indicador_impacto = FALSE, $id_indicador_impacto = FALSE, $porcentaje = FALSE) {
 		$insertado = FALSE;
 
