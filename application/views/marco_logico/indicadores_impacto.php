@@ -18,6 +18,8 @@
 
 						<th>Descripción</th>
 
+						<th>Avance</th>
+
 						<th>Meta</th>
 
 						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
@@ -37,6 +39,8 @@
 						<tr>
 
 							<td><?= $indicador_impacto->descripcion ?></td>
+
+							<td><?= $indicador_impacto->avance_acumulado + 0 ?> <?= $indicador_impacto->unidad ?></td>
 
 							<td><?= $indicador_impacto->cantidad ?> <?= $indicador_impacto->unidad ?></td>
 

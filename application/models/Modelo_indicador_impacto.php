@@ -19,6 +19,10 @@ class Modelo_indicador_impacto extends MY_Model {
 	const COLUMNAS_SELECT = "indicador_impacto.id, indicador_impacto.descripcion";
 	const COLUMNAS_SELECT_OTRA_TABLA = "indicador_impacto.id as id_indicador_impacto, indicador_impacto.descripcion as descripcion_indicador_impacto";
 	const NOMBRE_TABLA = "indicador_impacto";
+	//tabla avance indicador impacto
+	const ID_INDICADOR_IMPACTO = "id_indicador_impacto";
+	const COLUMNAS_SELECT_AVANCE_INDICADOR_IMPACTO = "avance_indicador_impacto.avance_acumulado";
+	const NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO = "avance_indicador_impacto";
 
 	public function __construct() {
 		parent::__construct();
@@ -35,6 +39,9 @@ class Modelo_indicador_impacto extends MY_Model {
 			$this->db->select(Modelo_meta_impacto::COLUMNAS_SELECT_OTRA_TABLA);
 			$this->db->join(Modelo_meta_impacto::NOMBRE_TABLA, Modelo_meta_impacto::NOMBRE_TABLA . "." . Modelo_meta_impacto::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 
+			$this->db->select(self::COLUMNAS_SELECT_AVANCE_INDICADOR_IMPACTO);
+			$this->db->join(self::NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO, self::NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO . "." . self::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+			
 			$query = $this->db->get();
 
 			$indicadores = $this->return_result($query);
