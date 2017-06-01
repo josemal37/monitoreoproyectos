@@ -124,7 +124,7 @@ class Item_validacion extends Validacion {
 		"porcentaje" => array(
 			"required" => true,
 			"number" => true,
-			"range" => [1, 100]
+			"range" => array(1, 100)
 		),
 		"indicador-impacto" => array(
 			"required" => true,
