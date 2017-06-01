@@ -10,6 +10,7 @@
  * @author Jose
  */
 require_once 'Validacion.php';
+require_once 'Archivo.php';
 
 class Item_validacion extends Validacion {
 
@@ -54,7 +55,8 @@ class Item_validacion extends Validacion {
 			"rules" => array(
 				"required",
 				"numeric",
-				"is_natural"
+				"is_natural",
+				"greater_than[0]"
 			)
 		),
 		"unidad" => array(
@@ -112,16 +114,17 @@ class Item_validacion extends Validacion {
 		),
 		"cantidad" => array(
 			"required" => true,
-			"number" => true
+			"number" => true,
+			"min" => 0.0000001
 		),
 		"unidad" => array(
 			"required" => true,
 			"minlength" => 1
 		),
-		"porcentaje"=>array(
-			"required"=>true,
-			"number"=>true,
-			"range"=>[1, 100]
+		"porcentaje" => array(
+			"required" => true,
+			"number" => true,
+			"range" => [1, 100]
 		),
 		"indicador-impacto" => array(
 			"required" => true,
@@ -130,6 +133,10 @@ class Item_validacion extends Validacion {
 		"indicador-efecto" => array(
 			"required" => true,
 			"number" => true
+		),
+		"archivos[]" => array(
+			"required" => true,
+			"extension" => Archivo::EXTENSIONES_VALIDAS
 		)
 	);
 	protected $mensajes_jquery_validate = array(
@@ -152,15 +159,16 @@ class Item_validacion extends Validacion {
 		"cantidad" => array(
 			"required" => "Por favor introduzca la cantidad.",
 			"number" => "La cantidad debe ser un número.",
+			"min" => "La cantidad debe ser mayor a cero."
 		),
 		"unidad" => array(
 			"required" => "Por favor introduzca la unidad.",
 			"minlength" => "La cantidad mínina de caracteres es de 1."
 		),
-		"porcentaje"=>array(
-			"required"=>"Por favor introduzca el porcentaje.",
-			"number"=>"El porcentaje debe ser un número.",
-			"range"=>"El porcentaje debe estar entre 1 y 100."
+		"porcentaje" => array(
+			"required" => "Por favor introduzca el porcentaje.",
+			"number" => "El porcentaje debe ser un número.",
+			"range" => "El porcentaje debe estar entre 1 y 100."
 		),
 		"indicador-impacto" => array(
 			"required" => "Ocurrió un error con la identificación del indicador de impacto.",
@@ -169,6 +177,10 @@ class Item_validacion extends Validacion {
 		"indicador-efecto" => array(
 			"required" => "Ocurrió un error con la identificación del indicador de efecto.",
 			"number" => "El indicador de efecto debe ser un número."
+		),
+		"archivos[]" => array(
+			"required" => "Seleccione los archivos.",
+			"extension" => "Por favor seleccione archivos con una extensión valida."
 		)
 	);
 

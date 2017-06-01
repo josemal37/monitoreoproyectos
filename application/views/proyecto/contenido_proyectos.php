@@ -54,12 +54,6 @@
 
 			</div>
 
-			<div>
-
-				<a href="<?= base_url("proyecto/registrar_proyecto") ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Proyecto</a>
-
-			</div>
-
 		</div>
 
 	<?php else: ?>
@@ -67,6 +61,12 @@
 		<p>No se registraron proyectos.</p>
 
 	<?php endif; ?>
+
+	<div>
+
+		<a href="<?= base_url("proyecto/registrar_proyecto") ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Proyecto</a>
+
+	</div>
 
 </div>
 

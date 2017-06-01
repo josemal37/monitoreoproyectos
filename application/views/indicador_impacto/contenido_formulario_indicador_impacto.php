@@ -45,6 +45,8 @@ switch ($accion) {
 
 		</div>
 
+		<p class="text-info">En caso de no registrar una meta se establecerá la meta por defecto. (<?= $cantidad_meta_por_defecto ?> <?= $unidad_meta_por_defecto ?>)</p>
+
 		<div id="contenedor-meta" <?php if (!$con_meta): ?>style="display: none;"<?php endif; ?>>
 
 			<div class="form-group">
@@ -80,19 +82,19 @@ switch ($accion) {
 </div>
 
 <script type="text/javascript">
-	$("#con-meta").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-meta").show();
-		} else {
-			$("#contenedor-meta").hide();
-		}
-	});
+    $("#con-meta").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-meta").show();
+        } else {
+            $("#contenedor-meta").hide();
+        }
+    });
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-		$("#form-impacto").validate(<?= $reglas_cliente ?>);
+	    $("#form-impacto").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

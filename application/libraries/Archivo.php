@@ -14,7 +14,7 @@ class Archivo {
 	protected $ci;
 
 	const PATH_BASE_ARCHIVO = "archivos/";
-	const EXTENSIONES_VALIDAS = "doc|docx|xls|xlsx|pdf|jpg|png|gif";
+	const EXTENSIONES_VALIDAS = "pdf|doc|docx|xls|xlsx|ppt|pptx|jpg|png|gif|rar|zip";
 
 	public function __construct() {
 		$this->ci = & get_instance();

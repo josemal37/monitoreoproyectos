@@ -132,6 +132,14 @@ class Usuario_validacion extends Validacion {
 		),
 		"password_anterior" => array(
 			"required" => true
+		),
+		"usuario" => array(
+			"required" => true,
+			"number" => true
+		),
+		"rol_proyecto" => array(
+			"required" => true,
+			"number" => true
 		)
 	);
 	protected $mensajes_jquery_validate = array(
@@ -168,6 +176,14 @@ class Usuario_validacion extends Validacion {
 		),
 		"password_anterior" => array(
 			"required" => "Por favor introduzca su contraseña anterior."
+		),
+		"usuario" => array(
+			"required" => "Por favor seleccione un usuario.",
+			"number" => "Ocurrió un error con el usuario seleccionado."
+		),
+		"rol_proyecto" => array(
+			"required" => "Por favor seleccione un rol de proyecto.",
+			"number" => "Ocurrió un error con el rol seleccionado."
 		)
 	);
 

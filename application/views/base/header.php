@@ -25,7 +25,9 @@
 		<!-- JQuery UI -->
 
 		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.css") ?>" rel="stylesheet">
+
 		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.structure.css") ?>" rel="stylesheet">
+
 		<script src="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.js") ?>"></script>
 
 		<!-- Bootstrap -->
@@ -47,6 +49,8 @@
 		<!-- Jquery validate -->
 
 		<script src="<?= base_url("assets/jquery-validate/jquery.validate.min.js") ?>"></script>
+
+		<script src="<?= base_url("assets/jquery-validate/additional-methods.min.js") ?>"></script>
 
 		<script src="<?= base_url("assets/jquery-validate/jquery.validate.bootstrap.defaults.js") ?>"></script>
 

@@ -47,6 +47,8 @@ switch ($accion) {
 
 		</div>
 
+		<p class="text-info">En caso de no registrar una meta se establecerá la meta por defecto. (<?= $cantidad_meta_por_defecto ?> <?= $unidad_meta_por_defecto ?>)</p>
+
 		<div id="contenedor-meta" <?php if (!$con_meta): ?>style="display: none;"<?php endif; ?>>
 
 			<div class="form-group">
@@ -109,7 +111,7 @@ switch ($accion) {
 
 							<?php foreach ($indicadores_impacto as $indicador_impacto): ?>
 
-						<option value="<?= $indicador_impacto->id ?>" <?php if(isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto):?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
+								<option value="<?= $indicador_impacto->id ?>" <?php if (isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto): ?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
 
 							<?php endforeach; ?>
 
@@ -136,27 +138,27 @@ switch ($accion) {
 </div>
 
 <script type="text/javascript">
-	$("#con-meta").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-meta").show();
-		} else {
-			$("#contenedor-meta").hide();
-		}
-	});
+    $("#con-meta").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-meta").show();
+        } else {
+            $("#contenedor-meta").hide();
+        }
+    });
 
-	$("#con-indicador-impacto").on("change", function() {
-		if ($(this).prop("checked")) {
-			$("#contenedor-indicador-impacto").show();
-		} else {
-			$("#contenedor-indicador-impacto").hide();
-		}
-	});
+    $("#con-indicador-impacto").on("change", function () {
+        if ($(this).prop("checked")) {
+            $("#contenedor-indicador-impacto").show();
+        } else {
+            $("#contenedor-indicador-impacto").hide();
+        }
+    });
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-		$("#form-indicador-efecto").validate(<?= $reglas_cliente ?>);
+	    $("#form-indicador-efecto").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

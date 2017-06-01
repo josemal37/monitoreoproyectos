@@ -96,11 +96,15 @@ class Avance extends CI_Controller {
 
 		if ($proyecto && $actividad) {
 			$titulo = "Registrar avance";
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("cantidad", "descripcion", "archivos[]"));
+			$extensiones_validas = Archivo::EXTENSIONES_VALIDAS;
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["actividad"] = $actividad;
+			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["extensiones_validas"] = $extensiones_validas;
 
 			$this->load->view("avance/formulario_avance", $datos);
 		} else {
@@ -114,7 +118,7 @@ class Avance extends CI_Controller {
 		$con_archivos = $this->input->post("con-archivos") == "on";
 		$archivos = FALSE;
 
-		if ($this->item_validacion->validar("cantidad", "descripcion")) {
+		if ($this->item_validacion->validar(array("cantidad", "descripcion"))) {
 			$id_usuario = $this->session->userdata("id");
 			$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 			$actividad = $this->Modelo_actividad->select_actividad_por_id($id_actividad, $id_proyecto, $id_usuario);

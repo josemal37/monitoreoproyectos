@@ -13,6 +13,9 @@ require_once 'Coordinador.php';
 
 class Indicador_impacto extends Coordinador {
 
+	const CANTIDAD_META_POR_DEFECTO = 100;
+	const UNIDAD_META_POR_DEFECTO = "%";
+
 	public function __construct() {
 		parent::__construct();
 
@@ -48,6 +51,8 @@ class Indicador_impacto extends Coordinador {
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("indicador_impacto/formulario_indicador_impacto", $datos);
 		} else {
@@ -66,6 +71,10 @@ class Indicador_impacto extends Coordinador {
 		if ($con_meta) {
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
+		} else {
+			$con_meta = TRUE;
+			$cantidad = self::CANTIDAD_META_POR_DEFECTO;
+			$unidad = self::UNIDAD_META_POR_DEFECTO;
 		}
 
 		if ($this->item_validacion->validar($array_validacion)) {
@@ -117,6 +126,8 @@ class Indicador_impacto extends Coordinador {
 			$datos["proyecto"] = $proyecto;
 			$datos["indicador_impacto"] = $indicador_impacto;
 			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["cantidad_meta_por_defecto"] = self::CANTIDAD_META_POR_DEFECTO;
+			$datos["unidad_meta_por_defecto"] = self::UNIDAD_META_POR_DEFECTO;
 
 			$this->load->view("indicador_impacto/formulario_indicador_impacto", $datos);
 		} else {
@@ -136,6 +147,10 @@ class Indicador_impacto extends Coordinador {
 
 			$array_validacion[] = "cantidad";
 			$array_validacion[] = "unidad";
+		} else {
+			$con_meta = TRUE;
+			$cantidad = self::CANTIDAD_META_POR_DEFECTO;
+			$unidad = self::UNIDAD_META_POR_DEFECTO;
 		}
 
 		if ($this->item_validacion->validar($array_validacion)) {

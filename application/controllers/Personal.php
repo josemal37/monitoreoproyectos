@@ -78,12 +78,14 @@ class Personal extends Coordinador {
 			$titulo = "Registrar personal";
 			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
 			$roles = $this->Modelo_rol_proyecto->select_roles();
+			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["usuarios"] = $usuarios;
 			$datos["roles"] = $roles;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("personal/formulario_personal", $datos);
 		} else {
@@ -141,6 +143,7 @@ class Personal extends Coordinador {
 			$titulo = "Modificar personal";
 			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
 			$roles = $this->Modelo_rol_proyecto->select_roles();
+			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
@@ -149,6 +152,7 @@ class Personal extends Coordinador {
 			$datos["roles"] = $roles;
 			$datos["registro"] = $registro;
 			$datos["usuario"] = $usuario;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("personal/formulario_personal", $datos);
 		} else {
@@ -232,12 +236,14 @@ class Personal extends Coordinador {
 		if ($proyecto && $actividad) {
 			$titulo = "Registrar responsable";
 			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
+			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["actividad"] = $actividad;
 			$datos["usuarios"] = $usuarios;
+			$datos["reglas_cliente"] = $reglas_cliente;
 
 			$this->load->view("personal/formulario_personal", $datos);
 		} else {

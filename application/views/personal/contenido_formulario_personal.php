@@ -22,7 +22,7 @@ switch ($accion) {
 
 	<p class="text-justify"><label>Proyecto:</label> <?= $proyecto->nombre ?></p>
 
-	<form id="form-impacto" action="<?= $url ?>" method="post">
+	<form id="form-personal" action="<?= $url ?>" method="post">
 
 		<div class="form-group">
 
@@ -73,3 +73,11 @@ switch ($accion) {
 	</form>
 
 </div>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+	    $("#form-personal").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>

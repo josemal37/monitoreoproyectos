@@ -54,6 +54,8 @@
 
 			<?php endif; ?>
 
+			<p class="text-info"><label>Extensiones validas:</label> <?= str_replace("|", ", ", $extensiones_validas) . "." ?></p>
+
 		</div>
 
 		<div>
@@ -75,3 +77,11 @@
         }
     });
 </script>
+
+<?php if (isset($reglas_cliente)): ?>
+
+	<script type="text/javascript">
+		$("#form-avance").validate(<?= $reglas_cliente ?>);
+	</script>
+
+<?php endif; ?>
