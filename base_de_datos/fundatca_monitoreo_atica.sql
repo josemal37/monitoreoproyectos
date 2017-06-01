@@ -441,6 +441,36 @@ GROUP BY
 
 
 CREATE 
+VIEW `avance_indicador_efecto`AS 
+SELECT
+	`indicador_efecto`.`id` AS `id_indicador_efecto`,
+	ROUND(
+		COALESCE (
+			(
+				SUM(
+					(
+						`avance_indicador_producto`.`avance_acumulado` / `meta_indicador_producto`.`cantidad`
+					) * (
+						`indicador_producto_efecto`.`porcentaje`
+					)
+				) / 100
+			) * `meta_indicador_efecto`.`cantidad`,
+			0
+		),
+		3
+	) AS `avance_acumulado`
+FROM
+	`indicador_efecto`
+LEFT JOIN `meta_indicador_efecto` ON `meta_indicador_efecto`.`id_indicador_efecto` = `indicador_efecto`.`id`
+LEFT JOIN `indicador_producto_efecto` ON `indicador_producto_efecto`.`id_indicador_efecto` = `indicador_efecto`.`id`
+LEFT JOIN `avance_indicador_producto` ON `avance_indicador_producto`.`id_indicador_producto` = `indicador_producto_efecto`.`id_indicador_producto`
+LEFT JOIN `meta_indicador_producto` ON `meta_indicador_producto`.`id_indicador_producto` = `indicador_producto_efecto`.`id_indicador_producto`
+GROUP BY
+	`indicador_efecto`.`id` ;
+
+
+
+CREATE 
 VIEW `avance_indicador_impacto`AS 
 SELECT
 	`indicador_impacto`.`id` AS `id_indicador_impacto`,
