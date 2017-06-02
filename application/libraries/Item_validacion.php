@@ -10,7 +10,6 @@
  * @author Jose
  */
 require_once 'Validacion.php';
-require_once 'Archivo.php';
 
 class Item_validacion extends Validacion {
 
@@ -136,7 +135,7 @@ class Item_validacion extends Validacion {
 		),
 		"archivos[]" => array(
 			"required" => true,
-			"extension" => Archivo::EXTENSIONES_VALIDAS
+			"extension" => "pdf|doc|docx|xls|xlsx|ppt|pptx|jpg|png|gif|rar|zip"
 		)
 	);
 	protected $mensajes_jquery_validate = array(
