@@ -92,6 +92,14 @@ class Item_validacion extends Validacion {
 				"numeric",
 				"is_natural"
 			)
+		),
+		"fecha" => array(
+			"field" => "fecha",
+			"label" => "fecha",
+			"rules" => array(
+				"required",
+				"date"
+			)
 		)
 	);
 	protected $jquery_validate = array(
@@ -136,6 +144,10 @@ class Item_validacion extends Validacion {
 		"archivos[]" => array(
 			"required" => true,
 			"extension" => "pdf|doc|docx|xls|xlsx|ppt|pptx|jpg|png|gif|rar|zip"
+		),
+		"fecha" => array(
+			"required" => true,
+			"date" => true
 		)
 	);
 	protected $mensajes_jquery_validate = array(
@@ -180,6 +192,10 @@ class Item_validacion extends Validacion {
 		"archivos[]" => array(
 			"required" => "Seleccione los archivos.",
 			"extension" => "Por favor seleccione archivos con una extensión valida."
+		),
+		"fecha" => array(
+			"required" => "Por favor introduzca una fecha.",
+			"date" => "Por favor introduzca una fecha valida."
 		)
 	);
 

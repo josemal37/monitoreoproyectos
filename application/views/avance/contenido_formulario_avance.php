@@ -34,6 +34,14 @@
 
 		</div>
 
+		<div class="form-group">
+
+			<label>Fecha</label>
+
+			<input type="text" id="fecha" name="fecha" class="form-control">
+
+		</div>
+
 		<div class="checkbox">
 
 			<label><input type="checkbox" id="con-archivos" name="con-archivos">Adjuntar archivos</label>
@@ -78,10 +86,14 @@
     });
 </script>
 
+<script type="text/javascript">
+	$("#fecha").datepicker({dateFormat: 'yy-mm-dd'});
+</script>
+
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-		$("#form-avance").validate(<?= $reglas_cliente ?>);
+	    $("#form-avance").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

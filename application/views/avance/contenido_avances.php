@@ -42,6 +42,8 @@
 
 										<tr>
 
+											<th>Fecha</th>
+
 											<th>Cantidad</th>
 
 											<th>Descripción</th>
@@ -57,6 +59,8 @@
 										<?php foreach ($actividad->avances as $avance): ?>
 
 											<tr>
+
+												<td><?= $avance->fecha ?></td>
 
 												<td><?= $avance->cantidad ?> <?= $actividad->unidad ?>
 

@@ -96,7 +96,7 @@ class Avance extends CI_Controller {
 
 		if ($proyecto && $actividad) {
 			$titulo = "Registrar avance";
-			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("cantidad", "descripcion", "archivos[]"));
+			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("cantidad", "descripcion", "archivos[]", "fecha"));
 			$extensiones_validas = Archivo::EXTENSIONES_VALIDAS;
 
 			$datos = array();
@@ -115,10 +115,11 @@ class Avance extends CI_Controller {
 	private function registrar_avance_bd($id_proyecto, $id_actividad) {
 		$cantidad = $this->input->post("cantidad");
 		$descripcion = $this->input->post("descripcion");
+		$fecha = $this->input->post("fecha");
 		$con_archivos = $this->input->post("con-archivos") == "on";
 		$archivos = FALSE;
 
-		if ($this->item_validacion->validar(array("cantidad", "descripcion"))) {
+		if ($this->item_validacion->validar(array("cantidad", "descripcion", "fecha"))) {
 			$id_usuario = $this->session->userdata("id");
 			$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 			$actividad = $this->Modelo_actividad->select_actividad_por_id($id_actividad, $id_proyecto, $id_usuario);
@@ -132,7 +133,7 @@ class Avance extends CI_Controller {
 					}
 				}
 				
-				if ($this->Modelo_avance->insert_avance($id_actividad, $cantidad, $descripcion, $con_archivos, $archivos)) {
+				if ($this->Modelo_avance->insert_avance($id_actividad, $cantidad, $descripcion, $fecha, $con_archivos, $archivos)) {
 					redirect(base_url("avance/ver_avances/" . $id_proyecto));
 				} else {
 					redirect(base_url("avance/registrar_avance/" . $id_proyecto . "/" . $id_actividad), "refresh");

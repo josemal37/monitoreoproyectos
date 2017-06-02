@@ -253,6 +253,7 @@ CREATE TABLE `avance` (
   `id_actividad` INTEGER UNSIGNED  NOT NULL  ,
   `cantidad` INTEGER UNSIGNED  NULL    ,
   `descripcion` TEXT NULL,
+  `fecha` DATE NULL,
 PRIMARY KEY(`id`)  ,
 INDEX `avance_FKIndex1`(`id_actividad`),
   FOREIGN KEY(`id_actividad`)

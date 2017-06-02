@@ -17,7 +17,8 @@ class Modelo_avance extends MY_Model {
 	const ID_ACTIVIDAD = "id_actividad";
 	const CANTIDAD = "cantidad";
 	const DESCRIPCION = "descripcion";
-	const COLUMNAS_SELECT = "avance.id, avance.id_actividad, avance.cantidad, avance.descripcion";
+	const FECHA = "fecha";
+	const COLUMNAS_SELECT = "avance.id, avance.id_actividad, avance.cantidad, avance.descripcion, avance.fecha";
 	const NOMBRE_TABLA = "avance";
 
 	public function __construct() {
@@ -48,7 +49,7 @@ class Modelo_avance extends MY_Model {
 		return $avances;
 	}
 
-	public function insert_avance($id_actividad = FALSE, $cantidad = FALSE, $descripcion = "", $con_archivos = FALSE, $archivos = FALSE) {
+	public function insert_avance($id_actividad = FALSE, $cantidad = FALSE, $descripcion = "", $fecha = "", $con_archivos = FALSE, $archivos = FALSE) {
 		$insertado = FALSE;
 
 		if ($id_actividad && $cantidad && $descripcion != "") {
@@ -57,7 +58,8 @@ class Modelo_avance extends MY_Model {
 			$datos = array(
 				self::ID_ACTIVIDAD => $id_actividad,
 				self::CANTIDAD => $cantidad,
-				self::DESCRIPCION => $descripcion
+				self::DESCRIPCION => $descripcion,
+				self::FECHA => $fecha
 			);
 
 			$this->db->set($datos);
