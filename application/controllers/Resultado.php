@@ -45,7 +45,7 @@ class Resultado extends Coordinador {
 		$titulo = "Registrar resultado";
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("nombre"));
 			
 			$datos = array();
@@ -64,7 +64,7 @@ class Resultado extends Coordinador {
 
 		if ($this->item_validacion->validar(array("nombre"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-			if ($proyecto) {
+			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_resultado->insert_resultado($id_proyecto, $nombre)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -102,7 +102,7 @@ class Resultado extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado = $this->Modelo_resultado->select_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-		if ($proyecto && $resultado) {
+		if ($proyecto && $resultado && !$proyecto->finalizado) {
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("nombre"));
 			
 			$datos = array();
@@ -123,7 +123,7 @@ class Resultado extends Coordinador {
 		if ($this->item_validacion->validar(array("nombre"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
-			if ($proyecto && $resultado) {
+			if ($proyecto && $resultado && !$proyecto->finalizado) {
 				if ($this->Modelo_resultado->update_resultado($id_resultado, $nombre)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -156,7 +156,7 @@ class Resultado extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-		if ($proyecto && $resultado) {
+		if ($proyecto && $resultado && !$proyecto->finalizado) {
 			if ($this->Modelo_resultado->delete_resultado($id_resultado)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

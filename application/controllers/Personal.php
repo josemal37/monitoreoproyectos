@@ -74,7 +74,7 @@ class Personal extends Coordinador {
 	private function cargar_vista_registrar_personal_proyecto($id_proyecto) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$titulo = "Registrar personal";
 			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
 			$roles = $this->Modelo_rol_proyecto->select_roles();
@@ -100,7 +100,7 @@ class Personal extends Coordinador {
 		if ($this->usuario_validacion->validar(array("usuario", "rol_proyecto"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-			if ($proyecto) {
+			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_proyecto_usuario->insert_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
 					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 				} else {
@@ -139,7 +139,7 @@ class Personal extends Coordinador {
 		$registro = $this->Modelo_proyecto_usuario->select_registro($id_usuario, $id_proyecto);
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
 
-		if ($proyecto && $registro && $usuario) {
+		if ($proyecto && $registro && $usuario && !$proyecto->finalizado) {
 			$titulo = "Modificar personal";
 			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
 			$roles = $this->Modelo_rol_proyecto->select_roles();
@@ -166,7 +166,7 @@ class Personal extends Coordinador {
 		if ($this->usuario_validacion->validar(array("rol_proyecto"))) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-			if ($proyecto) {
+			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_proyecto_usuario->update_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
 					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 				} else {
@@ -200,7 +200,7 @@ class Personal extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
 
-		if ($proyecto && $usuario) {
+		if ($proyecto && $usuario && !$proyecto->finalizado) {
 			if ($this->Modelo_proyecto_usuario->delete_proyecto_usuario($id_usuario, $id_proyecto)) {
 				redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 			} else {

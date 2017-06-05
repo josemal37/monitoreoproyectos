@@ -24,4 +24,14 @@
 
 	<p><label>Fecha de fin:</label> <?= $proyecto->fecha_fin ?></p>
 
+	<?php if ($proyecto->finalizado): ?>
+
+		<p><label>Estado:</label> Cerrado</p>
+
+	<?php else: ?>
+
+		<p><label>Estado:</label> Abierto</p>
+
+	<?php endif; ?>
+
 </div>

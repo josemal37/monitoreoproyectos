@@ -46,7 +46,7 @@ class Efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-		if ($proyecto && $resultado) {
+		if ($proyecto && $resultado && !$proyecto->finalizado) {
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 
 			$datos = array();
@@ -68,7 +68,7 @@ class Efecto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-			if ($proyecto && $resultado) {
+			if ($proyecto && $resultado && !$proyecto->finalizado) {
 				if ($this->Modelo_efecto->insert_efecto($id_resultado, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -87,7 +87,7 @@ class Efecto extends Coordinador {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "empleado") {
-			if ($id_proyecto && $id_efecto) {
+			if ($id_proyecto && $id_efecto && !$proyecto->finalizado) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_evento_bd($id_proyecto, $id_efecto);
 				} else {
@@ -106,7 +106,7 @@ class Efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-		if ($proyecto && $efecto) {
+		if ($proyecto && $efecto && !$proyecto->finalizado) {
 			$resultado = $this->get_resultado_de_proyecto($efecto->id_resultado, $id_proyecto);
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 
@@ -130,7 +130,7 @@ class Efecto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-			if ($proyecto && $efecto) {
+			if ($proyecto && $efecto && !$proyecto->finalizado) {
 				if ($this->Modelo_efecto->update_efecto($id_efecto, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -163,7 +163,7 @@ class Efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-		if ($proyecto && $efecto) {
+		if ($proyecto && $efecto && !$proyecto->finalizado) {
 			if ($this->Modelo_efecto->delete_efecto($id_efecto)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

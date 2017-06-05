@@ -20,7 +20,11 @@
 
 						<th>Rol</th>
 
-						<th>Acciones</th>
+						<?php if (!$proyecto->finalizado): ?>
+
+							<th>Acciones</th>
+
+						<?php endif; ?>
 
 					</tr>
 
@@ -36,13 +40,17 @@
 
 							<td><?= $usuario->nombre_rol_proyecto ?></td>
 
-							<td>
+							<?php if (!$proyecto->finalizado): ?>
 
-								<a href="<?= base_url("personal/modificar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+								<td>
 
-								<a href="<?= base_url("personal/eliminar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+									<a href="<?= base_url("personal/modificar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
-							</td>
+									<a href="<?= base_url("personal/eliminar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+								</td>
+
+							<?php endif; ?>
 
 						</tr>
 
@@ -60,7 +68,15 @@
 
 	<?php endif; ?>
 
-	<a href="<?= base_url("personal/registrar_personal_proyecto/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Personal</a>
+	<?php if (!$proyecto->finalizado): ?>
+
+		<div>
+
+			<a href="<?= base_url("personal/registrar_personal_proyecto/" . $proyecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Personal</a>
+
+		</div>
+
+	<?php endif; ?>
 
 	<div class="actividades">
 

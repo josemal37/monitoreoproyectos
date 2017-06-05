@@ -42,7 +42,7 @@ class Resultado_clave extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-		if ($proyecto && $resultado) {
+		if ($proyecto && $resultado && !$proyecto->finalizado) {
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 			
 			$datos = array();
@@ -64,7 +64,7 @@ class Resultado_clave extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 
-			if ($proyecto && $resultado) {
+			if ($proyecto && $resultado && !$proyecto->finalizado) {
 				if ($this->Modelo_resultado_clave->insert_resultado_clave($id_resultado, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -102,7 +102,7 @@ class Resultado_clave extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 		
-		if ($proyecto && $resultado_clave) {
+		if ($proyecto && $resultado_clave && !$proyecto->finalizado) {
 			$id_resultado = $resultado_clave->id_resultado;
 			$resultado = $this->get_resultado_de_proyecto($id_resultado, $id_proyecto);
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
@@ -127,7 +127,7 @@ class Resultado_clave extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 			
-			if ($proyecto && $resultado_clave) {
+			if ($proyecto && $resultado_clave && !$proyecto->finalizado) {
 				if ($this->Modelo_resultado_clave->update_resultado_clave($id_resultado_clave, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -160,7 +160,7 @@ class Resultado_clave extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$resultado_clave = $this->get_resultado_clave_de_proyecto($id_resultado_clave, $id_proyecto);
 		
-		if ($proyecto && $resultado_clave) {
+		if ($proyecto && $resultado_clave && !$proyecto->finalizado) {
 			if ($this->Modelo_resultado_clave->delete_resultado_clave($id_resultado_clave)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

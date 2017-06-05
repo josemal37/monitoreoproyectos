@@ -44,7 +44,7 @@ class Indicador_efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-		if ($proyecto && $efecto) {
+		if ($proyecto && $efecto && !$proyecto->finalizado) {
 			$titulo = "Registrar indicador de efecto";
 			$indicadores_impacto = $this->Modelo_indicador_impacto->select_indicadores_impacto_de_proyecto($id_proyecto);
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad", "porcentaje", "indicador-impacto"));
@@ -93,7 +93,7 @@ class Indicador_efecto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-			if ($proyecto && $efecto) {
+			if ($proyecto && $efecto && !$proyecto->finalizado) {
 				if ($this->Modelo_indicador_efecto->insert_indicador_efecto($id_efecto, $descripcion, $con_meta, $cantidad, $unidad, $con_indicador_impacto, $id_indicador_impacto, $porcentaje)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -131,7 +131,7 @@ class Indicador_efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$indicador_efecto = $this->get_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto);
 
-		if ($proyecto && $indicador_efecto) {
+		if ($proyecto && $indicador_efecto && !$proyecto->finalizado) {
 			$titulo = "Modificar indicador de efecto";
 			$efecto = $this->get_efecto_de_proyecto($indicador_efecto->id_efecto, $id_proyecto);
 			$indicadores_impacto = $this->Modelo_indicador_impacto->select_indicadores_impacto_de_proyecto($id_proyecto);
@@ -184,7 +184,7 @@ class Indicador_efecto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$indicador_efecto = $this->get_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto);
 
-			if ($proyecto && $indicador_efecto) {
+			if ($proyecto && $indicador_efecto && !$proyecto->finalizado) {
 				if ($this->Modelo_indicador_efecto->update_indicador_efecto($id_indicador_efecto, $descripcion, $con_meta, $cantidad, $unidad, $con_indicador_impacto, $id_indicador_impacto, $porcentaje)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -217,7 +217,7 @@ class Indicador_efecto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$indicador_efecto = $this->get_indicador_efecto_de_proyecto($id_indicador_efecto, $id_proyecto);
 
-		if ($proyecto && $indicador_efecto) {
+		if ($proyecto && $indicador_efecto && !$proyecto->finalizado) {
 			if ($this->Modelo_indicador_efecto->delete_indicador_efecto($id_indicador_efecto)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

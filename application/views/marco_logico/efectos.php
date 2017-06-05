@@ -52,7 +52,7 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 												<th>Indicador de impacto</th>
 
-												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
+												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
 
 													<th>Acciones</th>
 
@@ -84,7 +84,7 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 													</td>
 
-													<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
+													<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
 
 														<td>
 
@@ -108,7 +108,7 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 							<?php endif; ?>
 
-							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico"): ?>
+							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
 
 								<a href="<?= base_url("indicador_efecto/registrar_indicador_efecto/" . $proyecto->id . "/" . $efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Indicador de efecto</a>
 

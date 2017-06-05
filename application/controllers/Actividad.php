@@ -117,7 +117,7 @@ class Actividad extends Coordinador {
 	private function cargar_vista_registrar_actividad($id_proyecto) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$titulo = "Registrar actividad";
 			$productos = $this->Modelo_producto->select_productos_de_proyecto($id_proyecto);
 			$reglas_cliente = $this->actividad_validacion->get_reglas_cliente(array("nombre", "fecha_inicio", "fecha_fin", "cantidad", "unidad", "producto", "porcentaje", "indicador-producto"));
@@ -178,7 +178,7 @@ class Actividad extends Coordinador {
 		if ($this->actividad_validacion->validar($array_validacion)) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-			if ($proyecto) {
+			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_actividad->insert_actividad($id_proyecto, $nombre, $fecha_inicio, $fecha_fin, $con_meta, $cantidad, $unidad, $con_producto, $id_producto, $con_indicador_producto, $porcentaje, $id_indicador_producto)) {
 					redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 				} else {

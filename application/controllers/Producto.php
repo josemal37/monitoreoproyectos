@@ -42,7 +42,7 @@ class Producto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-		if ($proyecto && $efecto) {
+		if ($proyecto && $efecto && !$proyecto->finalizado) {
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 			
 			$datos = array();
@@ -64,7 +64,7 @@ class Producto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$efecto = $this->get_efecto_de_proyecto($id_efecto, $id_proyecto);
 
-			if ($proyecto && $efecto) {
+			if ($proyecto && $efecto && !$proyecto->finalizado) {
 				if ($this->Modelo_producto->insert_producto($id_efecto, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -102,7 +102,7 @@ class Producto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$producto = $this->get_producto_de_proyecto($id_producto, $id_proyecto);
 
-		if ($proyecto && $producto) {
+		if ($proyecto && $producto && !$proyecto->finalizado) {
 			$efecto = $this->get_efecto_de_proyecto($producto->id_efecto, $id_proyecto);
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion"));
 
@@ -126,7 +126,7 @@ class Producto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$producto = $this->get_producto_de_proyecto($id_producto, $id_proyecto);
 			
-			if ($proyecto && $producto) {
+			if ($proyecto && $producto && !$proyecto->finalizado) {
 				if ($this->Modelo_producto->update_producto($id_producto, $descripcion)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -159,7 +159,7 @@ class Producto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$producto = $this->get_producto_de_proyecto($id_producto, $id_proyecto);
 		
-		if ($proyecto && $producto) {
+		if ($proyecto && $producto && !$proyecto->finalizado) {
 			if ($this->Modelo_producto->delete_producto($id_producto)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

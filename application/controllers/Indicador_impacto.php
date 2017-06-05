@@ -43,7 +43,7 @@ class Indicador_impacto extends Coordinador {
 	private function cargar_vista_registrar_indicador_impacto($id_proyecto) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$titulo = "Registrar indicador de impacto";
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad"));
 
@@ -80,7 +80,7 @@ class Indicador_impacto extends Coordinador {
 		if ($this->item_validacion->validar($array_validacion)) {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-			if ($proyecto) {
+			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_indicador_impacto->insert_indicador_impacto($id_proyecto, $descripcion, $con_meta, $cantidad, $unidad)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -117,7 +117,7 @@ class Indicador_impacto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$indicador_impacto = $this->get_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto);
 
-		if ($proyecto && $indicador_impacto) {
+		if ($proyecto && $indicador_impacto && !$proyecto->finalizado) {
 			$titulo = "Modificar indicador de impacto";
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("descripcion", "cantidad", "unidad"));
 
@@ -157,7 +157,7 @@ class Indicador_impacto extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$indicador_impacto = $this->get_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto);
 
-			if ($proyecto && $indicador_impacto) {
+			if ($proyecto && $indicador_impacto && !$proyecto->finalizado) {
 				if ($this->Modelo_indicador_impacto->update_indicador_impacto($id_indicador_impacto, $descripcion, $con_meta, $cantidad, $unidad)) {
 					redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 				} else {
@@ -190,7 +190,7 @@ class Indicador_impacto extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$indicador_impacto = $this->get_indicador_impacto_de_proyecto($id_indicador_impacto, $id_proyecto);
 
-		if ($proyecto && $indicador_impacto) {
+		if ($proyecto && $indicador_impacto && !$proyecto->finalizado) {
 			if ($this->Modelo_indicador_impacto->delete_indicador_impacto($id_indicador_impacto)) {
 				redirect(base_url("marco_logico/editar_marco_logico/" . $id_proyecto));
 			} else {

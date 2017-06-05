@@ -13,7 +13,7 @@ class Proyecto extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array("Modelo_proyecto", "Modelo_rol_proyecto"));
+		$this->load->model(array("Modelo_proyecto", "Modelo_rol_proyecto", "Modelo_actividad"));
 		$this->load->library(array("Proyecto_validacion"));
 		$this->load->database("default");
 	}
@@ -113,7 +113,7 @@ class Proyecto extends CI_Controller {
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
 		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"));
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
@@ -171,6 +171,37 @@ class Proyecto extends CI_Controller {
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"), "refresh");
+		}
+	}
+
+	public function cerrar_proyecto($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id) {
+				$this->cerrar_proyecto_bd($id);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cerrar_proyecto_bd($id = FALSE) {
+		$id_usuario = $this->session->userdata("id");
+		$id_rol_coordindador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
+
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordindador);
+
+		if ($proyecto) {
+			if ($this->Modelo_proyecto->finalizar_proyecto($id)) {
+				redirect(base_url("avance/ver_avances/" . $id));
+			} else {
+				redirect(base_url("avance/ver_avances/" . $id), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
 		}
 	}
 

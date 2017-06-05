@@ -345,4 +345,22 @@ class Modelo_actividad extends MY_Model {
 		return $finalizada;
 	}
 
+	public function finalizar_actividades_de_proyecto_st($id_proyecto = FALSE) {
+		$finalizadas = FALSE;
+
+		if ($id_proyecto) {
+			$datos = array(
+				self::FINALIZADA => TRUE
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+
+			$finalizadas = $this->db->update(self::NOMBRE_TABLA);
+		}
+
+		return $finalizadas;
+	}
+
 }

@@ -24,4 +24,22 @@
 
 	<p><label>Fecha de fin:</label> <?= $proyecto->fecha_fin ?></p>
 
+	<?php if ($proyecto->finalizado): ?>
+
+		<p><label>Estado:</label> Cerrado</p>
+
+	<?php else: ?>
+
+		<p><label>Estado:</label> Abierto
+
+			<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
+
+				<a href="<?= base_url("proyecto/cerrar_proyecto/" . $proyecto->id) ?>" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-lock"></span> Cerrar</a>
+
+			<?php endif; ?>
+
+		</p>
+
+	<?php endif; ?>
+
 </div>

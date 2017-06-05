@@ -18,7 +18,8 @@ class Modelo_proyecto extends MY_Model {
 	const OBJETIVO = "objetivo";
 	const FECHA_INICIO = "fecha_inicio";
 	const FECHA_FIN = "fecha_fin";
-	const COLUMNAS_SELECT = "proyecto.id, proyecto.nombre, proyecto.objetivo, proyecto.fecha_inicio, proyecto.fecha_fin";
+	const FINALIZADO = "finalizado";
+	const COLUMNAS_SELECT = "proyecto.id, proyecto.nombre, proyecto.objetivo, proyecto.fecha_inicio, proyecto.fecha_fin, proyecto.finalizado";
 	const NOMBRE_TABLA = "proyecto";
 	//para el join con proyecto_usuario
 	const ID_USUARIO_PU = "id_usuario";
@@ -143,6 +144,7 @@ class Modelo_proyecto extends MY_Model {
 			$proyecto->objetivo = $fila->objetivo;
 			$proyecto->fecha_inicio = $fila->fecha_inicio;
 			$proyecto->fecha_fin = $fila->fecha_fin;
+			$proyecto->finalizado = $fila->finalizado;
 
 			$proyecto->nombre_rol_proyecto = $fila->nombre_rol_proyecto;
 
@@ -335,6 +337,32 @@ class Modelo_proyecto extends MY_Model {
 		}
 
 		return $eliminado;
+	}
+
+	public function finalizar_proyecto($id = FALSE) {
+		$finalizado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::FINALIZADO => TRUE
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+
+			$finalizado = $this->db->update(self::NOMBRE_TABLA);
+
+			if ($finalizado) {
+				$this->Modelo_actividad->finalizar_actividades_de_proyecto_st($id);
+			}
+
+			$this->db->trans_complete();
+		}
+
+		return $finalizado;
 	}
 
 }
