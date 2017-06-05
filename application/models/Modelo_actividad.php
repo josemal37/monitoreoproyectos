@@ -328,4 +328,21 @@ class Modelo_actividad extends MY_Model {
 		return $eliminado;
 	}
 
+	public function finalizar_actividad($id = FALSE) {
+		$finalizada = FALSE;
+
+		if ($id) {
+			$datos = array(
+				self::FINALIZADA => TRUE
+			);
+
+			$this->db->set($datos);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+
+			$finalizada = $this->db->update(self::NOMBRE_TABLA);
+		}
+
+		return $finalizada;
+	}
+
 }

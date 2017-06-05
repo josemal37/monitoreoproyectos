@@ -30,6 +30,24 @@
 
 						<p><label>Avance:</label> <?= $actividad->avance_acumulado + 0 ?> <?= $actividad->unidad ?></p>
 
+						<?php if ($actividad->finalizada): ?>
+
+							<p><label>Estado:</label> Cerrado</p>
+
+						<?php else: ?>
+
+							<p><label>Estado:</label> Abierto 
+
+								<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+
+									<a href="<?= base_url("actividad/cerrar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-lock"></span> Cerrar</a>
+
+								<?php endif; ?>
+
+							</p>
+
+						<?php endif; ?>
+
 						<h4>Avances</h4>
 
 						<?php if ($actividad->avances): ?>
@@ -102,7 +120,7 @@
 
 						<?php endif; ?>
 
-						<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+						<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id") && !$actividad->finalizada): ?>
 
 							<div>
 

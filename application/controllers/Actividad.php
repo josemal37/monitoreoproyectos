@@ -215,7 +215,7 @@ class Actividad extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
-		if ($proyecto && $actividad) {
+		if ($proyecto && $actividad && !$actividad->finalizada) {
 			$titulo = "Modificar actividad";
 			$productos = $this->Modelo_producto->select_productos_de_proyecto($id_proyecto);
 			$reglas_cliente = $this->actividad_validacion->get_reglas_cliente(array("nombre", "fecha_inicio", "fecha_fin", "cantidad", "unidad", "producto", "porcentaje", "indicador-producto"));
@@ -282,7 +282,7 @@ class Actividad extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
-			if ($proyecto && $actividad) {
+			if ($proyecto && $actividad && !$actividad->finalizada) {
 				if ($this->Modelo_actividad->update_actividad($id_actividad, $nombre, $fecha_inicio, $fecha_fin, $con_meta, $cantidad, $unidad, $con_producto, $id_producto, $con_indicador_producto, $porcentaje, $id_indicador_producto)) {
 					redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 				} else {
@@ -315,11 +315,41 @@ class Actividad extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
-		if ($proyecto && $actividad) {
+		if ($proyecto && $actividad && !$actividad->finalizada) {
 			if ($this->Modelo_actividad->delete_actividad($id_actividad)) {
 				redirect(base_url("actividad/editar_actividades/" . $id_proyecto));
 			} else {
 				redirect(base_url("actividad/editar_actividades/" . $id_proyecto), "refresh");
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	public function cerrar_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+
+			if ($id_proyecto && $id_actividad) {
+				$this->cerrar_actividad_bd($id_proyecto, $id_actividad);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cerrar_actividad_bd($id_proyecto, $id_actividad) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+
+		if ($proyecto && $actividad) {
+			if ($this->Modelo_actividad->finalizar_actividad($id_actividad)) {
+				redirect(base_url("actividad/ver_actividades/" . $id_proyecto));
+			} else {
+				redirect(base_url("actividad/ver_actividades/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

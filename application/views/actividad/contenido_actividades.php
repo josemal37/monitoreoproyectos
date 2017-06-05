@@ -18,7 +18,7 @@
 
 						<h3><?= $actividad->nombre ?> 
 
-							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades"): ?>
+							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_actividades" && !$actividad->finalizada): ?>
 
 								<a href="<?= base_url("actividad/modificar_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs">
 
@@ -47,6 +47,16 @@
 						<?php endif; ?>
 
 						<p><label>Avance:</label> <?= $actividad->avance_acumulado + 0 ?> <?= $actividad->unidad ?></p>
+
+						<?php if ($actividad->finalizada): ?>
+
+							<p><label>Estado:</label> Cerrado</p>
+
+						<?php else: ?>
+
+							<p><label>Estado:</label> Abierto</p>
+
+						<?php endif; ?>
 
 						<?php if (isset($actividad->id_producto)): ?>
 

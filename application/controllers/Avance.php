@@ -94,7 +94,7 @@ class Avance extends CI_Controller {
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 		$actividad = $this->Modelo_actividad->select_actividad_por_id($id_actividad, $id_proyecto, $id_usuario);
 
-		if ($proyecto && $actividad) {
+		if ($proyecto && $actividad && !$actividad->finalizada) {
 			$titulo = "Registrar avance";
 			$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("cantidad", "descripcion", "archivos[]", "fecha"));
 			$extensiones_validas = Archivo::EXTENSIONES_VALIDAS;
@@ -124,7 +124,7 @@ class Avance extends CI_Controller {
 			$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 			$actividad = $this->Modelo_actividad->select_actividad_por_id($id_actividad, $id_proyecto, $id_usuario);
 
-			if ($proyecto && $actividad) {
+			if ($proyecto && $actividad && !$actividad->finalizada) {
 				if ($con_archivos) {
 					$archivos = $this->archivo->subir_archivos("archivos", $proyecto->nombre . "/" . $actividad->nombre);
 
