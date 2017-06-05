@@ -88,7 +88,11 @@
 
 											<th>Nombre completo</th>
 
-											<th>Acciones</th>
+											<?php if (!$actividad->finalizada): ?>
+
+												<th>Acciones</th>
+
+											<?php endif; ?>
 
 										</tr>
 
@@ -102,7 +106,15 @@
 
 												<td><?= $usuario->nombre_completo ?></td>
 
-												<td><a href="<?= base_url("personal/eliminar_personal_actividad/" . $proyecto->id . "/" . $actividad->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+												<?php if (!$actividad->finalizada): ?>
+
+													<td>
+
+														<a href="<?= base_url("personal/eliminar_personal_actividad/" . $proyecto->id . "/" . $actividad->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+													</td>
+
+												<?php endif; ?>
 
 											</tr>
 
@@ -116,11 +128,15 @@
 
 						<?php endif; ?>
 
-						<div>
+						<?php if (!$actividad->finalizada): ?>
 
-							<a href="<?= base_url("personal/registrar_personal_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Responsable</a>
+							<div>
 
-						</div>
+								<a href="<?= base_url("personal/registrar_personal_actividad/" . $proyecto->id . "/" . $actividad->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Responsable</a>
+
+							</div>
+
+						<?php endif; ?>
 
 					</li>
 

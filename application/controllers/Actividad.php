@@ -342,8 +342,9 @@ class Actividad extends Coordinador {
 	}
 
 	private function cerrar_actividad_bd($id_proyecto, $id_actividad) {
-		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
-		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto, $id_usuario);
 
 		if ($proyecto && $actividad) {
 			if ($this->Modelo_actividad->finalizar_actividad($id_actividad)) {

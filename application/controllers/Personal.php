@@ -233,7 +233,7 @@ class Personal extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
-		if ($proyecto && $actividad) {
+		if ($proyecto && $actividad && !$actividad->finalizada) {
 			$titulo = "Registrar responsable";
 			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
 			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
@@ -258,7 +258,7 @@ class Personal extends Coordinador {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
-			if ($proyecto && $actividad) {
+			if ($proyecto && $actividad && !$actividad->finalizada) {
 				if ($this->Modelo_actividad_usuario->insert_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
 					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 				} else {
@@ -292,7 +292,7 @@ class Personal extends Coordinador {
 		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
 
-		if ($proyecto && $actividad && $usuario) {
+		if ($proyecto && $actividad && $usuario && !$actividad->finalizada) {
 			if ($this->Modelo_actividad_usuario->delete_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
 				redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
 			} else {
