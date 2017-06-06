@@ -43,12 +43,30 @@ class Marco_logico extends CI_Controller {
 
 		if ($rol == "empleado") {
 			if ($id_proyecto) {
-				$this->cargar_vista_marco_logico($id_proyecto);
+				$this->cargar_vista_ver_marco_logico($id_proyecto);
 			} else {
 				redirect(base_url("proyecto/proyectos"));
 			}
 		} else {
 			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_ver_marco_logico($id_proyecto) {
+		$titulo = "Marco lógico";
+
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
+
+		if ($proyecto) {
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+
+			$this->load->view("marco_logico/marco_logico", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
 		}
 	}
 
@@ -57,7 +75,7 @@ class Marco_logico extends CI_Controller {
 
 		if ($rol == "empleado") {
 			if ($id_proyecto) {
-				$this->cargar_vista_marco_logico($id_proyecto);
+				$this->cargar_vista_editar_marco_logico($id_proyecto);
 			} else {
 				redirect(base_url("proyecto/proyectos"));
 			}
@@ -66,7 +84,7 @@ class Marco_logico extends CI_Controller {
 		}
 	}
 
-	private function cargar_vista_marco_logico($id_proyecto) {
+	private function cargar_vista_editar_marco_logico($id_proyecto) {
 		$titulo = "Marco lógico";
 
 		$id_usuario = $this->session->userdata("id");
