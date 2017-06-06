@@ -19,12 +19,12 @@ class Personal extends Coordinador {
 		$this->load->library(array("Usuario_validacion"));
 	}
 
-	public function personal_proyecto($id_proyecto = FALSE) {
+	public function ver_personal_proyecto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "empleado") {
 			if ($id_proyecto) {
-				$this->cargar_vista_personal_proyecto($id_proyecto);
+				$this->cargar_vista_ver_personal_proyecto($id_proyecto);
 			} else {
 				redirect(base_url("proyecto/proyectos"));
 			}
@@ -33,11 +33,45 @@ class Personal extends Coordinador {
 		}
 	}
 
-	private function cargar_vista_personal_proyecto($id_proyecto) {
+	private function cargar_vista_ver_personal_proyecto($id_proyecto) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
 		if ($proyecto) {
 			$titulo = "Personal del proyecto";
+			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_personal($id_proyecto);
+
+			$datos = array();
+			$datos["titulo"] = $titulo;
+			$datos["proyecto"] = $proyecto;
+			$datos["usuarios"] = $usuarios;
+			$datos["actividades"] = $actividades;
+
+			$this->load->view("personal/personal_proyecto", $datos);
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	public function editar_personal_proyecto($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->cargar_vista_editar_personal_proyecto($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_editar_personal_proyecto($id_proyecto) {
+		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+
+		if ($proyecto && !$proyecto->finalizado) {
+			$titulo = "Editar personal del proyecto";
 			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
 			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_personal($id_proyecto);
 
@@ -102,7 +136,7 @@ class Personal extends Coordinador {
 
 			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_proyecto_usuario->insert_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
-					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+					redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 				} else {
 					$this->session->set_flashdata("error", "El usuario seleccionado ya se encuentra registrado en este proyecto.");
 					redirect(base_url("personal/registrar_personal_proyecto/" . $id_proyecto), "refresh");
@@ -168,7 +202,7 @@ class Personal extends Coordinador {
 
 			if ($proyecto && !$proyecto->finalizado) {
 				if ($this->Modelo_proyecto_usuario->update_proyecto_usuario($id_usuario, $id_proyecto, $id_rol_proyecto)) {
-					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+					redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 				} else {
 					$this->session->set_flashdata("error", "El usuario seleccionado ya se encuentra registrado en este proyecto.");
 					redirect(base_url("personal/modificar_personal_proyecto/" . $id_proyecto . "/" . $id_usuario), "refresh");
@@ -202,9 +236,9 @@ class Personal extends Coordinador {
 
 		if ($proyecto && $usuario && !$proyecto->finalizado) {
 			if ($this->Modelo_proyecto_usuario->delete_proyecto_usuario($id_usuario, $id_proyecto)) {
-				redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+				redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 			} else {
-				redirect(base_url("personal/personal_proyecto/" . $id_proyecto), "refresh");
+				redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));
@@ -260,7 +294,7 @@ class Personal extends Coordinador {
 
 			if ($proyecto && $actividad && !$actividad->finalizada) {
 				if ($this->Modelo_actividad_usuario->insert_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
-					redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+					redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 				} else {
 					redirect(base_url("personal/registrar_personal_actividad/" . $id_proyecto . "/" . $id_actividad), "refresh");
 				}
@@ -294,9 +328,9 @@ class Personal extends Coordinador {
 
 		if ($proyecto && $actividad && $usuario && !$actividad->finalizada) {
 			if ($this->Modelo_actividad_usuario->delete_actividad_usuario($id_actividad, $id_proyecto, $id_usuario)) {
-				redirect(base_url("personal/personal_proyecto/" . $id_proyecto));
+				redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 			} else {
-				redirect(base_url("personal/personal_proyecto/" . $id_proyecto), "refresh");
+				redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto), "refresh");
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));

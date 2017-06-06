@@ -79,7 +79,7 @@ class Actividad extends Coordinador {
 	private function cargar_vista_actividades($id_proyecto) {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			$titulo = "Actividades";
 			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto($id_proyecto);
 

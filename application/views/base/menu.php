@@ -11,7 +11,9 @@
 				<span class="sr-only">Toggle navigation</span>
 
 				<span class="icon-bar"></span>
+
                 <span class="icon-bar"></span>
+
                 <span class="icon-bar"></span>
 
             </button>
@@ -23,14 +25,6 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 
             <ul class="nav navbar-nav">
-
-                <!-- Inicio -->
-
-                <li <?php if ($this->uri->segment(1) == "administrador" || $this->uri->segment(1) == "empleado"): ?>class="active open"<?php endif; ?>>
-
-					<a href="<?= base_url() ?>">Inicio<span class="glyphicon glyphicon-menu-hamburger pull-right"></span></a>
-
-                </li>
 
 				<?php if ($this->session->userdata("rol") == "empleado"): ?>
 
@@ -68,7 +62,13 @@
 
 						</li>
 
-						<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
+						<li <?php if ($this->uri->segment(1) == "personal" && $this->uri->segment(2) == "ver_personal_proyecto"): ?>class="active open"<?php endif; ?>>
+
+							<a href="<?= base_url("personal/ver_personal_proyecto/" . $proyecto->id) ?>">Ver personal<span class="glyphicon glyphicon-book pull-right"></span></a>
+
+						</li>
+
+						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
 
 							<li class="separator">Editar proyecto</li>
 
@@ -90,9 +90,9 @@
 
 							</li>
 
-							<li <?php if ($this->uri->segment(1) == "personal" && $this->uri->segment(2) == "personal_proyecto"): ?>class="active open"<?php endif; ?>>
+							<li <?php if ($this->uri->segment(1) == "personal" && $this->uri->segment(2) == "editar_personal_proyecto"): ?>class="active open"<?php endif; ?>>
 
-								<a href="<?= base_url("personal/personal_proyecto/" . $proyecto->id) ?>">Asignar personal<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+								<a href="<?= base_url("personal/editar_personal_proyecto/" . $proyecto->id) ?>">Editar personal<span class="glyphicon glyphicon-pencil pull-right"></span></a>
 
 							</li>
 

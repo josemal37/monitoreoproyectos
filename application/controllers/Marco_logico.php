@@ -72,7 +72,7 @@ class Marco_logico extends CI_Controller {
 		$id_usuario = $this->session->userdata("id");
 		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 
 			$datos = array();
 			$datos["titulo"] = $titulo;

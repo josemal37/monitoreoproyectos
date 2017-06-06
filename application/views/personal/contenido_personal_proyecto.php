@@ -20,7 +20,7 @@
 
 						<th>Rol</th>
 
-						<?php if (!$proyecto->finalizado): ?>
+						<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$proyecto->finalizado): ?>
 
 							<th>Acciones</th>
 
@@ -40,7 +40,7 @@
 
 							<td><?= $usuario->nombre_rol_proyecto ?></td>
 
-							<?php if (!$proyecto->finalizado): ?>
+							<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$proyecto->finalizado): ?>
 
 								<td>
 
@@ -68,7 +68,7 @@
 
 	<?php endif; ?>
 
-	<?php if (!$proyecto->finalizado): ?>
+	<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$proyecto->finalizado): ?>
 
 		<div>
 
@@ -104,7 +104,7 @@
 
 											<th>Nombre completo</th>
 
-											<?php if (!$actividad->finalizada): ?>
+											<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$actividad->finalizada): ?>
 
 												<th>Acciones</th>
 
@@ -122,7 +122,7 @@
 
 												<td><?= $usuario->nombre_completo ?></td>
 
-												<?php if (!$actividad->finalizada): ?>
+												<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$actividad->finalizada): ?>
 
 													<td>
 
@@ -142,9 +142,13 @@
 
 							</div>
 
+						<?php else: ?>
+
+							<p>No se registró responsables para esta actividad.</p>
+
 						<?php endif; ?>
 
-						<?php if (!$actividad->finalizada): ?>
+						<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$actividad->finalizada): ?>
 
 							<div>
 

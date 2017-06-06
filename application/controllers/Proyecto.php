@@ -163,7 +163,7 @@ class Proyecto extends CI_Controller {
 		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
 
-		if ($proyecto) {
+		if ($proyecto && !$proyecto->finalizado) {
 			if ($this->Modelo_proyecto->delete_proyecto($id)) {
 				redirect(base_url("proyecto/proyectos"));
 			} else {
