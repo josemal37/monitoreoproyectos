@@ -44,9 +44,13 @@
 
 								<td>
 
-									<a href="<?= base_url("personal/modificar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+									<?php if ($usuario->id != $this->session->userdata("id")): ?>
 
-									<a href="<?= base_url("personal/eliminar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+										<a href="<?= base_url("personal/modificar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+
+										<a href="<?= base_url("personal/eliminar_personal_proyecto/" . $proyecto->id . "/" . $usuario->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+									<?php endif; ?>
 
 								</td>
 

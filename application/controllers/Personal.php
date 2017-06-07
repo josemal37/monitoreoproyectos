@@ -173,7 +173,7 @@ class Personal extends Coordinador {
 		$registro = $this->Modelo_proyecto_usuario->select_registro($id_usuario, $id_proyecto);
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
 
-		if ($proyecto && $registro && $usuario && !$proyecto->finalizado) {
+		if ($proyecto && $registro && $usuario && !$proyecto->finalizado && $usuario->id != $this->session->userdata("id")) {
 			$titulo = "Modificar personal";
 			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
 			$roles = $this->Modelo_rol_proyecto->select_roles();
@@ -234,7 +234,7 @@ class Personal extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id_usuario);
 
-		if ($proyecto && $usuario && !$proyecto->finalizado) {
+		if ($proyecto && $usuario && !$proyecto->finalizado && $usuario->id != $this->session->userdata("id")) {
 			if ($this->Modelo_proyecto_usuario->delete_proyecto_usuario($id_usuario, $id_proyecto)) {
 				redirect(base_url("personal/editar_personal_proyecto/" . $id_proyecto));
 			} else {
