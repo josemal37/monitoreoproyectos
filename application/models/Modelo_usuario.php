@@ -44,10 +44,25 @@ class Modelo_usuario extends MY_Model {
 		return $usuarios;
 	}
 
-	public function select_usuarios_empleados() {
+	public function select_usuarios_empleados($no_id_proyecto = FALSE) {
 		$this->set_select_usuario_y_rol();
 
 		$this->db->where(Modelo_rol::NOMBRE_TABLA . "." . Modelo_rol::NOMBRE, Modelo_rol::EMPLEADO);
+
+		if ($no_id_proyecto) {
+			$this->db->where(
+					"`usuario`.`id` NOT IN (
+						SELECT
+							`proyecto_usuario`.`id_usuario`
+						FROM
+							`proyecto_usuario`
+						WHERE
+							`proyecto_usuario`.`id_proyecto` = " . $no_id_proyecto . "
+					)"
+			);
+		}
+
+		$this->set_order_by_nombre_completo();
 
 		$query = $this->db->get();
 
@@ -62,7 +77,7 @@ class Modelo_usuario extends MY_Model {
 		return $usuarios;
 	}
 
-	public function select_usuarios_de_proyecto($id_proyecto = FALSE) {
+	public function select_usuarios_de_proyecto($id_proyecto = FALSE, $no_id_actividad = FALSE) {
 		$usuarios = FALSE;
 
 		if ($id_proyecto) {
@@ -74,6 +89,22 @@ class Modelo_usuario extends MY_Model {
 
 			$this->db->select(Modelo_rol_proyecto::COLUMNAS_SELECT_OTRA_TABLA);
 			$this->db->join(Modelo_rol_proyecto::NOMBRE_TABLA, Modelo_rol_proyecto::NOMBRE_TABLA . "." . Modelo_rol_proyecto::ID . " = " . Modelo_proyecto_usuario::NOMBRE_TABLA . "." . Modelo_proyecto_usuario::ID_ROL_PROYECTO);
+
+			if ($no_id_actividad) {
+				$this->db->where(
+						"`usuario`.`id` NOT IN (
+						SELECT
+							`actividad_usuario`.`id_usuario`
+						FROM
+							`actividad_usuario`
+						WHERE
+							`actividad_usuario`.`id_actividad` = " . $no_id_actividad . "
+					)"
+				);
+			}
+
+			$this->db->order_by(Modelo_rol_proyecto::NOMBRE_TABLA . "." . Modelo_rol_proyecto::ID);
+			$this->set_order_by_nombre_completo();
 
 			$query = $this->db->get();
 
@@ -99,6 +130,8 @@ class Modelo_usuario extends MY_Model {
 			$this->db->join(Modelo_actividad_usuario::NOMBRE_TABLA, Modelo_actividad_usuario::NOMBRE_TABLA . "." . Modelo_actividad_usuario::ID_USUARIO . " = " . self::NOMBRE_TABLA . "." . self::ID);
 
 			$this->db->where(Modelo_actividad_usuario::ID_ACTIVIDAD, $id_actividad);
+
+			$this->set_order_by_nombre_completo();
 
 			$query = $this->db->get();
 
@@ -182,6 +215,12 @@ class Modelo_usuario extends MY_Model {
 		$this->db->select(self::COLUMNAS_SELECT . ", " . Modelo_rol::NOMBRE_TABLA . "." . Modelo_rol::NOMBRE . " as nombre_rol");
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->join(Modelo_rol::NOMBRE_TABLA, Modelo_rol::NOMBRE_TABLA . "." . Modelo_rol::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_ROL);
+	}
+
+	private function set_order_by_nombre_completo() {
+		$this->db->order_by(Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::NOMBRE);
+		$this->db->order_by(Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::APELLIDO_PATERNO);
+		$this->db->order_by(Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::APELLIDO_MATERNO);
 	}
 
 	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $password = "", $id_rol = FALSE) {

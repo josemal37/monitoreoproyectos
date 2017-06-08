@@ -109,19 +109,23 @@ class Personal extends Coordinador {
 		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 
 		if ($proyecto && !$proyecto->finalizado) {
-			$titulo = "Registrar personal";
-			$usuarios = $this->Modelo_usuario->select_usuarios_empleados();
-			$roles = $this->Modelo_rol_proyecto->select_roles();
-			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
+			$usuarios = $this->Modelo_usuario->select_usuarios_empleados($id_proyecto);
+			if ($usuarios) {
+				$titulo = "Registrar personal";
+				$roles = $this->Modelo_rol_proyecto->select_roles();
+				$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
 
-			$datos = array();
-			$datos["titulo"] = $titulo;
-			$datos["proyecto"] = $proyecto;
-			$datos["usuarios"] = $usuarios;
-			$datos["roles"] = $roles;
-			$datos["reglas_cliente"] = $reglas_cliente;
+				$datos = array();
+				$datos["titulo"] = $titulo;
+				$datos["proyecto"] = $proyecto;
+				$datos["usuarios"] = $usuarios;
+				$datos["roles"] = $roles;
+				$datos["reglas_cliente"] = $reglas_cliente;
 
-			$this->load->view("personal/formulario_personal", $datos);
+				$this->load->view("personal/formulario_personal", $datos);
+			} else {
+				redirect(base_url("personal/editar_personal_proyecto/" . $proyecto->id), "refresh");
+			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));
 		}
@@ -268,18 +272,22 @@ class Personal extends Coordinador {
 		$actividad = $this->get_actividad_de_proyecto($id_actividad, $id_proyecto);
 
 		if ($proyecto && $actividad && !$actividad->finalizada) {
-			$titulo = "Registrar responsable";
-			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
-			$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
+			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto, $id_actividad);
+			if ($usuarios) {
+				$titulo = "Registrar responsable";
+				$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("usuario", "rol_proyecto"));
 
-			$datos = array();
-			$datos["titulo"] = $titulo;
-			$datos["proyecto"] = $proyecto;
-			$datos["actividad"] = $actividad;
-			$datos["usuarios"] = $usuarios;
-			$datos["reglas_cliente"] = $reglas_cliente;
+				$datos = array();
+				$datos["titulo"] = $titulo;
+				$datos["proyecto"] = $proyecto;
+				$datos["actividad"] = $actividad;
+				$datos["usuarios"] = $usuarios;
+				$datos["reglas_cliente"] = $reglas_cliente;
 
-			$this->load->view("personal/formulario_personal", $datos);
+				$this->load->view("personal/formulario_personal", $datos);
+			} else {
+				redirect(base_url("personal/editar_personal_proyecto/" . $proyecto->id), "refresh");
+			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));
 		}
