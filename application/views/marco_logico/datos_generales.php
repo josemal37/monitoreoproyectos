@@ -6,6 +6,8 @@
 
 	<h1><?= $proyecto->nombre ?></h1>
 
+	<a href="<?= base_url("reporte/marco_logico_docx/" . $proyecto->id) ?>" class="btn btn-primary">Reporte</a>
+
 	<!-- Objetivo del proyecto -->
 
 	<?php if ($proyecto->objetivo): ?>
