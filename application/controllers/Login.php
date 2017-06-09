@@ -30,11 +30,11 @@ class Login extends CI_Controller {
 				break;
 
 			case "administrador":
-				redirect(base_url("administrador"));
+				redirect(base_url("usuario/usuarios"));
 				break;
 
 			case "empleado":
-				redirect(base_url("empleado"));
+				redirect(base_url("proyecto/proyectos"));
 				break;
 
 			default:
