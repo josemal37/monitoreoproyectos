@@ -83,23 +83,13 @@ switch ($accion) {
 
 		<?php if ($indicadores_impacto): ?>
 
-			<div class="checkbox">
+			<div id="checkbox" class="checkbox">
 
 				<label><input type="checkbox" id="con-indicador-impacto" name="con-indicador-impacto"<?php if ($con_indicador_impacto): ?>checked<?php endif; ?>>Asociar a un indicador de impacto</label>
 
 			</div>
 
 			<div id="contenedor-indicador-impacto" <?php if (!$con_indicador_impacto): ?>style="display: none;"<?php endif; ?>>
-
-				<div class="form-group">
-
-					<label>Porcentaje que aporta al indicador de impacto <span class="text-red">*</span></label>
-
-					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_impacto): ?>value="<?= $indicador_efecto->porcentaje ?>"<?php endif; ?>>
-
-					<?= form_error("porcentaje") ?>
-
-				</div>
 
 				<div class="form-group">
 
@@ -111,7 +101,19 @@ switch ($accion) {
 
 							<?php foreach ($indicadores_impacto as $indicador_impacto): ?>
 
-								<option value="<?= $indicador_impacto->id ?>" <?php if (isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto): ?>selected<?php endif; ?>><?= $indicador_impacto->descripcion ?></option>
+								<?php
+								$porcentaje_disponible = 100 - $indicador_impacto->porcentaje_acumulado;
+
+								if (isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto) {
+									$porcentaje_disponible += $indicador_efecto->porcentaje;
+								}
+								?>
+
+								<option value="<?= $indicador_impacto->id ?>" data-porcentaje-disponible="<?= $porcentaje_disponible ?>" <?php if (isset($indicador_efecto) && $indicador_impacto->id == $indicador_efecto->id_indicador_impacto): ?>selected<?php endif; ?> <?php if ($porcentaje_disponible === 0): ?>disabled<?php endif; ?>>
+
+									<?= $indicador_impacto->descripcion . " (" . $porcentaje_disponible . " %)" ?>
+
+								</option>
 
 							<?php endforeach; ?>
 
@@ -120,6 +122,18 @@ switch ($accion) {
 					</select>
 
 					<?= form_error("indicador-impacto") ?>
+
+				</div>
+
+				<div class="form-group">
+
+					<label>Porcentaje que aporta al indicador de impacto <span class="text-red">*</span></label>
+
+					<p class="text-info">Porcentaje disponible: <span id="porcentaje-disponible"></span> %</p>
+
+					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_impacto): ?>value="<?= $indicador_efecto->porcentaje ?>"<?php endif; ?>>
+
+					<?= form_error("porcentaje") ?>
 
 				</div>
 
@@ -153,12 +167,31 @@ switch ($accion) {
             $("#contenedor-indicador-impacto").hide();
         }
     });
+
+    $("#indicador-impacto").on("change", function () {
+        var porcentaje_disponible = $("#indicador-impacto").find("option:selected").data("porcentaje-disponible");
+        $("#porcentaje-disponible").html(porcentaje_disponible);
+        $("#porcentaje").rules("remove", "range");
+        $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
+    });
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
 	    $("#form-indicador-efecto").validate(<?= $reglas_cliente ?>);
+
+	    var porcentaje_inicial = $("#indicador-impacto").find("option:selected").data("porcentaje-disponible");
+
+	    if (porcentaje_inicial === undefined) {
+	        $("#con-indicador-impacto").attr("disabled", true);
+			$("#checkbox").append("<p class='text-info'>Todos los indicadores de impacto estan asociados al 100 %</p>");
+	    } else {
+	        $("#porcentaje-disponible").html(porcentaje_inicial);
+	        $("#porcentaje").rules("remove", "range");
+	        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
+	    }
+
 	</script>
 
 <?php endif; ?>

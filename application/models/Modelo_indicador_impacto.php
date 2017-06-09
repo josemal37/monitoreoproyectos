@@ -23,6 +23,9 @@ class Modelo_indicador_impacto extends MY_Model {
 	const ID_INDICADOR_IMPACTO = "id_indicador_impacto";
 	const COLUMNAS_SELECT_AVANCE_INDICADOR_IMPACTO = "avance_indicador_impacto.avance_acumulado";
 	const NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO = "avance_indicador_impacto";
+	//tabla porcentaje acumulado indicador impacto
+	const COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO = "porcentaje_acumulado_indicador_impacto.porcentaje_acumulado";
+	const NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO = "porcentaje_acumulado_indicador_impacto";
 
 	public function __construct() {
 		parent::__construct();
@@ -41,7 +44,10 @@ class Modelo_indicador_impacto extends MY_Model {
 
 			$this->db->select(self::COLUMNAS_SELECT_AVANCE_INDICADOR_IMPACTO);
 			$this->db->join(self::NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO, self::NOMBRE_TABLA_AVANCE_INDICADOR_IMPACTO . "." . self::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-			
+
+			$this->db->select(self::COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO);
+			$this->db->join(self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO, self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO . "." . self::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+
 			$query = $this->db->get();
 
 			$indicadores = $this->return_result($query);
@@ -61,6 +67,9 @@ class Modelo_indicador_impacto extends MY_Model {
 
 			$this->db->select(Modelo_meta_impacto::COLUMNAS_SELECT_OTRA_TABLA);
 			$this->db->join(Modelo_meta_impacto::NOMBRE_TABLA, Modelo_meta_impacto::NOMBRE_TABLA . "." . Modelo_meta_impacto::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+
+			$this->db->select(self::COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO);
+			$this->db->join(self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO, self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_IMPACTO . "." . self::ID_INDICADOR_IMPACTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 
 			$query = $this->db->get();
 

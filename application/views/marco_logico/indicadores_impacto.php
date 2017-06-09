@@ -28,6 +28,12 @@
 
 						<?php endif; ?>
 
+						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+							<th>Porcentaje asignado</th>
+
+						<?php endif; ?>
+
 					</tr>
 
 				</thead>
@@ -53,6 +59,12 @@
 									<a href="<?= base_url("indicador_impacto/eliminar_indicador_impacto/" . $proyecto->id . "/" . $indicador_impacto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
 
 								</td>
+
+							<?php endif; ?>
+
+							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+								<td><?= $indicador_impacto->porcentaje_acumulado ?> %</td>
 
 							<?php endif; ?>
 
