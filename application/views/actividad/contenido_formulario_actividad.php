@@ -19,9 +19,9 @@ switch ($accion) {
 
 	<p class="text-justify"><label>Proyecto:</label> <?= $proyecto->nombre ?></p>
 
-	<p class="text-justify"><label>Fecha de inicio:</label> <span id="fecha_inicio_proyecto"><?= $proyecto->fecha_inicio ?></span></p>
+	<p class="text-justify"><label>Fecha de inicio:</label> <span id="fecha-inicio-proyecto"><?= $proyecto->fecha_inicio ?></span></p>
 
-	<p class="text-justify"><label>Fecha de fin:</label> <span id="fecha_fin_proyecto"><?= $proyecto->fecha_fin ?></span></p>
+	<p class="text-justify"><label>Fecha de fin:</label> <span id="fecha-fin-proyecto"><?= $proyecto->fecha_fin ?></span></p>
 
 	<form id="form-actividad" action="<?= $url ?>" method="post">
 
@@ -248,6 +248,29 @@ switch ($accion) {
 <script type="text/javascript">
     $("#fecha_inicio").datepicker({dateFormat: 'yy-mm-dd'});
     $("#fecha_fin").datepicker({dateFormat: 'yy-mm-dd'});
+
+    var fecha_inicio_proyecto = $("#fecha-inicio-proyecto").html();
+    var fecha_fin_proyecto = $("#fecha-fin-proyecto").html();
+
+    $(document).ready(function () {
+        $("#fecha_inicio").datepicker("option", "minDate", fecha_inicio_proyecto);
+        $("#fecha_fin").datepicker("option", "maxDate", fecha_fin_proyecto);
+
+        var fecha_inicio = $("#fecha_inicio").datepicker("getDate");
+        var fecha_fin = $("#fecha_fin").datepicker("getDate");
+
+        if (fecha_inicio === null) {
+            $("#fecha_fin").datepicker("option", "minDate", fecha_inicio_proyecto);
+        } else {
+			$("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
+        }
+		
+		if (fecha_fin === null) {
+            $("#fecha_inicio").datepicker("option", "maxDate", fecha_fin_proyecto);
+		} else {
+			$("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
+		}
+    });
 
     $('#fecha_inicio').change(function () {
         var fecha_inicio = $("#fecha_inicio").datepicker("getDate");
