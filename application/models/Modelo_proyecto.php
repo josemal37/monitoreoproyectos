@@ -37,12 +37,20 @@ class Modelo_proyecto extends MY_Model {
 		parent::__construct();
 	}
 
-	public function select_proyectos_de_usuario($id = FALSE) {
+	public function select_proyectos_de_usuario($id = FALSE, $finalizado = FALSE) {
 		$proyectos = FALSE;
 
 		if ($id) {
 			$this->set_select_proyecto_con_usuario_y_rol();
 			$this->db->where(self::ID_USUARIO_PU, $id);
+
+			if ($finalizado) {
+				$this->db->where(self::NOMBRE_TABLA . "." . self::FINALIZADO, $finalizado);
+			} else {
+				$this->db->where("(" .
+						self::NOMBRE_TABLA . "." . self::FINALIZADO . " IS NULL" .
+						" OR " . self::NOMBRE_TABLA . "." . self::FINALIZADO . " = FALSE" . ")");
+			}
 
 			$query = $this->db->get();
 

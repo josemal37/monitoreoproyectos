@@ -34,7 +34,8 @@ class Personal extends Coordinador {
 	}
 
 	private function cargar_vista_ver_personal_proyecto($id_proyecto) {
-		$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
 			$titulo = "Personal del proyecto";

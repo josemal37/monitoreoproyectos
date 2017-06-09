@@ -31,11 +31,21 @@ class Proyecto extends CI_Controller {
 			redirect(base_url());
 		}
 	}
+	
+	public function proyectos_terminados() {
+		$rol = $this->session->userdata("rol");
 
-	private function cargar_vista_proyectos() {
+		if ($rol == "empleado") {
+			$this->cargar_vista_proyectos(TRUE);
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_proyectos($finalizado = FALSE) {
 		$titulo = "Proyectos";
 		$id_usuario = $this->session->userdata("id");
-		$proyectos = $this->Modelo_proyecto->select_proyectos_de_usuario($id_usuario);
+		$proyectos = $this->Modelo_proyecto->select_proyectos_de_usuario($id_usuario, $finalizado);
 
 		$datos = array();
 		$datos["titulo"] = $titulo;

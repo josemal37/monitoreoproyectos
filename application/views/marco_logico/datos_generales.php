@@ -6,7 +6,11 @@
 
 	<h1><?= $proyecto->nombre ?></h1>
 
-	<a href="<?= base_url("reporte/marco_logico_docx/" . $proyecto->id) ?>" class="btn btn-primary">Reporte</a>
+	<?php if ($this->uri->segment(2) == "ver_marco_logico"): ?>
+
+		<a href="<?= base_url("reporte/marco_logico_docx/" . $proyecto->id) ?>" class="btn btn-primary">Reporte</a>
+
+	<?php endif; ?>
 
 	<!-- Objetivo del proyecto -->
 

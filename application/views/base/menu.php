@@ -34,7 +34,13 @@
 
 					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "proyectos"): ?>class="active open"<?php endif; ?>>
 
-						<a href="<?= base_url("proyecto/proyectos") ?>">Ver mis proyectos<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+						<a href="<?= base_url("proyecto/proyectos") ?>">Ver proyectos abiertos<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+
+					</li>
+
+					<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "proyectos_terminados"): ?>class="active open"<?php endif; ?>>
+
+						<a href="<?= base_url("proyecto/proyectos_terminados") ?>">Ver proyectos cerrados<span class="glyphicon glyphicon-th-list pull-right"></span></a>
 
 					</li>
 

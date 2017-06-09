@@ -19,6 +19,10 @@ switch ($accion) {
 
 	<p class="text-justify"><label>Proyecto:</label> <?= $proyecto->nombre ?></p>
 
+	<p class="text-justify"><label>Fecha de inicio:</label> <span id="fecha_inicio_proyecto"><?= $proyecto->fecha_inicio ?></span></p>
+
+	<p class="text-justify"><label>Fecha de fin:</label> <span id="fecha_fin_proyecto"><?= $proyecto->fecha_fin ?></span></p>
+
 	<form id="form-actividad" action="<?= $url ?>" method="post">
 
 		<div class="form-group">
@@ -258,7 +262,7 @@ switch ($accion) {
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-	    $("#form-actividad").validate(<?= $reglas_cliente ?>);
+		$("#form-actividad").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>
