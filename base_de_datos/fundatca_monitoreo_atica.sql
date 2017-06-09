@@ -499,3 +499,57 @@ LEFT JOIN `meta_indicador_efecto` ON `meta_indicador_efecto`.`id_indicador_efect
 LEFT JOIN `avance_indicador_efecto` ON `avance_indicador_efecto`.`id_indicador_efecto` = `indicador_efecto`.`id`
 GROUP BY
 	`indicador_impacto`.`id` ;
+
+
+
+CREATE 
+VIEW `porcentaje_acumulado_indicador_impacto`AS 
+SELECT
+	`indicador_impacto`.`id` AS `id_indicador_impacto`,
+	COALESCE (
+		SUM(
+			`indicador_efecto_impacto`.`porcentaje`
+		),
+		0
+	) AS `porcentaje_acumulado`
+FROM
+	`indicador_impacto`
+LEFT JOIN `indicador_efecto_impacto` ON `indicador_efecto_impacto`.`id_indicador_impacto` = `indicador_impacto`.`id`
+GROUP BY
+	`indicador_impacto`.`id` ;
+
+
+
+CREATE 
+VIEW `porcentaje_acumulado_indicador_efecto`AS 
+SELECT
+	`indicador_efecto`.`id` AS `id_indicador_efecto`,
+	COALESCE (
+		SUM(
+			`indicador_producto_efecto`.`porcentaje`
+		),
+		0
+	) AS `porcentaje_acumulado`
+FROM
+	`indicador_efecto`
+LEFT JOIN `indicador_producto_efecto` ON `indicador_producto_efecto`.`id_indicador_efecto` = `indicador_efecto`.`id`
+GROUP BY
+	`indicador_efecto`.`id` ;
+
+
+
+CREATE 
+VIEW `porcentaje_acumulado_indicador_producto`AS 
+SELECT
+	`indicador_producto`.`id` AS `id_indicador_producto`,
+	COALESCE (
+		SUM(
+			`actividad_indicador_producto`.`porcentaje`
+		),
+		0
+	) AS `porcentaje_acumulado`
+FROM
+	`indicador_producto`
+LEFT JOIN `actividad_indicador_producto` ON `actividad_indicador_producto`.`id_indicador_producto` = `indicador_producto`.`id`
+GROUP BY
+	`indicador_producto`.`id` ;
