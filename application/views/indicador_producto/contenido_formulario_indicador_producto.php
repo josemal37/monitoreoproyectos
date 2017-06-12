@@ -95,6 +95,8 @@ switch ($accion) {
 
 					<label>Porcentaje que aporta al indicador de efecto <span class="text-red">*</span></label>
 
+					<p class="text-info">Porcentaje disponible: <span id="porcentaje-disponible"></span> %</p>
+
 					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_efecto): ?>value="<?= $indicador_producto->porcentaje ?>"<?php endif; ?>>
 
 					<?= form_error("porcentaje") ?>
@@ -111,7 +113,19 @@ switch ($accion) {
 
 							<?php foreach ($indicadores_efecto as $indicador_efecto): ?>
 
-								<option value="<?= $indicador_efecto->id ?>" <?php if (isset($indicador_producto) && $indicador_efecto->id == $indicador_producto->id_indicador_efecto): ?>selected<?php endif; ?>><?= $indicador_efecto->descripcion ?></option>
+								<?php
+								$porcentaje_disponible = 100 - $indicador_efecto->porcentaje_acumulado;
+
+								if (isset($indicador_producto) && $indicador_efecto->id == $indicador_producto->id_indicador_efecto) {
+									$porcentaje_disponible += $indicador_producto->porcentaje;
+								}
+								?>
+
+								<option value="<?= $indicador_efecto->id ?>" data-porcentaje-disponible="<?= $porcentaje_disponible ?>" <?php if (isset($indicador_producto) && $indicador_efecto->id == $indicador_producto->id_indicador_efecto): ?>selected<?php endif; ?> <?php if ($porcentaje_disponible === 0): ?>disabled<?php endif; ?>>
+
+									<?= $indicador_efecto->descripcion . " (" . $porcentaje_disponible . " %)" ?>
+
+								</option>
 
 							<?php endforeach; ?>
 
@@ -153,6 +167,25 @@ switch ($accion) {
             $("#contenedor-indicador-efecto").hide();
         }
     });
+
+    $("#indicador-efecto").on("change", function () {
+        var porcentaje_disponible = $("#indicador-efecto").find("option:selected").data("porcentaje-disponible");
+        $("#porcentaje-disponible").html(porcentaje_disponible);
+        $("#porcentaje").rules("remove", "range");
+        $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
+    });
+
+    var porcentaje_inicial = $("#indicador-efecto").find("option:selected").data("porcentaje-disponible");
+
+    if (porcentaje_inicial === undefined) {
+        $("#con-indicador-efecto").attr("disabled", true);
+        $("#checkbox").append("<p class='text-info'>Todos los indicadores de efecto estan asociados al 100 %</p>");
+    } else {
+        $("#porcentaje-disponible").html(porcentaje_inicial);
+        $("#porcentaje").rules("remove", "range");
+        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
+    }
+
 </script>
 
 <?php if (isset($reglas_cliente)): ?>

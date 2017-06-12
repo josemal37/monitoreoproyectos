@@ -58,6 +58,12 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 												<?php endif; ?>
 
+												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+													<th>Porcentaje asignado</th>
+
+												<?php endif; ?>
+
 											</tr>
 
 										</thead>
@@ -91,6 +97,16 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 															<a href="<?= base_url("indicador_efecto/modificar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
 															<a href="<?= base_url("indicador_efecto/eliminar_indicador_efecto/" . $proyecto->id . "/" . $indicador_efecto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+														</td>
+
+													<?php endif; ?>
+
+													<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+														<td>
+
+															<?= $indicador_efecto->porcentaje_acumulado ?> %
 
 														</td>
 

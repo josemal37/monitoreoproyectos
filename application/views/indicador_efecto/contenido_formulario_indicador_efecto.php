@@ -174,24 +174,24 @@ switch ($accion) {
         $("#porcentaje").rules("remove", "range");
         $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
     });
+
+    var porcentaje_inicial = $("#indicador-impacto").find("option:selected").data("porcentaje-disponible");
+
+    if (porcentaje_inicial === undefined) {
+        $("#con-indicador-impacto").attr("disabled", true);
+        $("#checkbox").append("<p class='text-info'>Todos los indicadores de impacto estan asociados al 100 %</p>");
+    } else {
+        $("#porcentaje-disponible").html(porcentaje_inicial);
+        $("#porcentaje").rules("remove", "range");
+        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
+    }
+
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
 	    $("#form-indicador-efecto").validate(<?= $reglas_cliente ?>);
-
-	    var porcentaje_inicial = $("#indicador-impacto").find("option:selected").data("porcentaje-disponible");
-
-	    if (porcentaje_inicial === undefined) {
-	        $("#con-indicador-impacto").attr("disabled", true);
-			$("#checkbox").append("<p class='text-info'>Todos los indicadores de impacto estan asociados al 100 %</p>");
-	    } else {
-	        $("#porcentaje-disponible").html(porcentaje_inicial);
-	        $("#porcentaje").rules("remove", "range");
-	        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
-	    }
-
 	</script>
 
 <?php endif; ?>
