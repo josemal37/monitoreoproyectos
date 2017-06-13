@@ -6,6 +6,12 @@
 
 	<h1><?= $proyecto->nombre ?></h1>
 
+	<?php if ($this->uri->segment(2) == "ver_actividades"): ?>
+
+		<a href="<?= base_url("reporte/actividades_docx/" . $proyecto->id) ?>" class="btn btn-primary">Reporte</a>
+
+	<?php endif; ?>
+
 	<!-- Objetivo del proyecto -->
 
 	<?php if ($proyecto->objetivo): ?>

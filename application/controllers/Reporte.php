@@ -322,7 +322,7 @@ class Reporte extends CI_Controller {
 	}
 
 	private function add_responsables_de_actividades($actividades, $seccion) {
-		$this->phpword->add_title("Personal asignado", 1, $seccion);
+		$this->phpword->add_title("Responsables de actividades", 1, $seccion);
 
 		if ($actividades) {
 			foreach ($actividades as $actividad) {
@@ -344,6 +344,69 @@ class Reporte extends CI_Controller {
 					$this->phpword->add_table($cabecera, $datos, $seccion);
 				} else {
 					$this->phpword->add_text("No se registró responsables para esta actividad.", $seccion);
+				}
+			}
+		} else {
+			$this->phpword->add_text("No se registraron actividades en el proyecto.", $seccion);
+		}
+	}
+
+	public function actividades_docx($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->generar_actividades_docx($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function generar_actividades_docx($id_proyecto) {
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+
+		if ($proyecto) {
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto($id_proyecto);
+
+			$seccion = $this->phpword->get_section();
+
+			$this->add_datos_generales($proyecto, $seccion);
+			$this->add_actividades($actividades, $seccion);
+
+			$this->phpword->download("Actividades - " . $proyecto->nombre . ".docx");
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+	
+	private function add_actividades($actividades, $seccion) {
+		$this->phpword->add_title("Actividades", 1, $seccion);
+
+		if ($actividades) {
+			foreach ($actividades as $actividad) {
+				$this->phpword->add_title($actividad->nombre, 2, $seccion);
+				$this->phpword->add_text("Fecha de inicio: " . $actividad->fecha_inicio, $seccion);
+				$this->phpword->add_text("Fecha de fin: " . $actividad->fecha_fin, $seccion);
+				$this->phpword->add_text("Meta: " . $actividad->cantidad . " " . $actividad->unidad, $seccion);
+				$this->phpword->add_text("Avance: " . $actividad->avance_acumulado . " " . $actividad->unidad, $seccion);
+				if ($actividad->finalizada) {
+					$this->phpword->add_text("Estado: Cerrado", $seccion);
+				} else {
+					$this->phpword->add_text("Estado: Abierto", $seccion);
+				}
+				
+				if (isset($actividad->id_producto)) {
+					$this->phpword->add_title("Producto asociado", 3, $seccion);
+					$this->phpword->add_text($actividad->descripcion_producto, $seccion);
+				}
+				
+				if (isset($actividad->id_indicador_producto)) {
+					$this->phpword->add_title("Indicador de producto asociado", 3, $seccion);
+					$this->phpword->add_text($actividad->descripcion_indicador_producto . " (" . $actividad->porcentaje . " %)", $seccion);
 				}
 			}
 		} else {
