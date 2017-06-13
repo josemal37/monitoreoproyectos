@@ -179,7 +179,7 @@ class Item_validacion extends Validacion {
 		"porcentaje" => array(
 			"required" => "Por favor introduzca el porcentaje.",
 			"number" => "El porcentaje debe ser un número.",
-			"range" => "El porcentaje debe ser mayor a 0 y menor igual al disponible."
+			"range" => "El porcentaje debe ser mayor igual a 1 y menor igual al disponible."
 		),
 		"indicador-impacto" => array(
 			"required" => "Ocurrió un error con la identificación del indicador de impacto.",

@@ -26,6 +26,9 @@ class Modelo_indicador_producto extends MY_Model {
 	//tabla avance indicador producto
 	const COLUMNAS_SELECT_AVANCE_INDICADOR_PRODUCTO = "avance_indicador_producto.avance_acumulado";
 	const NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO = "avance_indicador_producto";
+	//tabla porcentaje acumulado indicador producto
+	const COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_PRODUCTO = "porcentaje_acumulado_indicador_producto.porcentaje_acumulado";
+	const NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_PRODUCTO = "porcentaje_acumulado_indicador_producto";
 
 	public function __construct() {
 		parent::__construct();
@@ -39,6 +42,7 @@ class Modelo_indicador_producto extends MY_Model {
 			$this->set_select_meta_indicador_producto();
 			$this->set_select_indicador_efecto_asociado();
 			$this->set_select_resultado_asociado();
+			$this->set_select_porcentaje_acumulado();
 
 			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_indicador_producto);
 
@@ -60,6 +64,7 @@ class Modelo_indicador_producto extends MY_Model {
 			$this->set_select_meta_indicador_producto();
 			$this->set_select_indicador_efecto_asociado();
 			$this->set_select_avance_acumulado();
+			$this->set_select_porcentaje_acumulado();
 
 			$this->db->where(self::ID_PRODUCTO, $id_producto);
 
@@ -108,6 +113,11 @@ class Modelo_indicador_producto extends MY_Model {
 	private function set_select_avance_acumulado() {
 		$this->db->select(self::COLUMNAS_SELECT_AVANCE_INDICADOR_PRODUCTO);
 		$this->db->join(self::NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO, self::NOMBRE_TABLA_AVANCE_INDICADOR_PRODUCTO . "." . self::ID_INDICADOR_PRODUCTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+	}
+
+	private function set_select_porcentaje_acumulado() {
+		$this->db->select(self::COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_PRODUCTO);
+		$this->db->join(self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_PRODUCTO, self::NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_PRODUCTO . "." . self::ID_INDICADOR_PRODUCTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_indicador_producto($id_producto = FALSE, $descripcion = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = FALSE, $con_indicador_efecto = FALSE, $id_indicador_efecto = FALSE, $porcentaje = FALSE) {

@@ -52,6 +52,12 @@
 
 										<?php endif; ?>
 
+										<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+											<th>Porcentaje asignado</th>
+
+										<?php endif; ?>
+
 									</tr>
 
 								</thead>
@@ -85,6 +91,16 @@
 													<a href="<?= base_url("indicador_producto/modificar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
 
 													<a href="<?= base_url("indicador_producto/eliminar_indicador_producto/" . $proyecto->id . "/" . $indicador_producto->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+												</td>
+
+											<?php endif; ?>
+
+											<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+												<td>
+
+													<?= $indicador_producto->porcentaje_acumulado ?> %
 
 												</td>
 

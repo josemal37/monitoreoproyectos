@@ -83,25 +83,13 @@ switch ($accion) {
 
 		<?php if ($indicadores_efecto): ?>
 
-			<div class="checkbox">
+			<div id="checkbox" class="checkbox">
 
 				<label><input type="checkbox" id="con-indicador-efecto" name="con-indicador-efecto"<?php if ($con_indicador_efecto): ?>checked<?php endif; ?>>Asociar a un indicador de efecto</label>
 
 			</div>
 
 			<div id="contenedor-indicador-efecto" <?php if (!$con_indicador_efecto): ?>style="display: none;"<?php endif; ?>>
-
-				<div class="form-group">
-
-					<label>Porcentaje que aporta al indicador de efecto <span class="text-red">*</span></label>
-
-					<p class="text-info">Porcentaje disponible: <span id="porcentaje-disponible"></span> %</p>
-
-					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_efecto): ?>value="<?= $indicador_producto->porcentaje ?>"<?php endif; ?>>
-
-					<?= form_error("porcentaje") ?>
-
-				</div>
 
 				<div class="form-group">
 
@@ -134,6 +122,18 @@ switch ($accion) {
 					</select>
 
 					<?= form_error("indicador-efecto") ?>
+
+				</div>
+
+				<div class="form-group">
+
+					<label>Porcentaje que aporta al indicador de efecto <span class="text-red">*</span></label>
+
+					<p class="text-info">Porcentaje disponible: <span id="porcentaje-disponible"></span> %</p>
+
+					<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($con_indicador_efecto): ?>value="<?= $indicador_producto->porcentaje ?>"<?php endif; ?>>
+
+					<?= form_error("porcentaje") ?>
 
 				</div>
 
@@ -174,24 +174,23 @@ switch ($accion) {
         $("#porcentaje").rules("remove", "range");
         $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
     });
-
-    var porcentaje_inicial = $("#indicador-efecto").find("option:selected").data("porcentaje-disponible");
-
-    if (porcentaje_inicial === undefined) {
-        $("#con-indicador-efecto").attr("disabled", true);
-        $("#checkbox").append("<p class='text-info'>Todos los indicadores de efecto estan asociados al 100 %</p>");
-    } else {
-        $("#porcentaje-disponible").html(porcentaje_inicial);
-        $("#porcentaje").rules("remove", "range");
-        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
-    }
-
 </script>
 
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
 	    $("#form-indicador-producto").validate(<?= $reglas_cliente ?>);
+
+	    var porcentaje_inicial = $("#indicador-efecto").find("option:selected").data("porcentaje-disponible");
+
+	    if (porcentaje_inicial === undefined) {
+	        $("#con-indicador-efecto").attr("disabled", true);
+	        $("#checkbox").append("<p class='text-info'>Todos los indicadores de efecto estan asociados al 100 %</p>");
+	    } else {
+	        $("#porcentaje-disponible").html(porcentaje_inicial);
+	        $("#porcentaje").rules("remove", "range");
+	        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
+	    }
 	</script>
 
 <?php endif; ?>

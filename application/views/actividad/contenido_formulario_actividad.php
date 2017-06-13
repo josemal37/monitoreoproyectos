@@ -147,16 +147,6 @@ switch ($accion) {
 
 					<div class="form-group">
 
-						<label>Porcentaje <span class="text-red">*</span></label>
-
-						<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto)): ?>value="<?= $actividad->porcentaje ?>"<?php endif; ?>>
-
-						<?= form_error("porcentaje") ?>
-
-					</div>
-
-					<div class="form-group">
-
 						<label>Indicador de producto <span class="text-red">*</span></label>
 
 						<select id="indicador-producto" name="indicador-producto" class="form-control">
@@ -165,7 +155,21 @@ switch ($accion) {
 
 								<?php foreach ($indicadores_producto as $indicador_producto): ?>
 
-									<option value="<?= $indicador_producto->id ?>" title="<?= $indicador_producto->descripcion ?>" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto) && $indicador_producto->id == $actividad->id_indicador_producto): ?>selected<?php endif; ?>><?= $indicador_producto->descripcion ?></option>
+									<?php
+									$porcentaje_disponible = 100 - $indicador_producto->porcentaje_acumulado;
+
+									if (isset($actividad) && $indicador_producto->id == $actividad->id_indicador_producto) {
+										$porcentaje_disponible += $actividad->porcentaje;
+									}
+									
+									$porcentaje_disponible = round($porcentaje_disponible, 2) + 0;
+									?>
+
+									<option value="<?= $indicador_producto->id ?>" data-porcentaje-disponible="<?= $porcentaje_disponible ?>" title="<?= $indicador_producto->descripcion ?>" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto) && $indicador_producto->id == $actividad->id_indicador_producto): ?>selected<?php endif; ?>>
+
+										<?= $indicador_producto->descripcion . " (" . $porcentaje_disponible . " %)" ?>
+
+									</option>
 
 								<?php endforeach; ?>
 
@@ -174,6 +178,26 @@ switch ($accion) {
 						</select>
 
 					</div>
+
+					<div class="form-group">
+
+						<label>Porcentaje <span class="text-red">*</span></label>
+
+						<p class="text-info">Porcentaje disponible: <span id="porcentaje-disponible"></span> %</p>
+
+						<input type="number" id="porcentaje" name="porcentaje" class="form-control" <?php if ($accion == "modificar_actividad" && isset($actividad->id_indicador_producto)): ?>value="<?= $actividad->porcentaje ?>"<?php endif; ?>>
+
+						<?= form_error("porcentaje") ?>
+
+					</div>
+
+					<?php if (isset($actividad)): ?>
+
+						<input type="hidden" id="actividad_id_indicador_producto" value="<?= $actividad->id_indicador_producto ?>">
+
+						<input type="hidden" id="actividad_porcentaje" value="<?= $actividad->porcentaje ?>">
+
+					<?php endif; ?>
 
 				</div>
 
@@ -233,15 +257,40 @@ switch ($accion) {
                 var opciones = Array();
                 for (var i = 0; i < response.length; i++) {
                     var indicador_producto = response[i];
-                    var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion);
+
+                    var porcentaje = (100 - indicador_producto.porcentaje_acumulado);
+                    var id_indicador_producto = $("#actividad_id_indicador_producto").val();
+                    porcentaje = Math.round(porcentaje * 100) / 100;
+
+                    if (id_indicador_producto !== undefined && id_indicador_producto === indicador_producto.id) {
+                        var porcentaje_actividad = parseFloat($("#actividad_porcentaje").val());
+
+                        porcentaje += porcentaje_actividad;
+                        porcentaje = Math.round(porcentaje * 100) / 100;
+                    }
+
+                    var opcion = $("<option/>").prop("value", indicador_producto.id).html(indicador_producto.descripcion + " (" + porcentaje + " %)").data("porcentaje-disponible", porcentaje);
                     opciones.push(opcion);
                 }
                 $("#indicador-producto").find("option").remove();
                 $("#indicador-producto").append(opciones);
 
                 $("#submit").attr("disabled", false);
+
+                var porcentaje_disponible = $("#indicador-producto").find("option:selected").data("porcentaje-disponible");
+
+                $("#porcentaje-disponible").html(porcentaje_disponible);
+                $("#porcentaje").rules("remove", "range");
+                $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
             }
         });
+    });
+
+    $("#indicador-producto").on("change", function () {
+        var porcentaje_disponible = $("#indicador-producto").find("option:selected").data("porcentaje-disponible");
+        $("#porcentaje-disponible").html(porcentaje_disponible);
+        $("#porcentaje").rules("remove", "range");
+        $("#porcentaje").rules("add", {"range": [1, porcentaje_disponible]});
     });
 </script>
 
@@ -262,14 +311,14 @@ switch ($accion) {
         if (fecha_inicio === null) {
             $("#fecha_fin").datepicker("option", "minDate", fecha_inicio_proyecto);
         } else {
-			$("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
+            $("#fecha_fin").datepicker("option", "minDate", fecha_inicio);
         }
-		
-		if (fecha_fin === null) {
+
+        if (fecha_fin === null) {
             $("#fecha_inicio").datepicker("option", "maxDate", fecha_fin_proyecto);
-		} else {
-			$("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
-		}
+        } else {
+            $("#fecha_inicio").datepicker("option", "maxDate", fecha_fin);
+        }
     });
 
     $('#fecha_inicio').change(function () {
@@ -285,7 +334,18 @@ switch ($accion) {
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-		$("#form-actividad").validate(<?= $reglas_cliente ?>);
+	    $("#form-actividad").validate(<?= $reglas_cliente ?>);
+
+	    var porcentaje_inicial = $("#indicador-producto").find("option:selected").data("porcentaje-disponible");
+
+	    if (porcentaje_inicial === undefined) {
+	        $("#con-indicador-producto").attr("disabled", true);
+	        $("#checkbox").append("<p class='text-info'>Todos los indicadores de producto estan asociados al 100 %</p>");
+	    } else {
+	        $("#porcentaje-disponible").html(porcentaje_inicial);
+	        $("#porcentaje").rules("remove", "range");
+	        $("#porcentaje").rules("add", {"range": [1, porcentaje_inicial]});
+	    }
 	</script>
 
 <?php endif; ?>

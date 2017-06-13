@@ -28,7 +28,7 @@ class Modelo_indicador_efecto extends MY_Model {
 	//Tabla avance indicador efecto
 	const COLUMNAS_SELECT_AVANCE_INDICADOR_EFECTO = "avance_indicador_efecto.avance_acumulado";
 	const NOMBRE_TABLA_AVANCE_INDICADOR_EFECTO = "avance_indicador_efecto";
-	//tabla porcentaje acumulado indicador impacto
+	//tabla porcentaje acumulado indicador efecto
 	const COLUMNAS_SELECT_PORCENTAJE_ACUMULADO_INDICADOR_EFECTO = "porcentaje_acumulado_indicador_efecto.porcentaje_acumulado";
 	const NOMBRE_TABLA_PORCENTAJE_ACUMULADO_INDICADOR_EFECTO = "porcentaje_acumulado_indicador_efecto";
 

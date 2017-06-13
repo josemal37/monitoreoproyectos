@@ -180,7 +180,7 @@ class Actividad_validacion extends Validacion {
 		"porcentaje" => array(
 			"required" => "Por favor introduzca el porcentaje.",
 			"number" => "El porcentaje debe ser un número.",
-			"range" => "El porcentaje debe estar entre 1 y 100."
+			"range" => "El porcentaje debe ser mayor igual a 1 y menor igual al disponible."
 		),
 		"indicador-producto" => array(
 			"required" => "Por favor seleccione un indicador de producto.",
