@@ -37,14 +37,15 @@ class Reporte extends CI_Controller {
 			"Modelo_avance",
 			"Modelo_documento_avance",
 			"Modelo_usuario",
-			"Modelo_actividad_usuario"
+			"Modelo_actividad_usuario",
+			"Modelo_proyecto_usuario"
 		));
 
 		$this->load->database("default");
 	}
 
 	public function index() {
-		$this->phpword->download();
+		redirect(base_url());
 	}
 
 	public function marco_logico_docx($id_proyecto = FALSE) {
@@ -74,7 +75,7 @@ class Reporte extends CI_Controller {
 			$this->add_resultados_clave($proyecto, $seccion);
 			$this->add_efectos($proyecto, $seccion);
 
-			$this->phpword->download("marco logico.docx");
+			$this->phpword->download("Marco Lógico - " . $proyecto->nombre . ".docx");
 		} else {
 			redirect(base_url("proyecto/proyectos"));
 		}
@@ -260,6 +261,93 @@ class Reporte extends CI_Controller {
 			}
 
 			$this->phpword->add_table($cabecera, $datos, $seccion);
+		}
+	}
+
+	public function personal_docx($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->generar_personal_docx($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function generar_personal_docx($id_proyecto) {
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+
+		if ($proyecto) {
+			$usuarios = $this->Modelo_usuario->select_usuarios_de_proyecto($id_proyecto);
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_personal($id_proyecto);
+
+			$seccion = $this->phpword->get_section();
+
+			$this->add_datos_generales($proyecto, $seccion);
+			$this->add_usuarios_de_proyecto($usuarios, $seccion);
+			$this->add_responsables_de_actividades($actividades, $seccion);
+
+			$this->phpword->download("Personal - " . $proyecto->nombre . ".docx");
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function add_usuarios_de_proyecto($usuarios, $seccion) {
+		$this->phpword->add_title("Personal asignado", 1, $seccion);
+
+		if ($usuarios) {
+			$cabecera = array("Nombre completo", "Rol");
+
+			$datos = array();
+
+			foreach ($usuarios as $usuario) {
+				$fila = array(
+					$usuario->nombre_completo,
+					$usuario->nombre_rol_proyecto
+				);
+
+				$datos[] = $fila;
+			}
+
+			$this->phpword->add_table($cabecera, $datos, $seccion);
+		} else {
+			$this->phpword->add_text("No se registraron usuarios para el proyecto.", $seccion);
+		}
+	}
+
+	private function add_responsables_de_actividades($actividades, $seccion) {
+		$this->phpword->add_title("Personal asignado", 1, $seccion);
+
+		if ($actividades) {
+			foreach ($actividades as $actividad) {
+				$this->phpword->add_title($actividad->nombre, 2, $seccion);
+
+				if ($actividad->usuarios) {
+					$cabecera = array("Nombre completo");
+
+					$datos = array();
+
+					foreach ($actividad->usuarios as $usuario) {
+						$fila = array(
+							$usuario->nombre_completo
+						);
+
+						$datos[] = $fila;
+					}
+
+					$this->phpword->add_table($cabecera, $datos, $seccion);
+				} else {
+					$this->phpword->add_text("No se registró responsables para esta actividad.", $seccion);
+				}
+			}
+		} else {
+			$this->phpword->add_text("No se registraron actividades en el proyecto.", $seccion);
 		}
 	}
 
