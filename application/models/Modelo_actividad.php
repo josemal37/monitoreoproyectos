@@ -110,6 +110,103 @@ class Modelo_actividad extends MY_Model {
 		return $actividades;
 	}
 
+	public function select_actividades_de_proyecto_con_avances($id_proyecto = FALSE, $fecha_actividades = FALSE, $fecha_inicio_actividades = FALSE, $fecha_fin_actividades = FALSE, $fecha_avances = FALSE, $fecha_inicio_avances = FALSE, $fecha_fin_avances = FALSE) {
+		$actividades = FALSE;
+
+		if ($id_proyecto) {
+			$this->set_select_actividad();
+			$this->set_select_meta_actividad();
+			$this->set_select_avance_acumulado();
+			$this->set_select_avances();
+
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_PROYECTO, $id_proyecto);
+
+			$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO);
+
+			if ($fecha_actividades && $fecha_inicio_actividades && $fecha_fin_actividades) {
+				$this->db->where(
+						"((`" .
+						self::NOMBRE_TABLA . "`.`" . self::FECHA_INICIO . "` BETWEEN '" .
+						$fecha_inicio_actividades . "' AND '" . $fecha_fin_actividades .
+						"') OR (`" .
+						self::NOMBRE_TABLA . "`.`" . self::FECHA_FIN . "` BETWEEN '" .
+						$fecha_inicio_actividades . "' AND '" . $fecha_fin_actividades .
+						"'))", NULL, FALSE
+				);
+			}
+
+			if ($fecha_avances && $fecha_inicio_avances && $fecha_fin_avances) {
+				$this->db->where(
+						"(`" .
+						Modelo_avance::NOMBRE_TABLA . "`.`" . Modelo_avance::FECHA . "` BETWEEN '" .
+						$fecha_inicio_avances . "' AND '" . $fecha_fin_avances .
+						"')", NULL, FALSE
+				);
+			}
+
+			$query = $this->db->get();
+
+			$filas = $this->return_result($query);
+
+			$actividades = $this->get_actividades_con_avances($filas);
+		}
+
+		return $actividades;
+	}
+
+	private function get_actividades_con_avances($filas) {
+		$actividades = FALSE;
+
+		if ($filas) {
+			$actividades = array();
+
+			foreach ($filas as $fila) {
+				if (!isset($actividades[$fila->id])) {
+					$actividades[$fila->id] = $this->get_actividad_con_avance($fila, $filas);
+				}
+			}
+		}
+
+		return $actividades;
+	}
+
+	private function get_actividad_con_avance($fila, $filas) {
+		$actividad = new stdClass();
+
+		$actividad->id = $fila->id;
+		$actividad->id_proyecto = $fila->id_proyecto;
+		$actividad->nombre = $fila->nombre;
+		$actividad->fecha_inicio = $fila->fecha_inicio;
+		$actividad->fecha_fin = $fila->fecha_fin;
+		$actividad->cantidad = $fila->cantidad;
+		$actividad->unidad = $fila->unidad;
+		$actividad->avance_acumulado = $fila->avance_acumulado;
+		$actividad->finalizada = $fila->finalizada;
+		$actividad->avances = $this->get_avances_de_actividad($actividad->id, $filas);
+
+		return $actividad;
+	}
+
+	private function get_avances_de_actividad($id_actividad, $filas) {
+		$avances = array();
+
+		foreach ($filas as $fila) {
+			if ($fila->id == $id_actividad && $fila->id_avance) {
+				$avance = new stdClass();
+
+				$avance->id = $fila->id_avance;
+				$avance->id_actividad = $id_actividad;
+				$avance->cantidad = $fila->cantidad_avance;
+				$avance->descripcion = $fila->descripcion_avance;
+				$avance->fecha = $fila->fecha_avance;
+
+				$avances[] = $avance;
+			}
+		}
+
+		return $avances;
+	}
+
 	public function select_actividad_por_id($id_actividad = FALSE, $id_proyecto = FALSE, $id_usuario = FALSE) {
 		$actividad = FALSE;
 
@@ -170,6 +267,11 @@ class Modelo_actividad extends MY_Model {
 	private function set_select_avance_acumulado() {
 		$this->db->select(self::COLUMNAS_SELECT_AVANCE_ACTIVIDAD);
 		$this->db->join(self::NOMBRE_TABLA_AVANCE_ACTIVIDAD, self::NOMBRE_TABLA_AVANCE_ACTIVIDAD . "." . self::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+	}
+
+	private function set_select_avances() {
+		$this->db->select(Modelo_avance::COLUMNAS_SELECT_OTRA_TABLA);
+		$this->db->join(Modelo_avance::NOMBRE_TABLA, Modelo_avance::NOMBRE_TABLA . "." . Modelo_avance::ID_ACTIVIDAD . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
 	}
 
 	public function insert_actividad($id_proyecto = FALSE, $nombre = "", $fecha_inicio = "", $fecha_fin = "", $con_meta = FALSE, $cantidad = FALSE, $unidad = "", $con_producto = FALSE, $id_producto = FALSE, $con_indicador_producto = FALSE, $porcentaje = FALSE, $id_indicador_producto = FALSE) {

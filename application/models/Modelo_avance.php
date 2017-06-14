@@ -19,6 +19,7 @@ class Modelo_avance extends MY_Model {
 	const DESCRIPCION = "descripcion";
 	const FECHA = "fecha";
 	const COLUMNAS_SELECT = "avance.id, avance.id_actividad, avance.cantidad, avance.descripcion, avance.fecha";
+	const COLUMNAS_SELECT_OTRA_TABLA = "avance.id as id_avance, avance.cantidad as cantidad_avance, avance.descripcion as descripcion_avance, avance.fecha as fecha_avance";
 	const NOMBRE_TABLA = "avance";
 
 	public function __construct() {

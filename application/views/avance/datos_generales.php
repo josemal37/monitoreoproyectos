@@ -6,6 +6,8 @@
 
 	<h1><?= $proyecto->nombre ?></h1>
 
+	<?php $this->load->view("avance/reporte"); ?>
+
 	<!-- Objetivo del proyecto -->
 
 	<?php if ($proyecto->objetivo): ?>

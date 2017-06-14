@@ -382,12 +382,14 @@ class Reporte extends CI_Controller {
 			redirect(base_url("proyecto/proyectos"));
 		}
 	}
-	
+
 	private function add_actividades($actividades, $seccion) {
 		$this->phpword->add_title("Actividades", 1, $seccion);
 
 		if ($actividades) {
 			foreach ($actividades as $actividad) {
+				$actividad->cantidad += 0;
+				$actividad->avance_acumulado += 0;
 				$this->phpword->add_title($actividad->nombre, 2, $seccion);
 				$this->phpword->add_text("Fecha de inicio: " . $actividad->fecha_inicio, $seccion);
 				$this->phpword->add_text("Fecha de fin: " . $actividad->fecha_fin, $seccion);
@@ -398,12 +400,12 @@ class Reporte extends CI_Controller {
 				} else {
 					$this->phpword->add_text("Estado: Abierto", $seccion);
 				}
-				
+
 				if (isset($actividad->id_producto)) {
 					$this->phpword->add_title("Producto asociado", 3, $seccion);
 					$this->phpword->add_text($actividad->descripcion_producto, $seccion);
 				}
-				
+
 				if (isset($actividad->id_indicador_producto)) {
 					$this->phpword->add_title("Indicador de producto asociado", 3, $seccion);
 					$this->phpword->add_text($actividad->descripcion_indicador_producto . " (" . $actividad->porcentaje . " %)", $seccion);
@@ -411,6 +413,109 @@ class Reporte extends CI_Controller {
 			}
 		} else {
 			$this->phpword->add_text("No se registraron actividades en el proyecto.", $seccion);
+		}
+	}
+
+	public function avances_docx($id_proyecto = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto) {
+				$this->generar_avances_docx($id_proyecto);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function generar_avances_docx($id_proyecto) {
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+
+		if ($proyecto) {
+			$fecha_actividades = FALSE;
+			$fecha_inicio_actividades = FALSE;
+			$fecha_fin_actividades = FALSE;
+			$fecha_avances = FALSE;
+			$fecha_inicio_avances = FALSE;
+			$fecha_fin_avances = FALSE;
+			
+			if (isset($_POST["submit"])) {
+				$fecha_actividades = $this->input->post("fecha-actividades") == "periodo";
+				$fecha_avances = $this->input->post("fecha-avances") == "periodo";
+				if ($fecha_actividades) {
+					$fecha_inicio_actividades = $this->input->post("fecha-inicio-actividades");
+					$fecha_fin_actividades = $this->input->post("fecha-fin-actividades");
+				}
+				if ($fecha_avances) {
+					$fecha_inicio_avances = $this->input->post("fecha-inicio-avances");
+					$fecha_fin_avances = $this->input->post("fecha-fin-avances");
+				}
+			}
+			
+			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_avances($id_proyecto, $fecha_actividades, $fecha_inicio_actividades, $fecha_fin_actividades, $fecha_avances, $fecha_inicio_avances, $fecha_fin_avances);
+			$seccion = $this->phpword->get_section();
+
+			$this->add_datos_generales($proyecto, $seccion);
+			$this->add_actividades_con_avances($actividades, $seccion);
+
+			$this->phpword->download("Actividades - " . $proyecto->nombre . ".docx");
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	private function add_actividades_con_avances($actividades, $seccion) {
+		$this->phpword->add_title("Actividades", 1, $seccion);
+
+		if ($actividades) {
+			foreach ($actividades as $actividad) {
+				$actividad->cantidad += 0;
+				$actividad->avance_acumulado += 0;
+				$this->phpword->add_title($actividad->nombre, 2, $seccion);
+				$this->phpword->add_text("Fecha de inicio: " . $actividad->fecha_inicio, $seccion);
+				$this->phpword->add_text("Fecha de fin: " . $actividad->fecha_fin, $seccion);
+				$this->phpword->add_text("Meta: " . $actividad->cantidad . " " . $actividad->unidad, $seccion);
+				$this->phpword->add_text("Avance: " . $actividad->avance_acumulado . " " . $actividad->unidad, $seccion);
+				if ($actividad->finalizada) {
+					$this->phpword->add_text("Estado: Cerrado", $seccion);
+				} else {
+					$this->phpword->add_text("Estado: Abierto", $seccion);
+				}
+
+				$this->add_avances($actividad, $seccion);
+			}
+		} else {
+			$this->phpword->add_text("No se registraron actividades en el proyecto.", $seccion);
+		}
+	}
+
+	private function add_avances($actividad, $seccion) {
+		$this->phpword->add_title("Avances", 3, $seccion);
+
+		$avances = $actividad->avances;
+
+		if ($avances) {
+			$cabecera = array("Fecha", "Cantidad", "Descripción");
+
+			$datos = array();
+
+			foreach ($avances as $avance) {
+				$avance->cantidad += 0;
+				$fila = array(
+					$avance->fecha,
+					$avance->cantidad . " " . $actividad->unidad,
+					$avance->descripcion
+				);
+
+				$datos[] = $fila;
+			}
+
+			$this->phpword->add_table($cabecera, $datos, $seccion);
+		} else {
+			$this->phpword->add_text("No se registraron avances.", $seccion);
 		}
 	}
 
