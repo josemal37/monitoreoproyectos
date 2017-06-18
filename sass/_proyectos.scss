@@ -1,28 +1,29 @@
 .proyectos {
     .proyecto {
-        border: 1px solid;
-        border-color: #737373;
+        border: 3px solid $color-2;
+        border-radius: 10px;
         margin-bottom: 20px;
         .titulo {
             text-align: center;
-            border-bottom: 1px solid;
-            border-color: #737373;
+            border-bottom: 3px solid $color-2;
+            background-color: $color-2;
+            padding: 10px 5px 5px 5px;
             label {
                 margin: 0;
+                color: $color-0;
             }
         }
         .objetivo {
             text-align: justify;
-            border-bottom: 1px solid;
-            border-color: #737373;
-            padding: 5px;
+            padding: 10px;
+            min-height: 150px;
         }
         .fecha {
             text-align: center;
-            border-bottom: 1px solid;
-            border-color: #737373;
+            background-color: $color-1;
             p {
                 margin: 0;
+                color: $color-0;
             }
         }
         .acciones {

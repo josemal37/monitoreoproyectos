@@ -13,26 +13,27 @@ a, p, label, span {
   font-family: 'Oxygen', sans-serif; }
 
 .proyectos .proyecto {
-  border: 1px solid;
-  border-color: #737373;
+  border: 3px solid #3F51B5;
+  border-radius: 10px;
   margin-bottom: 20px; }
   .proyectos .proyecto .titulo {
     text-align: center;
-    border-bottom: 1px solid;
-    border-color: #737373; }
+    border-bottom: 3px solid #3F51B5;
+    background-color: #3F51B5;
+    padding: 10px 5px 5px 5px; }
     .proyectos .proyecto .titulo label {
-      margin: 0; }
+      margin: 0;
+      color: #FFFFFF; }
   .proyectos .proyecto .objetivo {
     text-align: justify;
-    border-bottom: 1px solid;
-    border-color: #737373;
-    padding: 5px; }
+    padding: 10px;
+    min-height: 150px; }
   .proyectos .proyecto .fecha {
     text-align: center;
-    border-bottom: 1px solid;
-    border-color: #737373; }
+    background-color: #009688; }
     .proyectos .proyecto .fecha p {
-      margin: 0; }
+      margin: 0;
+      color: #FFFFFF; }
   .proyectos .proyecto .acciones {
     text-align: center;
     padding: 5px; }

@@ -36,11 +36,11 @@
 
 							<div class="acciones">
 
-								<a href="<?= base_url("actividad/ver_actividades/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Ver proyecto</a>
+								<a href="<?= base_url("actividad/ver_actividades/" . $proyecto->id) ?>" class="btn btn-success btn-xs">Ver proyecto</a>
 
 								<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
 
-									<a href="<?= base_url("proyecto/eliminar_proyecto/" . $proyecto->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
+									<a href="<?= base_url("proyecto/eliminar_proyecto/" . $proyecto->id) ?>" class="btn btn-danger btn-xs">Eliminar</a>
 
 								<?php endif; ?>
 
