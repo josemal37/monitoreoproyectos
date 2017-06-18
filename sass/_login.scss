@@ -1,0 +1,15 @@
+.login {
+    &>.titulo {
+        background-color: $color-1;
+        border-bottom: 30px solid $color-2;
+        text-align: left;
+        h1 {
+            margin: 30px 0 20px 0;
+            color: $color-0;
+            font-family: 'Nunito', sans-serif;
+        }
+    }
+    &>.ingreso {
+        margin-top: 50px;
+    }
+}

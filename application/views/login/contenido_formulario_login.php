@@ -34,7 +34,7 @@
 
 	<input type="hidden" id="token" name="token" value="<?= $token ?>">
 
-	<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-default">
+	<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 
 </form>
 

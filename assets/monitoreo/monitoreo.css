@@ -6,6 +6,12 @@ Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
     Created on : 02-05-2017, 02:45:15 PM
     Author     : Jose
 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito', sans-serif; }
+
+p, label, span {
+  font-family: 'Oxygen', sans-serif; }
+
 .proyectos .proyecto {
   border: 1px solid;
   border-color: #737373;
@@ -121,5 +127,16 @@ Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
 
 .text-red {
   color: red; }
+
+.login > .titulo {
+  background-color: #009688;
+  border-bottom: 30px solid #3F51B5;
+  text-align: left; }
+  .login > .titulo h1 {
+    margin: 30px 0 20px 0;
+    color: #FFFFFF;
+    font-family: 'Nunito', sans-serif; }
+.login > .ingreso {
+  margin-top: 50px; }
 
 /*# sourceMappingURL=monitoreo.css.map */

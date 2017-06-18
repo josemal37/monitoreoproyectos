@@ -60,6 +60,8 @@
 
 		<link href="<?= base_url("assets/monitoreo/monitoreo.css") ?>" rel="stylesheet">
 
+		<link href="https://fonts.googleapis.com/css?family=Nunito|Oxygen" rel="stylesheet">
+
 	</head>
 
 	<body>

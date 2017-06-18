@@ -47,7 +47,7 @@ class Login extends CI_Controller {
 	private function cargar_vista_login() {
 		$datos = array();
 
-		$datos["titulo"] = "Sistema de Monitoreo - Fundación Atica";
+		$datos["titulo"] = "Sistema de Monitoreo: Fundación Atica";
 		$datos["token"] = $this->token();
 		$datos["reglas_cliente"] = $this->login_validacion->get_reglas_cliente(array("login", "password"));
 
