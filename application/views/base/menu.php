@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<nav class="navbar navbar-m2p sidebar" role="navigation">
+<nav class="navbar navbar-m2p sidebar menu" role="navigation">
 
     <div class="container-fluid">
 
