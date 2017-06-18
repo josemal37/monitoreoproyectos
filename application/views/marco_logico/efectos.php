@@ -44,23 +44,31 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 											<tr>
 
-												<th>Descripción</th>
+												<th class="descripcion">Descripción</th>
 
-												<th>Avance</th>
+												<?php if ($this->uri->segment(2) == "editar_marco_logico"): ?>
 
-												<th>Meta</th>
+													<th class="meta">Meta</th>
 
-												<th>Indicador de impacto</th>
+												<?php endif; ?>
 
-												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+												<th class="indicador-asociado">Indicador de impacto</th>
 
-													<th>Acciones</th>
+												<?php if ($this->uri->segment(2) == "ver_marco_logico"): ?>
+
+													<th class="estado">Estado</th>
 
 												<?php endif; ?>
 
 												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
 
-													<th>Porcentaje asignado</th>
+													<th class="acciones">Acciones</th>
+
+												<?php endif; ?>
+
+												<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
+
+													<th class="porcentaje-asignado">Porcentaje asignado</th>
 
 												<?php endif; ?>
 
@@ -76,9 +84,11 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 													<td><?= $indicador_efecto->descripcion ?></td>
 
-													<td><?= $indicador_efecto->avance_acumulado + 0 ?> <?= $indicador_efecto->unidad ?></td>
+													<?php if ($this->uri->segment(2) == "editar_marco_logico"): ?>
 
-													<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
+														<td><?= $indicador_efecto->cantidad ?> <?= $indicador_efecto->unidad ?></td>
+
+													<?php endif; ?>
 
 													<td>
 
@@ -89,6 +99,30 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 														<?php endif; ?>
 
 													</td>
+
+													<?php if ($this->uri->segment(2) == "ver_marco_logico"): ?>
+
+														<td>
+
+															<p><?= $indicador_efecto->avance_acumulado + 0 ?> / <?= $indicador_efecto->cantidad + 0 ?> <?= $indicador_efecto->unidad ?></p>
+
+															<div class="progress">
+
+																<?php
+																$porcentaje_avance = ($indicador_efecto->avance_acumulado / $indicador_efecto->cantidad) * 100;
+
+																if ($porcentaje_avance > 100) {
+																	$porcentaje_avance = 100;
+																}
+																?>
+
+																<div class="progress-bar" role="progressbar" aria-valuenow="<?= $indicador_efecto->avance_acumulado + 0 ?>" aria-valuemin="0" aria-valuemax="<?= $indicador_efecto->cantidad + 0 ?>" style="width: <?= $porcentaje_avance ?>%; min-width: 1%;"></div>
+
+															</div>
+
+														</td>
+
+													<?php endif; ?>
 
 													<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->uri->segment(2) == "editar_marco_logico" && !$proyecto->finalizado): ?>
 
@@ -106,7 +140,13 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 														<td>
 
-															<?= $indicador_efecto->porcentaje_acumulado ?> %
+															<p><?= $indicador_efecto->porcentaje_acumulado ?> %</p>
+
+															<div class="progress">
+
+																<div class="progress-bar" role="progressbar" aria-valuenow="<?= $indicador_efecto->porcentaje_acumulado + 0 ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $indicador_efecto->porcentaje_acumulado ?>%; min-width: 1%;"></div>
+
+															</div>
 
 														</td>
 

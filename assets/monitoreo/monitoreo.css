@@ -6,10 +6,10 @@ Sistema de Monitoreo de proyectos para la Fundaci├│n Atica
     Created on : 02-05-2017, 02:45:15 PM
     Author     : Jose
 */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, th {
   font-family: 'Nunito', sans-serif; }
 
-a, p, label, span {
+a, p, label, span, td {
   font-family: 'Oxygen', sans-serif; }
 
 .proyectos .proyecto {
@@ -40,6 +40,16 @@ a, p, label, span {
 
 .marco-logico .btn {
   margin-bottom: 5px; }
+.marco-logico table thead tr th.estado {
+  width: 20%; }
+.marco-logico table thead tr th.meta {
+  width: 10%; }
+.marco-logico table thead tr th.acciones {
+  width: 5%; }
+.marco-logico table thead tr th.porcentaje-asignado {
+  width: 20%; }
+.marco-logico table thead tr th.indicador-asociado {
+  width: 30%; }
 .marco-logico > .resultados > ol.lista-resultados {
   padding: 0;
   counter-reset: counter-resultados;

@@ -2,6 +2,36 @@
     .btn {
         margin-bottom: 5px;
     }
+    table {
+        thead {
+            tr {
+                th {
+                    &.estado {
+                        width: 20%;
+                    }
+                    &.meta {
+                        width: 10%;
+                    }
+                    &.acciones {
+                        width: 5%;
+                    }
+                    &.porcentaje-asignado {
+                        width: 20%;
+                    }
+                    &.indicador-asociado {
+                        width: 30%;
+                    }
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+
+                }
+            }
+        }
+    }
     &>.resultados {
         &>ol.lista-resultados {
             padding: 0;
