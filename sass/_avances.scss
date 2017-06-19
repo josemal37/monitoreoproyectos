@@ -1,0 +1,19 @@
+.avances {
+    table {
+        thead {
+            tr {
+                th {
+                    &.fecha {
+                        width: 10%;
+                    }
+                    &.cantidad {
+                        width: 10%;
+                    }
+                    &.documentos {
+                        width: 30%;
+                    }
+                }
+            }
+        }
+    }
+}

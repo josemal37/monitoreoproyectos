@@ -172,4 +172,11 @@ table.table-hover tbody tr:hover td, table.table-hover tbody tr:hover th {
 .personal table thead tr th.acciones {
   width: 5%; }
 
+.avances table thead tr th.fecha {
+  width: 10%; }
+.avances table thead tr th.cantidad {
+  width: 10%; }
+.avances table thead tr th.documentos {
+  width: 30%; }
+
 /*# sourceMappingURL=monitoreo.css.map */
