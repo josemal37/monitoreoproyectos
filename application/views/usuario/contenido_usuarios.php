@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<div class="container-fluid">
+<div class="container-fluid usuarios">
 
 	<div class="text-center">
 
@@ -12,19 +12,19 @@
 
 		<div class="table-responsive">
 
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover">
 
 				<thead>
 
 					<tr>
 
-						<th>Nombre completo</th>
+						<th class="nombre-completo">Nombre completo</th>
 
-						<th>Login</th>
+						<th class="login">Login</th>
 
-						<th>Rol</th>
+						<th class="rol">Rol</th>
 
-						<th>Acciones</th>
+						<th class="acciones">Acciones</th>
 
 					</tr>
 
@@ -44,11 +44,11 @@
 
 							<td>
 
-								<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Modificar</a>
+								<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-success btn-xs">Modificar</a>
 
-								<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Modificar contraseña</a>
+								<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>" class="btn btn-warning btn-xs">Modificar contraseña</a>
 
-								<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
+								<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>" class="btn btn-danger btn-xs">Eliminar</a>
 
 							</td>
 

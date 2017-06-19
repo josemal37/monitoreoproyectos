@@ -1,0 +1,19 @@
+.usuarios {
+    table {
+        thead {
+            tr {
+                th {
+                    &.login {
+                        width: 15%;
+                    }
+                    &.rol {
+                        width: 10%;
+                    }
+                    &.acciones {
+                        width: 30%;
+                    }
+                }
+            }
+        }
+    }
+}

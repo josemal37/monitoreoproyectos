@@ -179,4 +179,11 @@ table.table-hover tbody tr:hover td, table.table-hover tbody tr:hover th {
 .avances table thead tr th.documentos {
   width: 30%; }
 
+.usuarios table thead tr th.login {
+  width: 15%; }
+.usuarios table thead tr th.rol {
+  width: 10%; }
+.usuarios table thead tr th.acciones {
+  width: 30%; }
+
 /*# sourceMappingURL=monitoreo.css.map */
