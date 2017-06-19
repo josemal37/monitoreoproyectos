@@ -22,6 +22,12 @@ switch ($accion) {
 
 	<p class="text-justify"><label>Proyecto:</label> <?= $proyecto->nombre ?></p>
 
+	<?php if ($accion == "registrar_personal_actividad"): ?>
+
+		<p class="text-justify"><label>Actividad:</label> <?= $actividad->nombre ?></p>
+
+	<?php endif; ?>
+
 	<form id="form-personal" action="<?= $url ?>" method="post">
 
 		<div class="form-group">
@@ -77,7 +83,7 @@ switch ($accion) {
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-	    $("#form-personal").validate(<?= $reglas_cliente ?>);
+		$("#form-personal").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

@@ -87,6 +87,7 @@ class Efecto extends Coordinador {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "empleado") {
+			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			if ($id_proyecto && $id_efecto && !$proyecto->finalizado) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_evento_bd($id_proyecto, $id_efecto);
