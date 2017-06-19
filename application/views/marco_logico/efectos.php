@@ -38,7 +38,7 @@ if (isset($proyecto->resultados) && $proyecto->resultados) {
 
 								<div class="table-responsive">
 
-									<table class="table table-bordered">
+									<table class="table table-bordered table-hover">
 
 										<thead>
 

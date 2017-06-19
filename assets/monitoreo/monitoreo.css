@@ -12,6 +12,9 @@ h1, h2, h3, h4, h5, h6, th {
 a, p, label, span, td {
   font-family: 'Oxygen', sans-serif; }
 
+table.table-hover tbody tr:hover td, table.table-hover tbody tr:hover th {
+  background-color: #E2FCFE; }
+
 .proyectos .proyecto {
   border: 3px solid #3F51B5;
   border-radius: 10px;
