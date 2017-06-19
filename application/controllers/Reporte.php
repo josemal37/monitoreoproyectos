@@ -461,7 +461,7 @@ class Reporte extends CI_Controller {
 			$this->add_datos_generales($proyecto, $seccion);
 			$this->add_actividades_con_avances($actividades, $seccion);
 
-			$this->phpword->download("Actividades - " . $proyecto->nombre . ".docx");
+			$this->phpword->download("Avances - " . $proyecto->nombre . ".docx");
 		} else {
 			redirect(base_url("proyecto/proyectos"));
 		}

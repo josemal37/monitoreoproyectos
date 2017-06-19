@@ -106,7 +106,7 @@ class Phpword {
 
 		$table->addRow();
 		foreach ($firstRow as $cell) {
-			$table->addCell(9000)->addText($cell);
+			$table->addCell(9000 / sizeof($firstRow))->addText($cell);
 		}
 
 		$cell = NULL;
@@ -114,7 +114,7 @@ class Phpword {
 		foreach ($data as $row) {
 			$table->addRow();
 			foreach ($row as $cell) {
-				$table->addCell(9000)->addText($cell);
+				$table->addCell(9000 / sizeof($row))->addText($cell);
 			}
 		}
 	}
