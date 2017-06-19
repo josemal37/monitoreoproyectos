@@ -1,0 +1,16 @@
+.personal {
+    table {
+        thead {
+            tr {
+                th {
+                    &.rol {
+                        width: 10%;
+                    }
+                    &.acciones {
+                        width: 5%;
+                    }
+                }
+            }
+        }
+    }
+}

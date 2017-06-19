@@ -164,4 +164,9 @@ a, p, label, span, td {
     -webkit-transition: background-color 0.5s, -webkit-transform 0.5s;
     transition: background-color 0.5s, transform 0.5s; }
 
+.personal table thead tr th.rol {
+  width: 10%; }
+.personal table thead tr th.acciones {
+  width: 5%; }
+
 /*# sourceMappingURL=monitoreo.css.map */

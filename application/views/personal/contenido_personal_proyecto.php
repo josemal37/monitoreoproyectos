@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<div class="container-fluid">
+<div class="personal container-fluid">
 
 	<?php $this->load->view("personal/datos_generales"); ?>
 
@@ -10,7 +10,7 @@
 
 		<div class="table-responsive">
 
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover">
 
 				<thead>
 
@@ -18,11 +18,11 @@
 
 						<th>Nombre completo</th>
 
-						<th>Rol</th>
+						<th class="rol">Rol</th>
 
 						<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$proyecto->finalizado): ?>
 
-							<th>Acciones</th>
+							<th class="acciones">Acciones</th>
 
 						<?php endif; ?>
 
@@ -100,7 +100,7 @@
 
 							<div class="table-responsive">
 
-								<table class="table table-bordered">
+								<table class="table table-bordered table-hover">
 
 									<thead>
 
@@ -110,7 +110,7 @@
 
 											<?php if ($this->uri->segment(2) == "editar_personal_proyecto" && !$actividad->finalizada): ?>
 
-												<th>Acciones</th>
+												<th class="acciones">Acciones</th>
 
 											<?php endif; ?>
 
