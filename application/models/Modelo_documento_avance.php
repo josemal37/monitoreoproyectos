@@ -22,6 +22,22 @@ class Modelo_documento_avance extends MY_Model {
 		parent::__construct();
 	}
 
+	public function select_archivo_por_id($id = FALSE) {
+		$archivo = FALSE;
+
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::ID, $id);
+
+			$query = $this->db->get();
+
+			$archivo = $this->return_row($query);
+		}
+
+		return $archivo;
+	}
+
 	public function select_documentos_avance_de_avance($id_avance = FALSE) {
 		$documentos = FALSE;
 
@@ -90,6 +106,21 @@ class Modelo_documento_avance extends MY_Model {
 			$this->db->trans_complete();
 		}
 		return $insertado;
+	}
+
+	public function delete_documento($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }

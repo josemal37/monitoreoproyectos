@@ -114,7 +114,13 @@
 
 															<?php foreach ($avance->documentos as $documento): ?>
 
-																<li><a href="<?= base_url($documento->documento) ?>"><?= $documento->nombre ?></a></li>
+																<li>
+
+																	<a href="<?= base_url($documento->documento) ?>"><?= $documento->nombre ?></a>
+
+																	<a href="<?= base_url("archivos/eliminar_archivo/" . $proyecto->id . "/" . $documento->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+																</li>
 
 															<?php endforeach; ?>
 

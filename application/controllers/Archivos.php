@@ -61,7 +61,7 @@ class Archivos extends CI_Controller {
 		if ($proyecto && $avance && !$proyecto->finalizado) {
 			$actividad = $this->Modelo_actividad->select_actividad_con_personal($avance->id_actividad);
 
-			if ($actividad && !$actividad->finalizada) {
+			if ($actividad && !$actividad->finalizada && $actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")) {
 				$titulo = "Registrar archivos";
 				$extensiones_validas = Archivo::EXTENSIONES_VALIDAS;
 				$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("archivos[]"));
@@ -91,7 +91,7 @@ class Archivos extends CI_Controller {
 		if ($proyecto && $avance && !$proyecto->finalizado) {
 			$actividad = $this->Modelo_actividad->select_actividad_con_personal($avance->id_actividad);
 
-			if ($actividad && !$actividad->finalizada) {
+			if ($actividad && !$actividad->finalizada && $actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")) {
 				$archivos = $this->archivo->subir_archivos("archivos", $proyecto->nombre . "/" . $actividad->nombre);
 
 				if ($archivos) {
@@ -105,6 +105,48 @@ class Archivos extends CI_Controller {
 				}
 			} else {
 				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
+		}
+	}
+
+	public function eliminar_archivo($id_proyecto = FALSE, $id_archivo = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_archivo) {
+				$this->eliminar_archivo_bd($id_proyecto, $id_archivo);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_archivo_bd($id_proyecto, $id_archivo) {
+		$id_usuario = $this->session->userdata("id");
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+		$archivo = $this->Modelo_documento_avance->select_archivo_por_id($id_archivo);
+
+		if ($proyecto && !$proyecto->finalizado) {
+			$avance = $this->Modelo_avance->select_avance_por_id($archivo->id_avance);
+
+			if ($avance) {
+				$actividad = $this->Modelo_actividad->select_actividad_con_personal($avance->id_actividad);
+
+				if ($actividad && !$actividad->finalizada && $actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")) {
+					if ($this->Modelo_documento_avance->delete_documento($id_archivo)) {
+						redirect(base_url("avance/ver_avances/" . $id_proyecto));
+					} else {
+						redirect(base_url("avance/ver_avances/" . $id_proyecto), "refresh");
+					}
+				} else {
+					redirect(base_url("proyecto/proyectos"));
+				}
+			} else {
+				redirect(base_url());
 			}
 		} else {
 			redirect(base_url("proyecto/proyectos"));
