@@ -42,11 +42,11 @@
 
 						<?php if ($actividad->finalizada): ?>
 
-							<p><label>Estado:</label> Cerrado</p>
+							<p><label>Estado:</label> Cerrada</p>
 
 						<?php else: ?>
 
-							<p><label>Estado:</label> Abierto</p>
+							<p><label>Estado:</label> Vigente</p>
 
 						<?php endif; ?>
 

@@ -36,7 +36,7 @@
 
 	<?php else: ?>
 
-		<p><label>Estado:</label> Abierto</p>
+		<p><label>Estado:</label> Vigente</p>
 
 	<?php endif; ?>
 

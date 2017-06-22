@@ -96,7 +96,7 @@ class Reporte extends CI_Controller {
 		if ($proyecto->finalizado) {
 			$this->phpword->add_text("Estado: Cerrado", $seccion);
 		} else {
-			$this->phpword->add_text("Estado: Abierto", $seccion);
+			$this->phpword->add_text("Estado: Vigente", $seccion);
 		}
 	}
 
@@ -396,9 +396,9 @@ class Reporte extends CI_Controller {
 				$this->phpword->add_text("Meta: " . $actividad->cantidad . " " . $actividad->unidad, $seccion);
 				$this->phpword->add_text("Avance: " . $actividad->avance_acumulado . " " . $actividad->unidad, $seccion);
 				if ($actividad->finalizada) {
-					$this->phpword->add_text("Estado: Cerrado", $seccion);
+					$this->phpword->add_text("Estado: Cerrada", $seccion);
 				} else {
-					$this->phpword->add_text("Estado: Abierto", $seccion);
+					$this->phpword->add_text("Estado: Vigente", $seccion);
 				}
 
 				if (isset($actividad->id_producto)) {
@@ -480,9 +480,9 @@ class Reporte extends CI_Controller {
 				$this->phpword->add_text("Meta: " . $actividad->cantidad . " " . $actividad->unidad, $seccion);
 				$this->phpword->add_text("Avance: " . $actividad->avance_acumulado . " " . $actividad->unidad, $seccion);
 				if ($actividad->finalizada) {
-					$this->phpword->add_text("Estado: Cerrado", $seccion);
+					$this->phpword->add_text("Estado: Cerrada", $seccion);
 				} else {
-					$this->phpword->add_text("Estado: Abierto", $seccion);
+					$this->phpword->add_text("Estado: Vigente", $seccion);
 				}
 
 				$this->add_avances($actividad, $seccion);

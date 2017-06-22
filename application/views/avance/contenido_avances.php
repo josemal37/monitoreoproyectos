@@ -24,11 +24,11 @@
 
 						<?php if ($actividad->finalizada): ?>
 
-							<p><label>Estado:</label> Cerrado</p>
+							<p><label>Estado:</label> Cerrada</p>
 
 						<?php else: ?>
 
-							<p><label>Estado:</label> Abierto 
+							<p><label>Estado:</label> Vigente 
 
 								<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
 

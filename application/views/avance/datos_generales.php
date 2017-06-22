@@ -32,7 +32,7 @@
 
 	<?php else: ?>
 
-		<p><label>Estado:</label> Abierto
+		<p><label>Estado:</label> Vigente
 
 			<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
 
