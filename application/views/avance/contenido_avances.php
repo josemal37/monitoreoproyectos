@@ -122,6 +122,8 @@
 
 													<?php endif; ?>
 
+													<a href="<?= base_url("archivos/registrar_archivo/" . $proyecto->id . "/" . $avance->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+
 												</td>
 
 												<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>

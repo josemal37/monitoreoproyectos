@@ -79,4 +79,17 @@ class Modelo_documento_avance extends MY_Model {
 		return $insertado;
 	}
 
+	public function insert_documentos($id_avance = FALSE, $archivos = FALSE) {
+		$insertado = FALSE;
+
+		if ($id_avance && $archivos) {
+			$this->db->trans_start();
+
+			$insertado = $this->insert_avances_st($id_avance, $archivos);
+
+			$this->db->trans_complete();
+		}
+		return $insertado;
+	}
+
 }
