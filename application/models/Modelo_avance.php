@@ -50,6 +50,22 @@ class Modelo_avance extends MY_Model {
 		return $avances;
 	}
 
+	public function select_avance_por_id($id = FALSE) {
+		$avance = FALSE;
+
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::ID, $id);
+
+			$query = $this->db->get();
+
+			$avance = $this->return_row($query);
+		}
+
+		return $avance;
+	}
+
 	public function insert_avance($id_actividad = FALSE, $cantidad = FALSE, $descripcion = "", $fecha = "", $con_archivos = FALSE, $archivos = FALSE) {
 		$insertado = FALSE;
 
@@ -77,6 +93,21 @@ class Modelo_avance extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function delete_avance($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
 	}
 
 }

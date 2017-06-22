@@ -132,7 +132,7 @@ class Avance extends CI_Controller {
 						redirect(base_url("avance/registrar_avance/" . $id_proyecto . "/" . $id_actividad), "refresh");
 					}
 				}
-				
+
 				if ($this->Modelo_avance->insert_avance($id_actividad, $cantidad, $descripcion, $fecha, $con_archivos, $archivos)) {
 					redirect(base_url("avance/ver_avances/" . $id_proyecto));
 				} else {
@@ -144,6 +144,43 @@ class Avance extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->registrar_avance($id_proyecto, $id_actividad);
+		}
+	}
+
+	public function eliminar_avance($id_proyecto = FALSE, $id_avance = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "empleado") {
+			if ($id_proyecto && $id_avance) {
+				$this->eliminar_avance_bd($id_proyecto, $id_avance);
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_avance_bd($id_proyecto, $id_avance) {
+		$id_usuario = $this->session->userdata("id");
+
+		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
+		$avance = $this->Modelo_avance->select_avance_por_id($id_avance);
+
+		if ($proyecto && $avance) {
+			$actividad = $this->Modelo_actividad->select_actividad_con_personal($avance->id_actividad);
+
+			if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")) {
+				if ($this->Modelo_avance->delete_avance($id_avance)) {
+					redirect(base_url("avance/ver_avances/" . $id_proyecto));
+				} else {
+					redirect(base_url("avance/ver_avances/" . $id_proyecto), "refresh");
+				}
+			} else {
+				redirect(base_url("proyecto/proyectos"));
+			}
+		} else {
+			redirect(base_url("proyecto/proyectos"));
 		}
 	}
 

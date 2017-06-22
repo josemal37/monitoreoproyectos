@@ -82,6 +82,12 @@
 
 											<th class="documentos">Documentos</th>
 
+											<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+
+												<th class="acciones">Acciones</th>
+
+											<?php endif; ?>
+
 										</tr>
 
 									</thead>
@@ -117,6 +123,12 @@
 													<?php endif; ?>
 
 												</td>
+
+												<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+
+													<td><a href="<?= base_url("avance/eliminar_avance/" . $proyecto->id . "/" . $avance->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+												<?php endif; ?>
 
 											</tr>
 

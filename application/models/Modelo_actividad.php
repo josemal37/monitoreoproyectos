@@ -154,6 +154,26 @@ class Modelo_actividad extends MY_Model {
 		return $actividades;
 	}
 
+	public function select_actividad_con_personal($id_actividad = FALSE) {
+		$actividad = FALSE;
+
+		if ($id_actividad) {
+			$this->set_select_actividad();
+
+			$this->db->where(self::ID, $id_actividad);
+
+			$query = $this->db->get();
+
+			$actividad = $this->return_row($query);
+
+			if ($actividad) {
+				$actividad->usuarios = $this->Modelo_usuario->select_usuarios_actividad($actividad->id);
+			}
+		}
+
+		return $actividad;
+	}
+
 	private function get_actividades_con_avances($filas) {
 		$actividades = FALSE;
 
