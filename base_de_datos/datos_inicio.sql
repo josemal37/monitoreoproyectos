@@ -21,4 +21,4 @@ INSERT INTO `tipo_financiador`
 VALUES (3, 'otro');
 
 INSERT INTO `financiador`
-VALUES (1, 2, "Fundación ATICA");
+VALUES (1, "Fundación ATICA");
