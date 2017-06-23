@@ -395,6 +395,49 @@ engine = innodb default character set = utf8 collate = utf8_general_ci;
 
 
 
+CREATE TABLE `tipo_financiador` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `nombre` VARCHAR(1024)  NULL    ,
+PRIMARY KEY(`id`))
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
+CREATE TABLE `financiador` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `id_tipo_financiador` INTEGER UNSIGNED  NOT NULL  ,
+  `nombre` VARCHAR(1024)  NULL    ,
+PRIMARY KEY(`id`)  ,
+INDEX `financiador_FKIndex1`(`id_tipo_financiador`),
+  FOREIGN KEY(`id_tipo_financiador`)
+    REFERENCES `tipo_financiador`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
+CREATE TABLE `aporte` (
+  `id` INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  `id_financiador` INTEGER UNSIGNED  NOT NULL  ,
+  `id_proyecto` INTEGER  NOT NULL  ,
+  `cantidad` DOUBLE  NULL  ,
+  `concepto` TEXT  NULL    ,
+PRIMARY KEY(`id`)  ,
+INDEX `aporte_FKIndex1`(`id_proyecto`)  ,
+INDEX `aporte_FKIndex2`(`id_financiador`),
+  FOREIGN KEY(`id_proyecto`)
+    REFERENCES `proyecto`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+  FOREIGN KEY(`id_financiador`)
+    REFERENCES `financiador`(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE)
+engine = innodb default character set = utf8 collate = utf8_general_ci;
+
+
+
 CREATE 
 VIEW `avance_actividad`AS 
 SELECT

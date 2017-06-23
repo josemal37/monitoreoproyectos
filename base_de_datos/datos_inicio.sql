@@ -12,3 +12,13 @@ VALUES ('2', 'empleado');
 
 INSERT INTO `usuario` 
 VALUES (1, 1, 'administrador', 'del', 'sistema', 'admin', SHA1('admin'));
+
+INSERT INTO `tipo_financiador`
+VALUES (1, 'financiador');
+INSERT INTO `tipo_financiador`
+VALUES (2, 'ejecutor');
+INSERT INTO `tipo_financiador`
+VALUES (3, 'otro');
+
+INSERT INTO `financiador`
+VALUES (1, 2, "Fundación ATICA");
