@@ -51,7 +51,7 @@ class Reporte extends CI_Controller {
 	public function marco_logico_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_marco_logico_docx($id_proyecto);
 			} else {
@@ -64,6 +64,11 @@ class Reporte extends CI_Controller {
 
 	private function generar_marco_logico_docx($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
@@ -267,7 +272,7 @@ class Reporte extends CI_Controller {
 	public function personal_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_personal_docx($id_proyecto);
 			} else {
@@ -280,6 +285,11 @@ class Reporte extends CI_Controller {
 
 	private function generar_personal_docx($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
@@ -354,7 +364,7 @@ class Reporte extends CI_Controller {
 	public function actividades_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_actividades_docx($id_proyecto);
 			} else {
@@ -367,6 +377,11 @@ class Reporte extends CI_Controller {
 
 	private function generar_actividades_docx($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
@@ -419,7 +434,7 @@ class Reporte extends CI_Controller {
 	public function avances_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_avances_docx($id_proyecto);
 			} else {
@@ -432,6 +447,11 @@ class Reporte extends CI_Controller {
 
 	private function generar_avances_docx($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
@@ -441,7 +461,7 @@ class Reporte extends CI_Controller {
 			$fecha_avances = FALSE;
 			$fecha_inicio_avances = FALSE;
 			$fecha_fin_avances = FALSE;
-			
+
 			if (isset($_POST["submit"])) {
 				$fecha_actividades = $this->input->post("fecha-actividades") == "periodo";
 				$fecha_avances = $this->input->post("fecha-avances") == "periodo";
@@ -454,7 +474,7 @@ class Reporte extends CI_Controller {
 					$fecha_fin_avances = $this->input->post("fecha-fin-avances");
 				}
 			}
-			
+
 			$actividades = $this->Modelo_actividad->select_actividades_de_proyecto_con_avances($id_proyecto, $fecha_actividades, $fecha_inicio_actividades, $fecha_fin_actividades, $fecha_avances, $fecha_inicio_avances, $fecha_fin_avances);
 			$seccion = $this->phpword->get_section();
 

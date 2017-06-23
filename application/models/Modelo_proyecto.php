@@ -37,15 +37,20 @@ class Modelo_proyecto extends MY_Model {
 		parent::__construct();
 	}
 
-	public function select_proyectos_de_usuario($id = FALSE, $finalizado = FALSE) {
+	public function select_proyectos_de_usuario($id = FALSE, $finalizado = FALSE, $direccion = FALSE) {
 		$proyectos = FALSE;
 
 		if ($id) {
-			$this->set_select_proyecto_con_usuario_y_rol();
-			$this->db->where(self::ID_USUARIO_PU, $id);
+
+			if (!$direccion) {
+				$this->set_select_proyecto_con_usuario_y_rol();
+				$this->db->where(self::ID_USUARIO_PU, $id);
+			} else {
+				$this->db->from(self::NOMBRE_TABLA);
+			}
 
 			if ($finalizado) {
-				$this->db->where(self::NOMBRE_TABLA . "." . self::FINALIZADO, $finalizado);
+				$this->db->where(self:: NOMBRE_TABLA . "." . self::FINALIZADO, $finalizado);
 			} else {
 				$this->db->where("(" .
 						self::NOMBRE_TABLA . "." . self::FINALIZADO . " IS NULL" .
@@ -65,7 +70,7 @@ class Modelo_proyecto extends MY_Model {
 
 		if ($id_proyecto) {
 			$this->set_select_proyecto_con_usuario_y_rol();
-			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_proyecto);
+			$this->db->where(self:: NOMBRE_TABLA . "." . self::ID, $id_proyecto);
 
 			if ($id_usuario) {
 				$this->db->where(self::ID_USUARIO_PU, $id_usuario);
@@ -88,7 +93,7 @@ class Modelo_proyecto extends MY_Model {
 
 		if ($id_proyecto) {
 			$this->set_select_proyecto_con_usuario_y_rol();
-			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id_proyecto);
+			$this->db->where(self:: NOMBRE_TABLA . "." . self::ID, $id_proyecto);
 
 			if ($id_usuario) {
 				$this->db->where(self::ID_USUARIO_PU, $id_usuario);
@@ -115,27 +120,32 @@ class Modelo_proyecto extends MY_Model {
 		$this->db->select(self::COLUMNAS_SELECT_PROYECTO_USUARIO);
 		$this->db->select(self::COLUMNAS_SELECT_ROL_PROYECTO);
 		$this->db->from(self::NOMBRE_TABLA);
-		$this->db->join(self::NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
-		$this->db->join(self::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_ROL_PROYECTO_PU, "left");
+		$this->db->join(self:: NOMBRE_TABLA_PROYECTO_USUARIO, self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::ID_PROYECTO_PU . " = " . self:: NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->join(self ::NOMBRE_TABLA_ROL_PROYECTO, self::NOMBRE_TABLA_ROL_PROYECTO . "." . self::ID_ROL_PROYECTO . " = " . self::NOMBRE_TABLA_PROYECTO_USUARIO . "." . self::
+
+				ID_ROL_PROYECTO_PU, "left");
 	}
 
 	private function set_select_resultados() {
 		$this->db->select(Modelo_resultado::COLUMNAS_SELECT_PARA_PROYECTO);
-		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self::NOMBRE_TABLA . "." . self::ID, "left");
+		$this->db->join(Modelo_resultado::NOMBRE_TABLA, Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID_PROYECTO . " = " . self:: NOMBRE_TABLA . "." . self::ID, "left");
 
-		$this->set_select_efectos();
+		$this->
+				set_select_efectos();
 	}
 
 	private function set_select_efectos() {
 		$this->db->select(Modelo_efecto::COLUMNAS_SELECT_PARA_PROYECTO);
 		$this->db->join(Modelo_efecto::NOMBRE_TABLA, Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID_RESULTADO . " = " . Modelo_resultado::NOMBRE_TABLA . "." . Modelo_resultado::ID, "left");
 
-		$this->set_select_productos();
+		$this->
+				set_select_productos();
 	}
 
 	private function set_select_productos() {
 		$this->db->select(Modelo_producto::COLUMNAS_SELECT_PARA_PROYECTO);
-		$this->db->join(Modelo_producto::NOMBRE_TABLA, Modelo_producto::NOMBRE_TABLA . "." . Modelo_producto::ID_EFECTO . " = " . Modelo_efecto::NOMBRE_TABLA . "." . Modelo_efecto::ID, "left");
+		$this->db->join(Modelo_producto::NOMBRE_TABLA, Modelo_producto::NOMBRE_TABLA . "." . Modelo_producto::ID_EFECTO . " = " . Modelo_efecto:: NOMBRE_TABLA . "." .
+				Modelo_efecto::ID, "left");
 	}
 
 	private function obtener_objeto_proyecto_de_filas($filas_proyecto) {
@@ -168,7 +178,6 @@ class Modelo_proyecto extends MY_Model {
 
 	private function obtener_resultados_de_proyecto($filas_proyecto) {
 		$resultados = array();
-
 		foreach ($filas_proyecto as $fila) {
 			if (isset($fila->id_resultado) && !$this->existe_id_en_array($fila->id_resultado, $resultados)) {
 				$resultado = new stdClass();
@@ -185,7 +194,6 @@ class Modelo_proyecto extends MY_Model {
 
 	private function obtener_efectos_de_resultado($id_resultado, $filas_proyecto) {
 		$efectos = array();
-
 		foreach ($filas_proyecto as $fila) {
 			if (isset($fila->id_resultado) && isset($fila->id_efecto) && !$this->existe_id_en_array($fila->id_efecto, $efectos)) {
 				if ($id_resultado == $fila->id_resultado) {
@@ -208,7 +216,6 @@ class Modelo_proyecto extends MY_Model {
 
 	private function obtener_productos_de_efecto($id_efecto, $filas_proyecto) {
 		$productos = array();
-
 		foreach ($filas_proyecto as $fila) {
 			if (isset($fila->id_efecto) && isset($fila->id_producto) && !$this->existe_id_en_array($fila->id_producto, $productos)) {
 				if ($id_efecto == $fila->id_efecto) {
@@ -228,6 +235,8 @@ class Modelo_proyecto extends MY_Model {
 
 	private function obtener_resultados_clave_de_resultado($id_resultado) {
 		$resultados_clave = $this->Modelo_resultado_clave->select_resultados_clave_de_resultado($id_resultado);
+
+
 
 		return $resultados_clave;
 	}
@@ -265,8 +274,8 @@ class Modelo_proyecto extends MY_Model {
 
 			$datos = array(
 				self::NOMBRE => $nombre,
-				self::OBJETIVO => $objetivo,
-				self::FECHA_INICIO => $fecha_inicio,
+				self:: OBJETIVO => $objetivo,
+				self:: FECHA_INICIO => $fecha_inicio,
 				self::FECHA_FIN => $fecha_fin
 			);
 
@@ -293,8 +302,8 @@ class Modelo_proyecto extends MY_Model {
 
 		if ($id_usuario && $id_proyecto && $id_rol) {
 			$datos = array(
-				self::ID_USUARIO_PU => $id_usuario,
-				self::ID_PROYECTO_PU => $id_proyecto,
+				self:: ID_USUARIO_PU => $id_usuario,
+				self:: ID_PROYECTO_PU => $id_proyecto,
 				self::ID_ROL_PROYECTO_PU => $id_rol
 			);
 
@@ -314,13 +323,12 @@ class Modelo_proyecto extends MY_Model {
 
 			$datos = array(
 				self::NOMBRE => $nombre,
-				self::OBJETIVO => $objetivo,
-				self::FECHA_INICIO => $fecha_inicio,
+				self:: OBJETIVO => $objetivo,
+				self:: FECHA_INICIO => $fecha_inicio,
 				self::FECHA_FIN => $fecha_fin
 			);
 
 			$this->db->set($datos);
-
 			$this->db->where(self::ID, $id);
 
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
@@ -336,7 +344,6 @@ class Modelo_proyecto extends MY_Model {
 
 		if ($id) {
 			$this->db->trans_start();
-
 			$this->db->where(self::ID, $id);
 
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
@@ -359,7 +366,7 @@ class Modelo_proyecto extends MY_Model {
 
 			$this->db->set($datos);
 
-			$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+			$this->db->where(self:: NOMBRE_TABLA . "." . self::ID, $id);
 
 			$finalizado = $this->db->update(self::NOMBRE_TABLA);
 

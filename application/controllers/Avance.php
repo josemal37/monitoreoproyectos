@@ -39,7 +39,7 @@ class Avance extends CI_Controller {
 	public function ver_avances($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_avances($id_proyecto);
 			} else {
@@ -52,6 +52,11 @@ class Avance extends CI_Controller {
 
 	private function cargar_vista_ver_avances($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {

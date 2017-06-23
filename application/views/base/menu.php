@@ -26,7 +26,7 @@
 
             <ul class="nav navbar-nav">
 
-				<?php if ($this->session->userdata("rol") == "empleado"): ?>
+				<?php if ($this->session->userdata("rol") == "empleado" || $this->session->userdata("rol") == "dirección"): ?>
 
 					<!-- Proyectos -->
 
@@ -74,33 +74,37 @@
 
 						</li>
 
-						<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
+						<?php if ($this->session->userdata("rol") == "empleado"): ?>
 
-							<li class="separator">Editar proyecto</li>
+							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
 
-							<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "modificar_proyecto"): ?>class="active open"<?php endif; ?>>
+								<li class="separator">Editar proyecto</li>
 
-								<a href="<?= base_url("proyecto/modificar_proyecto/" . $proyecto->id) ?>">Editar datos generales<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+								<li <?php if ($this->uri->segment(1) == "proyecto" && $this->uri->segment(2) == "modificar_proyecto"): ?>class="active open"<?php endif; ?>>
 
-							</li>
+									<a href="<?= base_url("proyecto/modificar_proyecto/" . $proyecto->id) ?>">Editar datos generales<span class="glyphicon glyphicon-pencil pull-right"></span></a>
 
-							<li <?php if ($this->uri->segment(1) == "marco_logico" && $this->uri->segment(2) == "editar_marco_logico"): ?>class="active open"<?php endif; ?>>
+								</li>
 
-								<a href="<?= base_url("marco_logico/editar_marco_logico/" . $proyecto->id) ?>">Editar marco lógico<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+								<li <?php if ($this->uri->segment(1) == "marco_logico" && $this->uri->segment(2) == "editar_marco_logico"): ?>class="active open"<?php endif; ?>>
 
-							</li>
+									<a href="<?= base_url("marco_logico/editar_marco_logico/" . $proyecto->id) ?>">Editar marco lógico<span class="glyphicon glyphicon-pencil pull-right"></span></a>
 
-							<li <?php if ($this->uri->segment(1) == "actividad" && $this->uri->segment(2) == "editar_actividades"): ?>class="active open"<?php endif; ?>>
+								</li>
 
-								<a href="<?= base_url("actividad/editar_actividades/" . $proyecto->id) ?>">Editar actividades<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+								<li <?php if ($this->uri->segment(1) == "actividad" && $this->uri->segment(2) == "editar_actividades"): ?>class="active open"<?php endif; ?>>
 
-							</li>
+									<a href="<?= base_url("actividad/editar_actividades/" . $proyecto->id) ?>">Editar actividades<span class="glyphicon glyphicon-pencil pull-right"></span></a>
 
-							<li <?php if ($this->uri->segment(1) == "personal" && $this->uri->segment(2) == "editar_personal_proyecto"): ?>class="active open"<?php endif; ?>>
+								</li>
 
-								<a href="<?= base_url("personal/editar_personal_proyecto/" . $proyecto->id) ?>">Editar personal<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+								<li <?php if ($this->uri->segment(1) == "personal" && $this->uri->segment(2) == "editar_personal_proyecto"): ?>class="active open"<?php endif; ?>>
 
-							</li>
+									<a href="<?= base_url("personal/editar_personal_proyecto/" . $proyecto->id) ?>">Editar personal<span class="glyphicon glyphicon-pencil pull-right"></span></a>
+
+								</li>
+
+							<?php endif; ?>
 
 						<?php endif; ?>
 

@@ -25,17 +25,17 @@ class Proyecto extends CI_Controller {
 	public function proyectos() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			$this->cargar_vista_proyectos();
 		} else {
 			redirect(base_url());
 		}
 	}
-	
+
 	public function proyectos_terminados() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			$this->cargar_vista_proyectos(TRUE);
 		} else {
 			redirect(base_url());
@@ -45,7 +45,13 @@ class Proyecto extends CI_Controller {
 	private function cargar_vista_proyectos($finalizado = FALSE) {
 		$titulo = "Proyectos";
 		$id_usuario = $this->session->userdata("id");
-		$proyectos = $this->Modelo_proyecto->select_proyectos_de_usuario($id_usuario, $finalizado);
+
+		$direccion = FALSE;
+		if ($this->session->userdata("rol") == "dirección") {
+			$direccion = TRUE;
+		}
+
+		$proyectos = $this->Modelo_proyecto->select_proyectos_de_usuario($id_usuario, $finalizado, $direccion);
 
 		$datos = array();
 		$datos["titulo"] = $titulo;

@@ -29,7 +29,7 @@ class Actividad extends Coordinador {
 	public function ver_actividades($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_actividades($id_proyecto);
 			} else {
@@ -42,6 +42,10 @@ class Actividad extends Coordinador {
 
 	private function cargar_vista_ver_actividades($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
 
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 

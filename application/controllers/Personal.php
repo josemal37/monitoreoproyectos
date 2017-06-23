@@ -22,7 +22,7 @@ class Personal extends Coordinador {
 	public function ver_personal_proyecto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "empleado" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_personal_proyecto($id_proyecto);
 			} else {
@@ -35,6 +35,11 @@ class Personal extends Coordinador {
 
 	private function cargar_vista_ver_personal_proyecto($id_proyecto) {
 		$id_usuario = $this->session->userdata("id");
+
+		if ($this->session->userdata("rol") == "dirección") {
+			$id_usuario = FALSE;
+		}
+
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id_proyecto, $id_usuario);
 
 		if ($proyecto) {

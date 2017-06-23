@@ -38,7 +38,7 @@
 
 								<a href="<?= base_url("actividad/ver_actividades/" . $proyecto->id) ?>" class="btn btn-success btn-xs">Ver proyecto</a>
 
-								<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
+								<?php if ($this->session->userdata("rol") == "empleado" && $proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
 
 									<a href="<?= base_url("proyecto/eliminar_proyecto/" . $proyecto->id) ?>" class="btn btn-danger btn-xs">Eliminar</a>
 
@@ -64,7 +64,11 @@
 
 	<div>
 
-		<a href="<?= base_url("proyecto/registrar_proyecto") ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Proyecto</a>
+		<?php if ($this->session->userdata("rol") == "empleado"): ?>
+
+			<a href="<?= base_url("proyecto/registrar_proyecto") ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> Proyecto</a>
+
+		<?php endif; ?>
 
 	</div>
 

@@ -37,6 +37,10 @@ class Login extends CI_Controller {
 				redirect(base_url("proyecto/proyectos"));
 				break;
 
+			case "dirección":
+				redirect(base_url("proyecto/proyectos"));
+				break;
+
 			default:
 				$this->cargar_vista_login();
 
