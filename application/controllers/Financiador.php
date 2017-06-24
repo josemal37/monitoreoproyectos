@@ -138,4 +138,32 @@ class Financiador extends CI_Controller {
 		}
 	}
 
+	public function eliminar_financiador($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+		if ($id) {
+			$this->eliminar_financiador_bd($id);
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
+		if ($rol == "administrador") {
+			
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_financiador_bd($id) {
+		$financiador = $this->Modelo_financiador->select_financiador_por_id($id);
+
+		if ($financiador) {
+			if ($this->Modelo_financiador->delete_financiador($id)) {
+				redirect(base_url("financiador/financiadores"));
+			} else {
+				redirect(base_url("financiador/financiadores"), "refresh");
+			}
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
+	}
+
 }

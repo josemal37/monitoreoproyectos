@@ -94,4 +94,19 @@ class Modelo_financiador extends MY_Model {
 		return $actualizado;
 	}
 
+	public function delete_financiador($id = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id) {
+			$this->db->trans_start();
+
+			$this->db->where(self::ID, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $eliminado;
+	}
+
 }
