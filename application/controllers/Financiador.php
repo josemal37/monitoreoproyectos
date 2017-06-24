@@ -87,4 +87,55 @@ class Financiador extends CI_Controller {
 		}
 	}
 
+	public function modificar_financiador($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador") {
+			if ($id) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_financiador_bd($id);
+				} else {
+					$this->cargar_vista_modificar_financiador($id);
+				}
+			} else {
+				redirect(base_url("usuario/usuarios"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function cargar_vista_modificar_financiador($id) {
+		$titulo = "Modificar financiador";
+		$reglas_cliente = $this->item_validacion->get_reglas_cliente(array("nombre"));
+		$financiador = $this->Modelo_financiador->select_financiador_por_id($id);
+
+		if ($financiador) {
+			$datos = array();
+
+			$datos["titulo"] = $titulo;
+			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["financiador"] = $financiador;
+
+			$this->load->view("financiador/formulario_financiador", $datos);
+		} else {
+			redirect(base_url("usuario/usuarios"));
+		}
+	}
+
+	private function modificar_financiador_bd($id) {
+		$nombre = $this->input->post("nombre");
+
+		if ($this->item_validacion->validar(array("nombre"))) {
+			if ($this->Modelo_financiador->update_financiador($id, $nombre)) {
+				redirect(base_url("financiador/financiadores"));
+			} else {
+				redirect(base_url("financiador/modificar_financiador/" . $id), "refresh");
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_financiador($id);
+		}
+	}
+
 }

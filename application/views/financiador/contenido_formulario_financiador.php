@@ -24,7 +24,7 @@ switch ($accion) {
 
 			<label>Nombre <span class="text-red">*</span></label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control">
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar_financiador"): ?>value="<?= $financiador->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 

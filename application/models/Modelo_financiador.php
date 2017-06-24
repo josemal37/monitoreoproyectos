@@ -37,6 +37,22 @@ class Modelo_financiador extends MY_Model {
 		return $financiadores;
 	}
 
+	public function select_financiador_por_id($id = FALSE) {
+		$financiador = FALSE;
+
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::ID, $id);
+
+			$query = $this->db->get();
+
+			$financiador = $this->return_row($query);
+		}
+
+		return $financiador;
+	}
+
 	public function insert_financiador($nombre = "") {
 		$insertado = FALSE;
 
@@ -55,6 +71,27 @@ class Modelo_financiador extends MY_Model {
 		}
 
 		return $insertado;
+	}
+
+	public function update_financiador($id = FALSE, $nombre = "") {
+		$actualizado = FALSE;
+
+		if ($id && $nombre != "") {
+			$this->db->trans_start();
+
+			$datos = array(
+				self::NOMBRE => $nombre
+			);
+
+			$this->db->set($datos);
+			$this->db->where(self::ID, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+		}
+
+		return $actualizado;
 	}
 
 }
