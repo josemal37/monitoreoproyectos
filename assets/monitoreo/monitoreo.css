@@ -188,4 +188,7 @@ table.table-hover tbody tr:hover td, table.table-hover tbody tr:hover th {
 .usuarios table thead tr th.acciones {
   width: 30%; }
 
+.financiadores table thead tr th.acciones {
+  width: 15%; }
+
 /*# sourceMappingURL=monitoreo.css.map */
