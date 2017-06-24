@@ -128,6 +128,18 @@
 
 					</li>
 
+					<li <?php if ($this->uri->segment(1) == "financiador" && $this->uri->segment(2) == "financiadores"): ?>class="active open"<?php endif; ?>>
+
+						<a href="<?= base_url("financiador/financiadores") ?>">Ver financiadores<span class="glyphicon glyphicon-th-list pull-right"></span></a>
+
+					</li>
+
+					<li <?php if ($this->uri->segment(1) == "financiador" && $this->uri->segment(2) == "registrar_financiador"): ?>class="active open"<?php endif; ?>>
+
+						<a href="<?= base_url("financiador/registrar_financiador") ?>">Registrar financiador<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
+
+					</li>
+
 				<?php endif; ?>
 
                 <li class="separator">Sistema</li>
