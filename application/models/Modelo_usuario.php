@@ -18,10 +18,11 @@ class Modelo_usuario extends MY_Model {
 	const NOMBRE = "nombre";
 	const APELLIDO_PATERNO = "apellido_paterno";
 	const APELLIDO_MATERNO = "apellido_materno";
+	const E_MAIL = "e_mail";
 	const LOGIN = "login";
 	const PASSWORD = "passwd";
-	const COLUMNAS_SELECT = "usuario.id, usuario.id_rol_usuario as id_rol, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno, usuario.login, usuario.passwd as password";
-	const COLUMNAS_SELECT_OTRA_TABLA = "usuario.id as id_usuario, usuario.id_rol_usuario as id_rol_usuario, usuario.nombre as nombre_usuario, usuario.apellido_paterno as apellido_paterno_usuario, usuario.apellido_materno as apellido_materno_usuario";
+	const COLUMNAS_SELECT = "usuario.id, usuario.id_rol_usuario as id_rol, usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno, usuario.e_mail, usuario.login, usuario.passwd as password";
+	const COLUMNAS_SELECT_OTRA_TABLA = "usuario.id as id_usuario, usuario.id_rol_usuario as id_rol_usuario, usuario.nombre as nombre_usuario, usuario.apellido_paterno as apellido_paterno_usuario, usuario.apellido_materno as apellido_materno_usuario, usuario.e_mail as e_mail_usuario";
 	const NOMBRE_TABLA = "usuario";
 
 	public function __construct() {
@@ -223,27 +224,50 @@ class Modelo_usuario extends MY_Model {
 		$this->db->order_by(Modelo_usuario::NOMBRE_TABLA . "." . Modelo_usuario::APELLIDO_MATERNO);
 	}
 
-	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $password = "", $id_rol = FALSE) {
+	private function select_usuario_por_e_mail($e_mail, $no_id = FALSE) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->where("BINARY `" . self::NOMBRE_TABLA . "`.`" . self::E_MAIL . "` = '" . $e_mail . "'", NULL, FALSE);
+
+		if ($no_id) {
+			$this->db->where(self::ID . " != ", $no_id);
+		}
+
+		$query = $this->db->get();
+
+		$usuario = $this->return_row($query);
+
+		return $usuario;
+	}
+
+	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $e_mail = "", $login = "", $password = "", $id_rol = FALSE) {
 		$insertado = FALSE;
 
-		if ($nombre != "" && $login != "" && $password != "" && $id_rol) {
+		if ($nombre != "" && $login != "" && $password != "" && $id_rol && $e_mail != "") {
 			$password = sha1($password);
 
 			$this->db->trans_start();
 
+			$usuario_de_e_mail = $this->select_usuario_por_e_mail($e_mail);
+
 			if (!$this->existe_login($login)) {
-				$datos = array(
-					self::NOMBRE => $nombre,
-					self::APELLIDO_PATERNO => $apellido_paterno,
-					self::APELLIDO_MATERNO => $apellido_materno,
-					self::LOGIN => $login,
-					self::PASSWORD => $password,
-					self::ID_ROL => $id_rol
-				);
+				if (!$usuario_de_e_mail) {
+					$datos = array(
+						self::NOMBRE => $nombre,
+						self::APELLIDO_PATERNO => $apellido_paterno,
+						self::APELLIDO_MATERNO => $apellido_materno,
+						self::E_MAIL => $e_mail,
+						self::LOGIN => $login,
+						self::PASSWORD => $password,
+						self::ID_ROL => $id_rol
+					);
 
-				$this->db->set($datos);
+					$this->db->set($datos);
 
-				$insertado = $this->db->insert(self::NOMBRE_TABLA);
+					$insertado = $this->db->insert(self::NOMBRE_TABLA);
+				} else {
+					$this->session->set_flashdata("existe_e_mail", "El correo electrónico introducido ya se encuentra registrado.");
+				}
 			} else {
 				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
 			}
@@ -254,26 +278,30 @@ class Modelo_usuario extends MY_Model {
 		return $insertado;
 	}
 
-	public function update_usuario($id = FALSE, $nombre = "", $apellido_paterno = "", $apellido_materno = "", $login = "", $id_rol = FALSE) {
+	public function update_usuario($id = FALSE, $nombre = "", $apellido_paterno = "", $apellido_materno = "", $e_mail = "", $login = "", $id_rol = FALSE) {
 		$actualizado = FALSE;
 
-		if ($id && $nombre != "" && $login != "" && $id_rol) {
+		if ($id && $nombre != "" && $login != "" && $id_rol && $e_mail != "") {
 			$this->db->trans_start();
 
 			if (!$this->select_usuario_por_login($login, $id)) {
-				$datos = array(
-					self::NOMBRE => $nombre,
-					self::APELLIDO_PATERNO => $apellido_paterno,
-					self::APELLIDO_MATERNO => $apellido_materno,
-					self::LOGIN => $login,
-					self::ID_ROL => $id_rol
-				);
+				if (!$this->select_usuario_por_e_mail($e_mail, $id)) {
+					$datos = array(
+						self::NOMBRE => $nombre,
+						self::APELLIDO_PATERNO => $apellido_paterno,
+						self::APELLIDO_MATERNO => $apellido_materno,
+						self::LOGIN => $login,
+						self::ID_ROL => $id_rol
+					);
 
-				$this->db->set($datos);
+					$this->db->set($datos);
 
-				$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
+					$this->db->where(self::NOMBRE_TABLA . "." . self::ID, $id);
 
-				$actualizado = $this->db->update(self::NOMBRE_TABLA);
+					$actualizado = $this->db->update(self::NOMBRE_TABLA);
+				} else {
+					$this->session->set_flashdata("existe_e_mail", "El correo electrónico introducido ya se encuentra registrado.");
+				}
 			} else {
 				$this->session->set_flashdata("existe", "El nombre de usuario introducido ya se encuentra registrado.");
 			}

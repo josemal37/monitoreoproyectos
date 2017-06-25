@@ -20,6 +20,8 @@
 
 						<th class="nombre-completo">Nombre completo</th>
 
+						<th class="nombre-completo">Correo electrónico</th>
+
 						<th class="login">Login</th>
 
 						<th class="rol">Rol</th>
@@ -37,6 +39,8 @@
 						<tr>
 
 							<td><?= $usuario->nombre_completo ?></td>
+
+							<td><?= $usuario->e_mail ?></td>
 
 							<td><?= $usuario->login ?></td>
 

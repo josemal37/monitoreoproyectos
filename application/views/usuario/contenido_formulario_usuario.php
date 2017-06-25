@@ -57,6 +57,22 @@ switch ($accion) {
 
 			<div class="form-group">
 
+				<label>Correo electrónico</label>
+
+				<input type="text" id="e-mail" name="e-mail" class="form-control" <?php if ($accion == "modificar_usuario"): ?>value="<?= $usuario->e_mail ?>"<?php endif; ?>>
+
+				<?= form_error("e-mail") ?>
+				
+				<?php if ($this->session->flashdata("existe_e_mail")): ?>
+
+					<label class="text-danger"><?= $this->session->flashdata("existe_e_mail") ?></label>
+
+				<?php endif; ?>
+
+			</div>
+
+			<div class="form-group">
+
 				<label>Rol <span class="text-red">*</span></label>
 
 				<select id="rol" name="rol" class="form-control">

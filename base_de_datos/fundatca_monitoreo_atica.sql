@@ -63,6 +63,7 @@ CREATE TABLE `usuario` (
   `nombre` VARCHAR(1024)  NULL  ,
   `apellido_paterno` VARCHAR(1024)  NULL  ,
   `apellido_materno` VARCHAR(1024)  NULL  ,
+  `e_mail` VARCHAR(1024) NULL ,
   `login` VARCHAR(1024)  NULL  ,
   `passwd` VARCHAR(1024)  NULL    ,
 PRIMARY KEY(`id`)  ,

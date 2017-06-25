@@ -61,7 +61,7 @@ class Usuario extends CI_Controller {
 	private function cargar_vista_registrar_usuario() {
 		$titulo = "Registrar usuario";
 		$roles = $this->Modelo_rol->select_roles();
-		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "password", "confirmacion_password", "rol"));
+		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "password", "confirmacion_password", "rol", "e-mail"));
 
 		$datos = array();
 		$datos["titulo"] = $titulo;
@@ -78,9 +78,10 @@ class Usuario extends CI_Controller {
 		$login = $this->input->post("login");
 		$password = $this->input->post("password");
 		$rol = $this->input->post("rol");
+		$e_mail = $this->input->post("e-mail");
 
-		if ($this->usuario_validacion->validar(array("nombre", "apellido_paterno", "apellido_materno", "login", "password", "confirmacion_password", "rol"))) {
-			if ($this->Modelo_usuario->insert_usuario($nombre, $apellido_paterno, $apellido_materno, $login, $password, $rol)) {
+		if ($this->usuario_validacion->validar(array("nombre", "apellido_paterno", "apellido_materno", "login", "password", "confirmacion_password", "rol", "e_mail"))) {
+			if ($this->Modelo_usuario->insert_usuario($nombre, $apellido_paterno, $apellido_materno, $e_mail, $login, $password, $rol)) {
 				redirect(base_url("usuario/usuarios"));
 			} else {
 				redirect(base_url("usuario/registrar_usuario"), "refresh");
@@ -113,7 +114,7 @@ class Usuario extends CI_Controller {
 		$titulo = "Modificar usuario";
 		$roles = $this->Modelo_rol->select_roles();
 		$usuario = $this->Modelo_usuario->select_usuario_por_id($id);
-		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "rol"));
+		$reglas_cliente = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "login", "rol", "e-mail"));
 
 		if ($usuario) {
 			$datos = array();
@@ -135,9 +136,10 @@ class Usuario extends CI_Controller {
 		$apellido_materno = $this->input->post("apellido_materno");
 		$login = $this->input->post("login");
 		$rol = $this->input->post("rol");
+		$e_mail = $this->input->post("e-mail");
 
 		if ($this->usuario_validacion->validar(array("id", "nombre", "apellido_paterno", "apellido_materno", "login", "rol"))) {
-			if ($this->Modelo_usuario->update_usuario($id, $nombre, $apellido_paterno, $apellido_materno, $login, $rol)) {
+			if ($this->Modelo_usuario->update_usuario($id, $nombre, $apellido_paterno, $apellido_materno, $e_mail, $login, $rol)) {
 				redirect(base_url("usuario/usuarios"));
 			} else {
 				redirect(base_url("usuario/modificar_usuario/" . $id), "refresh");

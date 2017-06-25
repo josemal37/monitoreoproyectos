@@ -96,6 +96,14 @@ class Usuario_validacion extends Validacion {
 				"numeric",
 				"is_natural"
 			)
+		),
+		"e_mail" => array(
+			"field" => "e-mail",
+			"label" => "correo electrónico",
+			"rules" => array(
+				"required",
+				"valid_email"
+			)
 		)
 	);
 	protected $jquery_validate = array(
@@ -140,6 +148,10 @@ class Usuario_validacion extends Validacion {
 		"rol_proyecto" => array(
 			"required" => true,
 			"number" => true
+		),
+		"e-mail" => array(
+			"required" => true,
+			"email" => true
 		)
 	);
 	protected $mensajes_jquery_validate = array(
@@ -184,6 +196,10 @@ class Usuario_validacion extends Validacion {
 		"rol_proyecto" => array(
 			"required" => "Por favor seleccione un rol de proyecto.",
 			"number" => "Ocurrió un error con el rol seleccionado."
+		),
+		"e-mail" => array(
+			"required" => "Por favor introduzca el correo electrónico.",
+			"email" => "Debe ser un correo electrónico válido."
 		)
 	);
 
