@@ -18,6 +18,7 @@ class Modelo_financiador extends MY_Model {
 	const ID = "id";
 	const NOMBRE = "nombre";
 	const COLUMNAS_SELECT = "financiador.id, financiador.nombre";
+	const COLUMNAS_SELECT_OTRA_TABLA = "financiador.nombre as nombre_financiador";
 	const NOMBRE_TABLA = "financiador";
 
 	public function __construct() {

@@ -171,6 +171,8 @@ class Modelo_proyecto extends MY_Model {
 
 			//indicadores de impacto
 			$proyecto->indicadores_impacto = $this->obtener_indicadores_impacto_de_proyecto($proyecto->id);
+
+			$proyecto->aportes = $this->Modelo_aporte->select_aportes_de_proyecto($proyecto->id);
 		}
 
 		return $proyecto;
@@ -253,6 +255,12 @@ class Modelo_proyecto extends MY_Model {
 		return $indicadores;
 	}
 
+	private function obtener_aportes_de_proyecto($id_proyecto) {
+		$aportes = $this->Modelo_aporte->select_aportes_de_proyecto($id_proyecto);
+
+		return $aportes;
+	}
+
 	private function existe_id_en_array($id, $array) {
 		$existe = FALSE;
 
@@ -266,7 +274,7 @@ class Modelo_proyecto extends MY_Model {
 		return $existe;
 	}
 
-	public function insert_proyecto($nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $coordinador = FALSE) {
+	public function insert_proyecto($nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $coordinador = FALSE, $con_financiadores = FALSE, $instituciones_ejecutores = FALSE, $cantidades_ejecutores = FALSE, $conceptos_ejecutores = FALSE, $instituciones_financiadores = FALSE, $cantidades_financiadores = FALSE, $conceptos_financiadores = FALSE, $instituciones_otros = FALSE, $cantidades_otros = FALSE, $conceptos_otros = FALSE) {
 		$insertado = FALSE;
 
 		if ($nombre != "" && $fecha_inicio != "" && $fecha_fin != "") {
@@ -284,10 +292,15 @@ class Modelo_proyecto extends MY_Model {
 			$insertado = $this->db->insert(self::NOMBRE_TABLA);
 
 			if ($insertado) {
+				$id_proyecto = $this->db->insert_id();
+
 				if ($coordinador) {
-					$id_proyecto = $this->db->insert_id();
 					$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
 					$this->asignar_usuario_a_proyecto_con_rol($coordinador, $id_proyecto, $id_rol_coordinador);
+				}
+
+				if ($con_financiadores) {
+					$this->Modelo_aporte->insert_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
 				}
 			}
 

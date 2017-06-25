@@ -29,7 +29,10 @@ class Marco_logico extends CI_Controller {
 			"Modelo_rol_proyecto",
 			"Modelo_actividad",
 			"Modelo_meta_actividad",
-			"Modelo_avance"
+			"Modelo_avance",
+			"Modelo_aporte",
+			"Modelo_financiador",
+			"Modelo_tipo_financiador"
 		));
 		$this->load->database("default");
 	}
@@ -64,10 +67,16 @@ class Marco_logico extends CI_Controller {
 		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
 
 		if ($proyecto) {
+			$id_ejecutor = $this->Modelo_tipo_financiador->select_id_ejecutor();
+			$id_financiador = $this->Modelo_tipo_financiador->select_id_financiador();
+			$id_otro = $this->Modelo_tipo_financiador->select_id_otro();
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
+			$datos["id_ejecutor"] = $id_ejecutor;
+			$datos["id_financiador"] = $id_financiador;
+			$datos["id_otro"] = $id_otro;
 
 			$this->load->view("marco_logico/marco_logico", $datos);
 		} else {
@@ -96,10 +105,16 @@ class Marco_logico extends CI_Controller {
 		$proyecto = $this->Modelo_proyecto->select_marco_logico_proyecto($id_proyecto, $id_usuario);
 
 		if ($proyecto && !$proyecto->finalizado) {
+			$id_ejecutor = $this->Modelo_tipo_financiador->select_id_ejecutor();
+			$id_financiador = $this->Modelo_tipo_financiador->select_id_financiador();
+			$id_otro = $this->Modelo_tipo_financiador->select_id_otro();
 
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
+			$datos["id_ejecutor"] = $id_ejecutor;
+			$datos["id_financiador"] = $id_financiador;
+			$datos["id_otro"] = $id_otro;
 
 			$this->load->view("marco_logico/marco_logico", $datos);
 		} else {

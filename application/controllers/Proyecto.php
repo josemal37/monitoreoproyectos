@@ -13,7 +13,7 @@ class Proyecto extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array("Modelo_proyecto", "Modelo_rol_proyecto", "Modelo_actividad"));
+		$this->load->model(array("Modelo_proyecto", "Modelo_rol_proyecto", "Modelo_actividad", "Modelo_financiador", "Modelo_tipo_financiador", "Modelo_aporte"));
 		$this->load->library(array("Proyecto_validacion"));
 		$this->load->database("default");
 	}
@@ -76,11 +76,27 @@ class Proyecto extends CI_Controller {
 
 	private function cargar_vista_registrar_proyecto() {
 		$titulo = "Registrar proyecto";
-		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array("nombre", "objetivo", "fecha_inicio", "fecha_fin"));
+		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array(
+			"nombre",
+			"objetivo",
+			"fecha_inicio",
+			"fecha_fin",
+			"instituciones-ejecutores[]",
+			"cantidades-ejecutores[]",
+			"conceptos-ejecutores[]",
+			"instituciones-financiadores[]",
+			"cantidades-financiadores[]",
+			"conceptos-financiadores[]",
+			"instituciones-otros[]",
+			"cantidades-otros[]",
+			"conceptos-otros[]"
+		));
+		$financiadores = $this->Modelo_financiador->select_financiadores();
 
 		$datos = array();
 		$datos["titulo"] = $titulo;
 		$datos["reglas_cliente"] = $reglas_cliente;
+		$datos["financiadores"] = $financiadores;
 
 		$this->load->view("proyecto/formulario_proyecto", $datos);
 	}
@@ -91,9 +107,54 @@ class Proyecto extends CI_Controller {
 		$fecha_inicio = $this->input->post("fecha_inicio");
 		$fecha_fin = $this->input->post("fecha_fin");
 		$id_usuario = $this->session->userdata("id");
+		$reglas_validacion = array("nombre", "objetivo", "fecha_inicio", "fecha_fin");
 
-		if ($this->proyecto_validacion->validar(array("nombre", "objetivo", "fecha_inicio", "fecha_fin"))) {
-			if ($this->Modelo_proyecto->insert_proyecto($nombre, $objetivo, $fecha_inicio, $fecha_fin, $id_usuario)) {
+		$con_financiadores = $this->input->post("con-financiadores") == "on";
+
+		$instituciones_ejecutores = FALSE;
+		$cantidades_ejecutores = FALSE;
+		$conceptos_ejecutores = FALSE;
+		$instituciones_financiadores = FALSE;
+		$cantidades_financiadores = FALSE;
+		$conceptos_financiadores = FALSE;
+		$instituciones_otros = FALSE;
+		$cantidades_otros = FALSE;
+		$conceptos_otros = FALSE;
+
+		if ($con_financiadores) {
+			if (isset($_POST["instituciones-ejecutores"])) {
+				$instituciones_ejecutores = $this->input->post("instituciones-ejecutores");
+				$cantidades_ejecutores = $this->input->post("cantidades-ejecutores");
+				$conceptos_ejecutores = $this->input->post("conceptos-ejecutores");
+
+				$reglas_validacion[] = "instituciones-ejecutores";
+				$reglas_validacion[] = "cantidades-ejecutores";
+				$reglas_validacion[] = "conceptos-ejecutores";
+			}
+
+			if (isset($_POST["instituciones-financiadores"])) {
+				$instituciones_financiadores = $this->input->post("instituciones-financiadores");
+				$cantidades_financiadores = $this->input->post("cantidades-financiadores");
+				$conceptos_financiadores = $this->input->post("conceptos-financiadores");
+
+				$reglas_validacion[] = "instituciones-financiadores";
+				$reglas_validacion[] = "cantidades-financiadores";
+				$reglas_validacion[] = "conceptos-financiadores";
+			}
+
+			if (isset($_POST["instituciones-otros"])) {
+				$instituciones_otros = $this->input->post("instituciones-otros");
+				$cantidades_otros = $this->input->post("cantidades-otros");
+				$conceptos_otros = $this->input->post("conceptos-otros");
+
+				$reglas_validacion[] = "instituciones-otros";
+				$reglas_validacion[] = "cantidades-otros";
+				$reglas_validacion[] = "conceptos-otros";
+			}
+		}
+
+		if ($this->proyecto_validacion->validar($reglas_validacion)) {
+			if ($this->Modelo_proyecto->insert_proyecto($nombre, $objetivo, $fecha_inicio, $fecha_fin, $id_usuario, $con_financiadores, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros)) {
 				redirect(base_url("proyecto/proyectos"));
 			} else {
 				redirect(base_url("proyecto/registrar_proyecto"), "refresh");

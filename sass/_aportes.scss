@@ -1,0 +1,16 @@
+.aportes {
+    table {
+        thead {
+            tr {
+                th {
+                    &.monto {
+                        width: 15%;
+                    }
+                    &.institucion {
+                        width: 30%;
+                    }
+                }
+            }
+        }
+    }
+}

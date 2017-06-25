@@ -53,6 +53,72 @@ class Proyecto_validacion extends Validacion {
 				"required",
 				"date"
 			)
+		),
+		"instituciones-ejecutores" => array(
+			"field" => "instituciones-ejecutores[]",
+			"label" => "institución",
+			"rules" => array(
+				"required"
+			)
+		),
+		"cantidades-ejecutores" => array(
+			"field" => "cantidades-ejecutores[]",
+			"label" => "cantidad",
+			"rules" => array(
+				"required",
+				"numeric"
+			)
+		),
+		"conceptos-ejecutores" => array(
+			"field" => "conceptos-ejecutores[]",
+			"label" => "conceptos",
+			"rules" => array(
+				"required"
+			)
+		),
+		"instituciones-financiadores" => array(
+			"field" => "instituciones-financiadores[]",
+			"label" => "institución",
+			"rules" => array(
+				"required"
+			)
+		),
+		"cantidades-financiadores" => array(
+			"field" => "cantidades-financiadores[]",
+			"label" => "cantidad",
+			"rules" => array(
+				"required",
+				"numeric"
+			)
+		),
+		"conceptos-financiadores" => array(
+			"field" => "conceptos-financiadores[]",
+			"label" => "conceptos",
+			"rules" => array(
+				"required"
+			)
+		),
+		"instituciones-otros" => array(
+			"field" => "instituciones-otros[]",
+			"label" => "institución",
+			"rules" => array(
+				"required"
+			)
+		),
+		"cantidades-otros" => array(
+			"field" => "cantidades-otros[]",
+			"label" => "cantidad",
+			"rules" => array(
+				"required",
+				"numeric"
+			)
+		),
+		"conceptos-otros" => array(
+			"field" => "conceptos-otros[]",
+			"label" => "conceptos",
+			"rules" => array(
+				"required"
+			)
 		)
 	);
 	protected $jquery_validate = array(
@@ -74,6 +140,36 @@ class Proyecto_validacion extends Validacion {
 		"fecha_fin" => array(
 			"required" => true,
 			"date" => true
+		),
+		"instituciones-ejecutores[]" => array(
+			"required" => true
+		),
+		"cantidades-ejecutores[]" => array(
+			"required" => true,
+			"number" => true
+		),
+		"conceptos-ejecutores[]" => array(
+			"required" => true
+		),
+		"instituciones-financiadores[]" => array(
+			"required" => true
+		),
+		"cantidades-financiadores[]" => array(
+			"required" => true,
+			"number" => true
+		),
+		"conceptos-financiadores[]" => array(
+			"required" => true
+		),
+		"instituciones-otros[]" => array(
+			"required" => true
+		),
+		"cantidades-otros[]" => array(
+			"required" => true,
+			"number" => true
+		),
+		"conceptos-otros[]" => array(
+			"required" => true
 		)
 	);
 	protected $mensajes_jquery_validate = array(
@@ -95,6 +191,36 @@ class Proyecto_validacion extends Validacion {
 		"fecha_fin" => array(
 			"required" => "Por favor introduzca una fecha de fin.",
 			"date" => "Por favor introduzca una fecha valida."
+		),
+		"instituciones-ejecutores[]" => array(
+			"required" => "Por favor seleccione una institución."
+		),
+		"cantidades-ejecutores[]" => array(
+			"required" => "Por favor introduzca una cantidad.",
+			"number" => "La cantidad debe ser un número."
+		),
+		"conceptos-ejecutores[]" => array(
+			"required" => "Por favor introduzca el concepto."
+		),
+		"instituciones-financiadores[]" => array(
+			"required" => "Por favor seleccione una institución."
+		),
+		"cantidades-financiadores[]" => array(
+			"required" => "Por favor introduzca una cantidad.",
+			"number" => "La cantidad debe ser un número."
+		),
+		"conceptos-financiadores[]" => array(
+			"required" => "Por favor introduzca el concepto."
+		),
+		"instituciones-otros[]" => array(
+			"required" => "Por favor seleccione una institución."
+		),
+		"cantidades-otros[]" => array(
+			"required" => "Por favor introduzca una cantidad.",
+			"number" => "La cantidad debe ser un número."
+		),
+		"conceptos-otros[]" => array(
+			"required" => "Por favor introduzca el concepto."
 		)
 	);
 

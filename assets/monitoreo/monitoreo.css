@@ -191,4 +191,9 @@ table.table-hover tbody tr:hover td, table.table-hover tbody tr:hover th {
 .financiadores table thead tr th.acciones {
   width: 15%; }
 
+.aportes table thead tr th.monto {
+  width: 15%; }
+.aportes table thead tr th.institucion {
+  width: 30%; }
+
 /*# sourceMappingURL=monitoreo.css.map */

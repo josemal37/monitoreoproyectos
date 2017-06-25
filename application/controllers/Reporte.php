@@ -38,7 +38,10 @@ class Reporte extends CI_Controller {
 			"Modelo_documento_avance",
 			"Modelo_usuario",
 			"Modelo_actividad_usuario",
-			"Modelo_proyecto_usuario"
+			"Modelo_proyecto_usuario",
+			"Modelo_aporte",
+			"Modelo_financiador",
+			"Modelo_tipo_financiador"
 		));
 
 		$this->load->database("default");
@@ -102,6 +105,56 @@ class Reporte extends CI_Controller {
 			$this->phpword->add_text("Estado: Cerrado", $seccion);
 		} else {
 			$this->phpword->add_text("Estado: Vigente", $seccion);
+		}
+
+		$this->add_aportes($proyecto, $seccion);
+	}
+
+	private function add_aportes($proyecto, $seccion) {
+		$id_ejecutor = $this->Modelo_tipo_financiador->select_id_ejecutor();
+		$id_financiador = $this->Modelo_tipo_financiador->select_id_financiador();
+		$id_otro = $this->Modelo_tipo_financiador->select_id_otro();
+
+		if (($proyecto->nombre_rol_proyecto == "coordinador" || $this->session->userdata("rol") == "direccion") && isset($proyecto->aportes) && $proyecto->aportes) {
+			$ejecutores = array();
+			$financiadores = array();
+			$otros = array();
+
+			foreach ($proyecto->aportes as $aporte) {
+				switch ($aporte->id_tipo_financiador) {
+					case $id_ejecutor:
+						$ejecutores[] = array($aporte->nombre_financiador, $aporte->concepto , $aporte->cantidad);
+						break;
+					case $id_financiador:
+						$financiadores[] = array($aporte->nombre_financiador, $aporte->concepto, $aporte->cantidad);
+						break;
+					case $id_otro:
+						$otros[] = array($aporte->nombre_financiador, $aporte->concepto, $aporte->cantidad);
+						break;
+				}
+			}
+
+			$this->phpword->add_title("Costo del proyecto", 1, $seccion);
+
+			$cabecera = array("Institución", "Concepto", "Monto");
+
+			if (sizeof($ejecutores) > 0) {
+				$this->phpword->add_title("Ejecutores", 2, $seccion);
+
+				$this->phpword->add_table($cabecera, $ejecutores, $seccion);
+			}
+
+			if (sizeof($financiadores) > 0) {
+				$this->phpword->add_title("Financiadores", 2, $seccion);
+
+				$this->phpword->add_table($cabecera, $financiadores, $seccion);
+			}
+
+			if (sizeof($otros) > 0) {
+				$this->phpword->add_title("Otros", 2, $seccion);
+
+				$this->phpword->add_table($cabecera, $otros, $seccion);
+			}
 		}
 	}
 

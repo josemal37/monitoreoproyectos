@@ -40,4 +40,172 @@
 
 	<?php endif; ?>
 
+	<?php if (($proyecto->nombre_rol_proyecto == "coordinador" || $this->session->userdata("rol") == "direccion") && isset($proyecto->aportes) && $proyecto->aportes): ?>
+
+		<?php
+		$ejecutores = array();
+		$financiadores = array();
+		$otros = array();
+
+		foreach ($proyecto->aportes as $aporte) {
+			switch ($aporte->id_tipo_financiador) {
+				case $id_ejecutor:
+					$ejecutores[] = $aporte;
+					break;
+				case $id_financiador:
+					$financiadores[] = $aporte;
+					break;
+				case $id_otro:
+					$otros[] = $aporte;
+					break;
+			}
+		}
+		?>
+
+		<div class="aportes">
+
+			<h2>Costo del proyecto</h2>
+
+			<?php if (sizeof($ejecutores) > 0): ?>
+
+				<h3>Ejecutores</h3>
+
+				<div class="table-responsive">
+
+					<table class="table table-bordered table-hover">
+
+						<thead>
+
+							<tr>
+
+								<th class="institucion">Institución</th>
+
+								<th class="descripcion">Concepto</th>
+
+								<th class="monto">Monto (Bs.)</th>
+
+							</tr>
+
+						</thead>
+
+						<tbody>
+
+							<?php foreach ($ejecutores as $ejecutor): ?>
+
+								<tr>
+
+									<td><?= $ejecutor->nombre_financiador ?></td>
+
+									<td><?= $ejecutor->concepto ?></td>
+
+									<td><?= $ejecutor->cantidad ?></td>
+
+								</tr>
+
+							<?php endforeach; ?>
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			<?php endif; ?>
+
+			<?php if (sizeof($financiadores) > 0): ?>
+
+				<h3>Financiadores</h3>
+
+				<div class="table-responsive">
+
+					<table class="table table-bordered table-hover">
+
+						<thead>
+
+							<tr>
+
+								<th class="institucion">Institución</th>
+
+								<th class="descripcion">Concepto</th>
+
+								<th class="monto">Monto (Bs.)</th>
+
+							</tr>
+
+						</thead>
+
+						<tbody>
+
+							<?php foreach ($financiadores as $financiador): ?>
+
+								<tr>
+
+									<td><?= $financiador->nombre_financiador ?></td>
+
+									<td><?= $financiador->concepto ?></td>
+
+									<td><?= $financiador->cantidad ?></td>
+
+								</tr>
+
+							<?php endforeach; ?>
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			<?php endif; ?>
+
+			<?php if (sizeof($otros) > 0): ?>
+
+				<h3>Otros</h3>
+
+				<div class="table-responsive">
+
+					<table class="table table-bordered table-hover">
+
+						<thead>
+
+							<tr>
+
+								<th class="institucion">Institución</th>
+
+								<th class="descripcion">Concepto</th>
+
+								<th class="monto">Monto (Bs.)</th>
+
+							</tr>
+
+						</thead>
+
+						<tbody>
+
+							<?php foreach ($otros as $otro): ?>
+
+								<tr>
+
+									<td><?= $otro->nombre_financiador ?></td>
+
+									<td><?= $financiador->concepto ?></td>
+
+									<td><?= $otro->cantidad ?></td>
+
+								</tr>
+
+							<?php endforeach; ?>
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			<?php endif; ?>
+
+		</div>
+
+	<?php endif; ?>
+
 </div>
