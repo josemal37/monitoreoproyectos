@@ -26,7 +26,10 @@ class Avance extends CI_Controller {
 			"Modelo_avance",
 			"Modelo_documento_avance",
 			"Modelo_usuario",
-			"Modelo_actividad_usuario"
+			"Modelo_actividad_usuario",
+			"Modelo_aporte",
+			"Modelo_financiador",
+			"Modelo_tipo_financiador"
 		));
 
 		$this->load->library(array("Item_validacion", "Archivo"));

@@ -188,7 +188,7 @@
 
 									<td><?= $otro->nombre_financiador ?></td>
 
-									<td><?= $financiador->concepto ?></td>
+									<td><?= $otro->concepto ?></td>
 
 									<td><?= $otro->cantidad ?></td>
 

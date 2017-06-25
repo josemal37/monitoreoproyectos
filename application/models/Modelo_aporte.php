@@ -40,11 +40,11 @@ class Modelo_aporte extends MY_Model {
 
 			$this->db->join(Modelo_financiador::NOMBRE_TABLA, Modelo_financiador::NOMBRE_TABLA . "." . Modelo_financiador::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_FINANCIADOR, "left");
 			$this->db->join(Modelo_tipo_financiador::NOMBRE_TABLA, Modelo_tipo_financiador::NOMBRE_TABLA . "." . Modelo_tipo_financiador::ID . " = " . self::NOMBRE_TABLA . "." . self::ID_FINANCIADOR, "left");
-			
+
 			$this->db->where(self::ID_PROYECTO, $id_proyecto);
-			
+
 			$query = $this->db->get();
-			
+
 			$aportes = $this->return_result($query);
 		}
 
@@ -109,6 +109,24 @@ class Modelo_aporte extends MY_Model {
 		}
 
 		return $aportes;
+	}
+
+	public function update_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros) {
+		$this->delete_aportes_de_proyecto_st($id_proyecto);
+
+		return $this->insert_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
+	}
+
+	private function delete_aportes_de_proyecto_st($id_proyecto = FALSE) {
+		$eliminado = FALSE;
+
+		if ($id_proyecto) {
+			$this->db->where(self::ID_PROYECTO, $id_proyecto);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+		}
+
+		return $eliminado;
 	}
 
 }

@@ -83,6 +83,8 @@ class Modelo_proyecto extends MY_Model {
 			$query = $this->db->get();
 
 			$proyecto = $this->return_row($query);
+
+			$proyecto->aportes = $this->Modelo_aporte->select_aportes_de_proyecto($proyecto->id);
 		}
 
 		return $proyecto;
@@ -328,7 +330,7 @@ class Modelo_proyecto extends MY_Model {
 		return $asignado;
 	}
 
-	public function update_proyecto($id = FALSE, $nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "") {
+	public function update_proyecto($id = FALSE, $nombre = "", $objetivo = "", $fecha_inicio = "", $fecha_fin = "", $con_financiadores = FALSE, $instituciones_ejecutores = FALSE, $cantidades_ejecutores = FALSE, $conceptos_ejecutores = FALSE, $instituciones_financiadores = FALSE, $cantidades_financiadores = FALSE, $conceptos_financiadores = FALSE, $instituciones_otros = FALSE, $cantidades_otros = FALSE, $conceptos_otros = FALSE) {
 		$actualizado = FALSE;
 
 		if ($id && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "") {
@@ -345,6 +347,10 @@ class Modelo_proyecto extends MY_Model {
 			$this->db->where(self::ID, $id);
 
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			
+			if ($actualizado && $con_financiadores) {
+				$this->Modelo_aporte->update_aportes_st($id, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
+			}
 
 			$this->db->trans_complete();
 		}

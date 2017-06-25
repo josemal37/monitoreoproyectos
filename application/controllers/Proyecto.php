@@ -188,13 +188,37 @@ class Proyecto extends CI_Controller {
 		$id_usuario = $this->session->userdata("id");
 		$id_rol_coordinador = $this->Modelo_rol_proyecto->select_id_rol_coordinador();
 		$proyecto = $this->Modelo_proyecto->select_proyecto_por_id($id, $id_usuario, $id_rol_coordinador);
-		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"));
+		$reglas_cliente = $this->proyecto_validacion->get_reglas_cliente(array(
+			"id",
+			"nombre",
+			"objetivo",
+			"fecha_inicio",
+			"fecha_fin",
+			"instituciones-ejecutores[]",
+			"cantidades-ejecutores[]",
+			"conceptos-ejecutores[]",
+			"instituciones-financiadores[]",
+			"cantidades-financiadores[]",
+			"conceptos-financiadores[]",
+			"instituciones-otros[]",
+			"cantidades-otros[]",
+			"conceptos-otros[]"
+		));
 
 		if ($proyecto && !$proyecto->finalizado) {
+			$financiadores = $this->Modelo_financiador->select_financiadores();
+			$id_ejecutor = $this->Modelo_tipo_financiador->select_id_ejecutor();
+			$id_financiador = $this->Modelo_tipo_financiador->select_id_financiador();
+			$id_otro = $this->Modelo_tipo_financiador->select_id_otro();
+
 			$datos = array();
 			$datos["titulo"] = $titulo;
 			$datos["proyecto"] = $proyecto;
 			$datos["reglas_cliente"] = $reglas_cliente;
+			$datos["financiadores"] = $financiadores;
+			$datos["id_ejecutor"] = $id_ejecutor;
+			$datos["id_financiador"] = $id_financiador;
+			$datos["id_otro"] = $id_otro;
 
 			$this->load->view("proyecto/formulario_proyecto", $datos);
 		} else {
@@ -208,10 +232,55 @@ class Proyecto extends CI_Controller {
 		$objetivo = $this->input->post("objetivo");
 		$fecha_inicio = $this->input->post("fecha_inicio");
 		$fecha_fin = $this->input->post("fecha_fin");
+		$reglas_validacion = array("nombre", "objetivo", "fecha_inicio", "fecha_fin");
 
-		if ($this->proyecto_validacion->validar(array("id", "nombre", "objetivo", "fecha_inicio", "fecha_fin"))) {
-			if ($this->Modelo_proyecto->update_proyecto($id, $nombre, $objetivo, $fecha_inicio, $fecha_fin)) {
-				redirect(base_url("proyecto/proyectos"));
+		$con_financiadores = $this->input->post("con-financiadores") == "on";
+
+		$instituciones_ejecutores = FALSE;
+		$cantidades_ejecutores = FALSE;
+		$conceptos_ejecutores = FALSE;
+		$instituciones_financiadores = FALSE;
+		$cantidades_financiadores = FALSE;
+		$conceptos_financiadores = FALSE;
+		$instituciones_otros = FALSE;
+		$cantidades_otros = FALSE;
+		$conceptos_otros = FALSE;
+
+		if ($con_financiadores) {
+			if (isset($_POST["instituciones-ejecutores"])) {
+				$instituciones_ejecutores = $this->input->post("instituciones-ejecutores");
+				$cantidades_ejecutores = $this->input->post("cantidades-ejecutores");
+				$conceptos_ejecutores = $this->input->post("conceptos-ejecutores");
+
+				$reglas_validacion[] = "instituciones-ejecutores";
+				$reglas_validacion[] = "cantidades-ejecutores";
+				$reglas_validacion[] = "conceptos-ejecutores";
+			}
+
+			if (isset($_POST["instituciones-financiadores"])) {
+				$instituciones_financiadores = $this->input->post("instituciones-financiadores");
+				$cantidades_financiadores = $this->input->post("cantidades-financiadores");
+				$conceptos_financiadores = $this->input->post("conceptos-financiadores");
+
+				$reglas_validacion[] = "instituciones-financiadores";
+				$reglas_validacion[] = "cantidades-financiadores";
+				$reglas_validacion[] = "conceptos-financiadores";
+			}
+
+			if (isset($_POST["instituciones-otros"])) {
+				$instituciones_otros = $this->input->post("instituciones-otros");
+				$cantidades_otros = $this->input->post("cantidades-otros");
+				$conceptos_otros = $this->input->post("conceptos-otros");
+
+				$reglas_validacion[] = "instituciones-otros";
+				$reglas_validacion[] = "cantidades-otros";
+				$reglas_validacion[] = "conceptos-otros";
+			}
+		}
+
+		if ($this->proyecto_validacion->validar($reglas_validacion)) {
+			if ($this->Modelo_proyecto->update_proyecto($id, $nombre, $objetivo, $fecha_inicio, $fecha_fin, $con_financiadores, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros)) {
+				redirect(base_url("marco_logico/editar_marco_logico/" . $id));
 			} else {
 				redirect(base_url("proyecto/modificar_proyecto/" . $id), "refresh");
 			}

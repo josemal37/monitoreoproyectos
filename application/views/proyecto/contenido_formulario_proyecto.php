@@ -34,7 +34,7 @@ switch ($accion) {
 
 			<label>Objetivo</label>
 
-			<textarea id="objetivo" name="objetivo" class="form-control"> <?php if ($accion == "modificar_proyecto"): ?><?= $proyecto->objetivo ?><?php endif; ?></textarea>
+			<textarea id="objetivo" name="objetivo" class="form-control"><?php if ($accion == "modificar_proyecto"): ?><?= $proyecto->objetivo ?><?php endif; ?></textarea>
 
 			<?= form_error("objetivo") ?>
 
@@ -68,19 +68,101 @@ switch ($accion) {
 
 		<?php if (isset($financiadores) && $financiadores): ?>
 
+			<?php
+			$con_aportes = FALSE;
+
+			if ($accion == "modificar_proyecto" && $proyecto->aportes) {
+				$ejecutores_aportes = array();
+				$financiadores_aportes = array();
+				$otros_aportes = array();
+
+				foreach ($proyecto->aportes as $aporte) {
+					switch ($aporte->id_tipo_financiador) {
+						case $id_ejecutor:
+							$ejecutores_aportes[] = $aporte;
+							break;
+						case $id_financiador:
+							$financiadores_aportes[] = $aporte;
+							break;
+						case $id_otro:
+							$otros_aportes[] = $aporte;
+							break;
+					}
+				}
+
+				$con_aportes = TRUE;
+			}
+			?>
+
 			<div class="checkbox">
 
-				<label><input type="checkbox" id="con-financiadores" name="con-financiadores"> Registrar costo del proyecto</label>
+				<label><input type="checkbox" id="con-financiadores" name="con-financiadores" <?php if ($con_aportes): ?>checked<?php endif; ?>> Registrar costo del proyecto</label>
 
 			</div>
 
-			<div id="contenedor-financiadores" style="display: none;">
+			<div id="contenedor-financiadores" <?php if (!$con_aportes): ?>style="display: none;"<?php endif; ?>>
 
 				<div>
 
 					<label>Ejecutores</label>
 
-					<ol id="lista-ejecutores"></ol>
+					<ol id="lista-ejecutores">
+
+						<?php if ($accion == "modificar_proyecto" && sizeof($ejecutores_aportes) > 0): ?>
+
+							<?php foreach ($ejecutores_aportes as $ejecutor_aporte): ?>
+
+								<li>
+
+									<div class="form-financiador">
+
+										<div class="form-group">
+
+											<label>Institución <span class="text-red">*</span></label>
+
+											<select class="form-control institucion" name="instituciones-ejecutores[]">
+
+												<?php foreach ($financiadores as $financiador): ?>
+
+													<option value="<?= $financiador->id ?>" <?php if ($financiador->id == $ejecutor_aporte->id_financiador): ?>selected<?php endif; ?>><?= $financiador->nombre ?></option>
+
+												<?php endforeach; ?>
+
+											</select>
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Monto (Bs.) <span class="text-red">*</span></label>
+
+											<input type="number" name="cantidades-ejecutores[]" class="form-control cantidad" value="<?= $ejecutor_aporte->cantidad ?>">
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Concepto <span class="text-red">*</span></label>
+
+											<textarea name="conceptos-ejecutores[]" class="form-control concepto"><?= $ejecutor_aporte->concepto ?></textarea>
+
+										</div>
+
+										<div>
+
+											<button class="btn btn-danger btn-xs eliminar-financiador"><span class="glyphicon glyphicon-trash"></span></button>
+
+										</div>
+
+									</div>
+
+								</li>
+
+							<?php endforeach; ?>
+
+						<?php endif; ?>
+
+					</ol>
 
 					<p>
 
@@ -94,7 +176,63 @@ switch ($accion) {
 
 					<label>Financiadores</label>
 
-					<ol id="lista-financiadores"></ol>
+					<ol id="lista-financiadores">
+
+						<?php if ($accion == "modificar_proyecto" && sizeof($financiadores_aportes) > 0): ?>
+
+							<?php foreach ($financiadores_aportes as $financiador_aporte): ?>
+
+								<li>
+
+									<div class="form-financiador">
+
+										<div class="form-group">
+
+											<label>Institución <span class="text-red">*</span></label>
+
+											<select name="instituciones-financiadores[]" class="form-control institucion">
+
+												<?php foreach ($financiadores as $financiador): ?>
+
+													<option value="<?= $financiador->id ?>" <?php if ($financiador->id == $financiador_aporte->id_financiador): ?>selected<?php endif; ?>><?= $financiador->nombre ?></option>
+
+												<?php endforeach; ?>
+
+											</select>
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Monto (Bs.) <span class="text-red">*</span></label>
+
+											<input type="number" name="cantidades-financiadores[]" class="form-control cantidad" value="<?= $financiador_aporte->cantidad ?>">
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Concepto <span class="text-red">*</span></label>
+
+											<textarea name="conceptos-financiadores[]" class="form-control concepto"><?= $financiador_aporte->concepto ?></textarea>
+
+										</div>
+
+										<div>
+
+											<button class="btn btn-danger btn-xs eliminar-financiador"><span class="glyphicon glyphicon-trash"></span></button>
+
+										</div>
+
+									</div>
+
+								</li>
+
+							<?php endforeach; ?>
+
+						<?php endif; ?>
+
+					</ol>
 
 					<p>
 
@@ -108,7 +246,63 @@ switch ($accion) {
 
 					<label>Otros</label>
 
-					<ol id="lista-otros"></ol>
+					<ol id="lista-otros">
+
+						<?php if ($accion == "modificar_proyecto" && sizeof($otros_aportes) > 0): ?>
+
+							<?php foreach ($otros_aportes as $otro_aporte): ?>
+
+								<li>
+
+									<div class="form-financiador">
+
+										<div class="form-group">
+
+											<label>Institución <span class="text-red">*</span></label>
+
+											<select name="instituciones-otros[]" class="form-control institucion">
+
+												<?php foreach ($financiadores as $financiador): ?>
+
+													<option value="<?= $financiador->id ?>" <?php if ($financiador->id == $otro_aporte->id_financiador): ?>selected<?php endif; ?>><?= $financiador->nombre ?></option>
+
+												<?php endforeach; ?>
+
+											</select>
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Monto (Bs.) <span class="text-red">*</span></label>
+
+											<input type="number" name="cantidades-otros[]" class="form-control cantidad" value="<?= $otro_aporte->cantidad ?>">
+
+										</div>
+
+										<div class="form-group">
+
+											<label>Concepto <span class="text-red">*</span></label>
+
+											<textarea name="conceptos-otros[]" class="form-control concepto"><?= $otro_aporte->concepto ?></textarea>
+
+										</div>
+
+										<div>
+
+											<button class="btn btn-danger btn-xs eliminar-financiador"><span class="glyphicon glyphicon-trash"></span></button>
+
+										</div>
+
+									</div>
+
+								</li>
+
+							<?php endforeach; ?>
+
+						<?php endif; ?>
+
+					</ol>
 
 					<p>
 
