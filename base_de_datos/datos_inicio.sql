@@ -11,7 +11,7 @@ INSERT INTO `rol_proyecto`
 VALUES ('2', 'técnico');
 
 INSERT INTO `usuario` 
-VALUES (1, 1, 'administrador', 'del', 'sistema', 'admin', SHA1('admin'));
+VALUES (1, 1, 'administrador', 'del', 'sistema', NULL, 'admin', SHA1('admin'));
 
 INSERT INTO `tipo_financiador`
 VALUES (1, 'financiador');
