@@ -22,7 +22,7 @@ class Personal extends Coordinador {
 	public function ver_personal_proyecto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_personal_proyecto($id_proyecto);
 			} else {
@@ -62,7 +62,7 @@ class Personal extends Coordinador {
 	public function editar_personal_proyecto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				$this->cargar_vista_editar_personal_proyecto($id_proyecto);
 			} else {
@@ -96,7 +96,7 @@ class Personal extends Coordinador {
 	public function registrar_personal_proyecto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_personal_proyecto_bd($id_proyecto);
@@ -163,7 +163,7 @@ class Personal extends Coordinador {
 	public function modificar_personal_proyecto($id_proyecto = FALSE, $id_usuario = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_usuario) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_personal_proyecto_bd($id_proyecto, $id_usuario);
@@ -229,7 +229,7 @@ class Personal extends Coordinador {
 	public function eliminar_personal_proyecto($id_proyecto = FALSE, $id_usuario = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_usuario) {
 				$this->eliminar_personal_proyecto_bd($id_proyecto, $id_usuario);
 			} else {
@@ -258,7 +258,7 @@ class Personal extends Coordinador {
 	public function registrar_personal_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_actividad) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_personal_actividad_bd($id_proyecto, $id_actividad);
@@ -324,7 +324,7 @@ class Personal extends Coordinador {
 	public function eliminar_personal_actividad($id_proyecto = FALSE, $id_actividad = FALSE, $id_usuario) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_actividad && $id_usuario) {
 				$this->eliminar_personal_actividad_bd($id_proyecto, $id_actividad, $id_usuario);
 			} else {

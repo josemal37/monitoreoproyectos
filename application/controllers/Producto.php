@@ -22,7 +22,7 @@ class Producto extends Coordinador {
 	public function registrar_producto($id_proyecto = FALSE, $id_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_efecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_producto_bd($id_proyecto, $id_efecto);
@@ -82,7 +82,7 @@ class Producto extends Coordinador {
 	public function modificar_producto($id_proyecto = FALSE, $id_producto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_producto) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_producto_bd($id_proyecto, $id_producto);
@@ -144,7 +144,7 @@ class Producto extends Coordinador {
 	public function eliminar_producto($id_proyecto = FALSE, $id_producto = FALSE) {
 		$rol = $this->session->userdata("rol");
 		
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_producto) {
 				$this->eliminar_producto_bd($id_proyecto, $id_producto);
 			} else {

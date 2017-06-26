@@ -26,7 +26,7 @@ class Efecto extends Coordinador {
 	public function registrar_efecto($id_proyecto = FALSE, $id_resultado = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_efecto_bd($id_proyecto, $id_resultado);
@@ -86,7 +86,7 @@ class Efecto extends Coordinador {
 	public function modificar_efecto($id_proyecto = FALSE, $id_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			$proyecto = $this->get_proyecto_de_coordinador($id_proyecto);
 			if ($id_proyecto && $id_efecto && !$proyecto->finalizado) {
 				if (isset($_POST["submit"])) {
@@ -149,7 +149,7 @@ class Efecto extends Coordinador {
 	public function eliminar_efecto($id_proyecto = FALSE, $id_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_efecto) {
 				$this->eliminar_efecto_bd($id_proyecto, $id_efecto);
 			} else {

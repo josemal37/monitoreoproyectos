@@ -25,7 +25,7 @@ class Indicador_efecto extends Coordinador {
 	public function registrar_indicador_efecto($id_proyecto = FALSE, $id_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_efecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_indicador_efecto_bd($id_proyecto, $id_efecto);
@@ -112,7 +112,7 @@ class Indicador_efecto extends Coordinador {
 	public function modificar_indicador_efecto($id_proyecto = FALSE, $id_indicador_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_efecto) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_indicador_efecto_bd($id_proyecto, $id_indicador_efecto);
@@ -202,7 +202,7 @@ class Indicador_efecto extends Coordinador {
 	public function eliminar_indicador_efecto($id_proyecto = FALSE, $id_indicador_efecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_efecto) {
 				$this->eliminar_indicador_efecto_bd($id_proyecto, $id_indicador_efecto);
 			} else {

@@ -26,7 +26,7 @@ class Resultado extends Coordinador {
 	public function registrar_resultado($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_resultado_bd($id_proyecto);
@@ -82,7 +82,7 @@ class Resultado extends Coordinador {
 	public function modificar_resultado($id_proyecto = FALSE, $id_resultado = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_resultado_bd($id_proyecto, $id_resultado);
@@ -141,7 +141,7 @@ class Resultado extends Coordinador {
 	public function eliminar_resultado($id_proyecto = FALSE, $id_resultado = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado) {
 				$this->eliminar_resultado_bd($id_proyecto, $id_resultado);
 			} else {

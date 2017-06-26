@@ -25,7 +25,7 @@ class Proyecto extends CI_Controller {
 	public function proyectos() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			$this->cargar_vista_proyectos();
 		} else {
 			redirect(base_url());
@@ -35,7 +35,7 @@ class Proyecto extends CI_Controller {
 	public function proyectos_terminados() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			$this->cargar_vista_proyectos(TRUE);
 		} else {
 			redirect(base_url());
@@ -63,7 +63,7 @@ class Proyecto extends CI_Controller {
 	public function registrar_proyecto() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if (isset($_POST["submit"])) {
 				$this->registrar_proyecto_bd();
 			} else {
@@ -168,7 +168,7 @@ class Proyecto extends CI_Controller {
 	public function modificar_proyecto($id = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_proyecto_bd();
@@ -293,7 +293,7 @@ class Proyecto extends CI_Controller {
 	public function eliminar_proyecto($id = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id) {
 				$this->eliminar_proyecto_bd($id);
 			} else {
@@ -323,7 +323,7 @@ class Proyecto extends CI_Controller {
 	public function cerrar_proyecto($id = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id) {
 				$this->cerrar_proyecto_bd($id);
 			} else {

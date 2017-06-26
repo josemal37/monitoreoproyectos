@@ -42,7 +42,7 @@ class Avance extends CI_Controller {
 	public function ver_avances($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_avances($id_proyecto);
 			} else {
@@ -82,7 +82,7 @@ class Avance extends CI_Controller {
 	public function registrar_avance($id_proyecto = FALSE, $id_actividad = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_actividad) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_avance_bd($id_proyecto, $id_actividad);
@@ -158,7 +158,7 @@ class Avance extends CI_Controller {
 	public function eliminar_avance($id_proyecto = FALSE, $id_avance = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_avance) {
 				$this->eliminar_avance_bd($id_proyecto, $id_avance);
 			} else {

@@ -25,7 +25,7 @@ class Indicador_impacto extends Coordinador {
 	public function registrar_indicador_impacto($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_indicador_impacto_bd($id_proyecto);
@@ -98,7 +98,7 @@ class Indicador_impacto extends Coordinador {
 	public function modificar_indicador_impacto($id_proyecto = FALSE, $id_indicador_impacto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_impacto) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_indicador_impacto_bd($id_proyecto, $id_indicador_impacto);
@@ -175,7 +175,7 @@ class Indicador_impacto extends Coordinador {
 	public function eliminar_indicador_impacto($id_proyecto = FALSE, $id_indicador_impacto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_impacto) {
 				$this->eliminar_indicador_impacto_bd($id_proyecto, $id_indicador_impacto);
 			} else {

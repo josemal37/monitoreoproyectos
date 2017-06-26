@@ -44,7 +44,7 @@ class Marco_logico extends CI_Controller {
 	public function ver_marco_logico($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_marco_logico($id_proyecto);
 			} else {
@@ -87,7 +87,7 @@ class Marco_logico extends CI_Controller {
 	public function editar_marco_logico($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				$this->cargar_vista_editar_marco_logico($id_proyecto);
 			} else {

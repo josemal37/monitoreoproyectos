@@ -26,7 +26,7 @@
 
             <ul class="nav navbar-nav">
 
-				<?php if ($this->session->userdata("rol") == "empleado" || $this->session->userdata("rol") == "dirección"): ?>
+				<?php if ($this->session->userdata("rol") == "técnico" || $this->session->userdata("rol") == "dirección"): ?>
 
 					<!-- Proyectos -->
 
@@ -74,7 +74,7 @@
 
 						</li>
 
-						<?php if ($this->session->userdata("rol") == "empleado"): ?>
+						<?php if ($this->session->userdata("rol") == "técnico"): ?>
 
 							<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && !$proyecto->finalizado): ?>
 

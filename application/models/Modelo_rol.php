@@ -18,7 +18,7 @@ class Modelo_rol extends MY_Model {
 	const COLUMNAS_SELECT = "rol_usuario.id, rol_usuario.nombre";
 	const NOMBRE_TABLA = "rol_usuario";
 	const COORDINADOR = "coordinador";
-	const EMPLEADO = "empleado";
+	const EMPLEADO = "técnico";
 
 	public function __construct() {
 		parent::__construct();

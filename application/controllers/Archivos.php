@@ -38,7 +38,7 @@ class Archivos extends CI_Controller {
 	public function registrar_archivo($id_proyecto = FALSE, $id_avance = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_avance) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_archivo_bd($id_proyecto, $id_avance);
@@ -114,7 +114,7 @@ class Archivos extends CI_Controller {
 	public function eliminar_archivo($id_proyecto = FALSE, $id_archivo = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_archivo) {
 				$this->eliminar_archivo_bd($id_proyecto, $id_archivo);
 			} else {

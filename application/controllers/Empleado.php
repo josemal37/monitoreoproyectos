@@ -22,7 +22,7 @@ class Empleado extends CI_Controller {
 	public function bienvenida() {
 		$rol = $this->session->userdata("rol");
 		
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			$datos = array();
 			
 			$datos["titulo"] = "Bienvenido al sistema";

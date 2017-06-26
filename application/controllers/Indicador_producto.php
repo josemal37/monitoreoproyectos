@@ -25,7 +25,7 @@ class Indicador_producto extends Coordinador {
 	public function registrar_indicador_producto($id_proyecto = FALSE, $id_producto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_producto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_indicador_producto_bd($id_proyecto, $id_producto);
@@ -111,7 +111,7 @@ class Indicador_producto extends Coordinador {
 	public function modificar_indicador_producto($id_proyecto = FALSE, $id_indicador_producto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_producto) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_indicador_producto_bd($id_proyecto, $id_indicador_producto);
@@ -201,7 +201,7 @@ class Indicador_producto extends Coordinador {
 	public function eliminar_indicador_producto($id_proyecto = FALSE, $id_indicador_producto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_indicador_producto) {
 				$this->eliminar_indicador_producto_bd($id_proyecto, $id_indicador_producto);
 			} else {

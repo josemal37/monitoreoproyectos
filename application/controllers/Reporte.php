@@ -54,7 +54,7 @@ class Reporte extends CI_Controller {
 	public function marco_logico_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_marco_logico_docx($id_proyecto);
 			} else {
@@ -325,7 +325,7 @@ class Reporte extends CI_Controller {
 	public function personal_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_personal_docx($id_proyecto);
 			} else {
@@ -417,7 +417,7 @@ class Reporte extends CI_Controller {
 	public function actividades_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_actividades_docx($id_proyecto);
 			} else {
@@ -487,7 +487,7 @@ class Reporte extends CI_Controller {
 	public function avances_docx($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->generar_avances_docx($id_proyecto);
 			} else {

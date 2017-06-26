@@ -29,7 +29,7 @@ class Actividad extends Coordinador {
 	public function ver_actividades($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado" || $rol == "dirección") {
+		if ($rol == "técnico" || $rol == "dirección") {
 			if ($id_proyecto) {
 				$this->cargar_vista_ver_actividades($id_proyecto);
 			} else {
@@ -69,7 +69,7 @@ class Actividad extends Coordinador {
 	public function editar_actividades($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				$this->cargar_vista_actividades($id_proyecto);
 			} else {
@@ -103,7 +103,7 @@ class Actividad extends Coordinador {
 	public function registrar_actividad($id_proyecto = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_actividad_bd($id_proyecto);
@@ -200,7 +200,7 @@ class Actividad extends Coordinador {
 	public function modificar_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_actividad) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_actividad_bd($id_proyecto, $id_actividad);
@@ -304,7 +304,7 @@ class Actividad extends Coordinador {
 	public function eliminar_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_actividad) {
 				$this->eliminar_actividad_bd($id_proyecto, $id_actividad);
 			} else {
@@ -333,7 +333,7 @@ class Actividad extends Coordinador {
 	public function cerrar_actividad($id_proyecto = FALSE, $id_actividad = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 
 			if ($id_proyecto && $id_actividad) {
 				$this->cerrar_actividad_bd($id_proyecto, $id_actividad);

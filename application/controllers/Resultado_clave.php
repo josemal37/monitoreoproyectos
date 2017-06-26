@@ -22,7 +22,7 @@ class Resultado_clave extends Coordinador {
 	public function registrar_resultado_clave($id_proyecto = FALSE, $id_resultado = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado) {
 				if (isset($_POST["submit"])) {
 					$this->registrar_resultado_clave_bd($id_proyecto, $id_resultado);
@@ -82,7 +82,7 @@ class Resultado_clave extends Coordinador {
 	public function modificar_resultado_clave($id_proyecto = FALSE, $id_resultado_clave = FALSE) {
 		$rol = $this->session->userdata("rol");
 		
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado_clave) {
 				if (isset($_POST["submit"])) {
 					$this->modificar_resultado_clave_bd($id_proyecto, $id_resultado_clave);
@@ -145,7 +145,7 @@ class Resultado_clave extends Coordinador {
 	public function eliminar_resultado_clave($id_proyecto = FALSE, $id_resultado_clave = FALSE) {
 		$rol = $this->session->userdata("rol");
 		
-		if ($rol == "empleado") {
+		if ($rol == "técnico") {
 			if ($id_proyecto && $id_resultado_clave) {
 				$this->eliminar_resultado_clave_bd($id_proyecto, $id_resultado_clave);
 			} else {

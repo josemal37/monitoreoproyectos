@@ -187,7 +187,7 @@ class Usuario extends CI_Controller {
 	public function modificar_password() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "administrador" || $rol == "empleado") {
+		if ($rol == "administrador" || $rol == "técnico") {
 			if (isset($_POST["submit"])) {
 				$this->modificar_password_bd();
 			} else {
