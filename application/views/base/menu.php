@@ -114,7 +114,7 @@
 
 					<!-- Administrador -->
 
-					<li class="separator">Administrador</li>
+					<li class="separator">Usuario</li>
 
 					<li <?php if ($this->uri->segment(1) == "usuario" && $this->uri->segment(2) == "usuarios"): ?>class="active open"<?php endif; ?>>
 
@@ -127,6 +127,8 @@
 						<a href="<?= base_url("usuario/registrar_usuario") ?>">Registrar usuario<span class="glyphicon glyphicon-plus-sign pull-right"></span></a>
 
 					</li>
+
+					<li class="separator">Financiador</li>
 
 					<li <?php if ($this->uri->segment(1) == "financiador" && $this->uri->segment(2) == "financiadores"): ?>class="active open"<?php endif; ?>>
 
