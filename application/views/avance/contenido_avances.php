@@ -118,7 +118,11 @@
 
 																	<a href="<?= base_url($documento->documento) ?>"><?= $documento->nombre ?></a>
 
-																	<a href="<?= base_url("archivos/eliminar_archivo/" . $proyecto->id . "/" . $documento->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+																	<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+
+																		<a href="<?= base_url("archivos/eliminar_archivo/" . $proyecto->id . "/" . $documento->id) ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+
+																	<?php endif; ?>
 
 																</li>
 
@@ -128,7 +132,11 @@
 
 													<?php endif; ?>
 
-													<a href="<?= base_url("archivos/registrar_archivo/" . $proyecto->id . "/" . $avance->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+													<?php if ($actividad->usuarios && is_value_in_array($this->session->userdata("id"), $actividad->usuarios, "id")): ?>
+
+														<a href="<?= base_url("archivos/registrar_archivo/" . $proyecto->id . "/" . $avance->id) ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+
+													<?php endif; ?>
 
 												</td>
 
