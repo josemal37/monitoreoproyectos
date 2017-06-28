@@ -34,7 +34,7 @@
 
 		<p><label>Estado:</label> Vigente
 
-			<?php if ($proyecto->nombre_rol_proyecto == "coordinador"): ?>
+			<?php if ($proyecto->nombre_rol_proyecto == "coordinador" && $this->session->userdata("rol") == "empleado"): ?>
 
 				<a href="<?= base_url("proyecto/cerrar_proyecto/" . $proyecto->id) ?>" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-lock"></span> Cerrar</a>
 
