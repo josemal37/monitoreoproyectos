@@ -101,19 +101,19 @@ function enviar_correo($actividad_proxima) {
 
 		$para = $actividad_proxima["e_mail"];
 		$titulo = "Recordatorio: " . $nombre_actividad;
-		$mensaje = "Buenos días " . $nombre_completo . "\r\n"
-				. "\r\n"
+		$mensaje = "Buenos días " . $nombre_completo . "\r\n<br />"
+				. "\r\n<br />"
 				. "Este es un mensaje para recordarle que todavía no completó el"
 				. "registro de avances de la actividad " . $nombre_actividad
-				. " del proyecto " . $nombre_proyecto . ".\r\n"
-				. "\r\n"
-				. "Avance: " . $avance . " " . $unidad . "\r\n"
-				. "Meta: " . $meta . " " . $unidad . "\r\n"
-				. "Días restantes: " . $dias_restantes . " días\r\n"
-				. "\r\n"
-				. "Por favor no responda este mensaje.\r\n"
-				. "\r\n"
-				. "Sistema de Monitoreo: Fundación ATICA\r\n";
+				. " del proyecto " . $nombre_proyecto . ".\r\n<br />"
+				. "\r\n<br />"
+				. "Avance: " . $avance . " " . $unidad . "\r\n<br />"
+				. "Meta: " . $meta . " " . $unidad . "\r\n<br />"
+				. "Días restantes: " . $dias_restantes . " días\r\n<br />"
+				. "\r\n<br />"
+				. "Por favor no responda este mensaje.\r\n<br />"
+				. "\r\n<br />"
+				. "Sistema de Monitoreo: Fundación ATICA\r\n<br />";
 
 		$mensaje = wordwrap($mensaje, 70, "\r\n", FALSE);
 
