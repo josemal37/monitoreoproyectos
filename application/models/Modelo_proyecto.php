@@ -84,7 +84,9 @@ class Modelo_proyecto extends MY_Model {
 
 			$proyecto = $this->return_row($query);
 
-			$proyecto->aportes = $this->Modelo_aporte->select_aportes_de_proyecto($proyecto->id);
+			if ($proyecto) {
+				$proyecto->aportes = $this->Modelo_aporte->select_aportes_de_proyecto($proyecto->id);
+			}
 		}
 
 		return $proyecto;
@@ -347,7 +349,7 @@ class Modelo_proyecto extends MY_Model {
 			$this->db->where(self::ID, $id);
 
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
-			
+
 			if ($actualizado) {
 				$this->Modelo_aporte->update_aportes_st($id, $con_financiadores, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
 			}
