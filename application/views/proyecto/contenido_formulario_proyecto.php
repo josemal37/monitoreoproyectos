@@ -108,7 +108,7 @@ switch ($accion) {
 
 					<ol id="lista-ejecutores">
 
-						<?php if ($accion == "modificar_proyecto" && sizeof($ejecutores_aportes) > 0): ?>
+						<?php if ($accion == "modificar_proyecto" && isset($ejecutores_aportes) && sizeof($ejecutores_aportes) > 0): ?>
 
 							<?php foreach ($ejecutores_aportes as $ejecutor_aporte): ?>
 
@@ -178,7 +178,7 @@ switch ($accion) {
 
 					<ol id="lista-financiadores">
 
-						<?php if ($accion == "modificar_proyecto" && sizeof($financiadores_aportes) > 0): ?>
+						<?php if ($accion == "modificar_proyecto" && isset($financiadores_aportes)  && sizeof($financiadores_aportes) > 0): ?>
 
 							<?php foreach ($financiadores_aportes as $financiador_aporte): ?>
 
@@ -248,7 +248,7 @@ switch ($accion) {
 
 					<ol id="lista-otros">
 
-						<?php if ($accion == "modificar_proyecto" && sizeof($otros_aportes) > 0): ?>
+						<?php if ($accion == "modificar_proyecto" && isset($otros_aportes)  && sizeof($otros_aportes) > 0): ?>
 
 							<?php foreach ($otros_aportes as $otro_aporte): ?>
 
@@ -437,7 +437,7 @@ switch ($accion) {
 <?php if (isset($reglas_cliente)): ?>
 
 	<script type="text/javascript">
-	    $("#form-proyecto").validate(<?= $reglas_cliente ?>);
+		$("#form-proyecto").validate(<?= $reglas_cliente ?>);
 	</script>
 
 <?php endif; ?>

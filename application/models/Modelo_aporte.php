@@ -111,10 +111,14 @@ class Modelo_aporte extends MY_Model {
 		return $aportes;
 	}
 
-	public function update_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros) {
-		$this->delete_aportes_de_proyecto_st($id_proyecto);
+	public function update_aportes_st($id_proyecto, $con_financiadores, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros) {
+		$actualizado = $this->delete_aportes_de_proyecto_st($id_proyecto);
 
-		return $this->insert_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
+		if ($con_financiadores) {
+			$actualizado = $this->insert_aportes_st($id_proyecto, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
+		}
+
+		return $actualizado;
 	}
 
 	private function delete_aportes_de_proyecto_st($id_proyecto = FALSE) {

@@ -348,8 +348,8 @@ class Modelo_proyecto extends MY_Model {
 
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
 			
-			if ($actualizado && $con_financiadores) {
-				$this->Modelo_aporte->update_aportes_st($id, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
+			if ($actualizado) {
+				$this->Modelo_aporte->update_aportes_st($id, $con_financiadores, $instituciones_ejecutores, $cantidades_ejecutores, $conceptos_ejecutores, $instituciones_financiadores, $cantidades_financiadores, $conceptos_financiadores, $instituciones_otros, $cantidades_otros, $conceptos_otros);
 			}
 
 			$this->db->trans_complete();
