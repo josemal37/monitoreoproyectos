@@ -171,6 +171,9 @@ class Indicador_producto extends Coordinador {
 			$unidad = self::UNIDAD_META_POR_DEFECTO;
 		}
 
+		$id_indicador_efecto = FALSE;
+		$porcentaje = FALSE;
+
 		if ($con_indicador_efecto) {
 			$id_indicador_efecto = $this->input->post("indicador-efecto");
 			$porcentaje = $this->input->post("porcentaje");
